@@ -1,36 +1,35 @@
 <template>
   <div class="headNav">
-    <div class="shaw ov">
-      <div class="leftNav fl">
+    <div class="shaw">
+      <div class="leftNav ov">
         <i @click="togalClick" :class="icon" class="pad_i"></i>
-        <breadcrumb></breadcrumb>
+        <topMenus></topMenus>
       </div>
-      <div class="rightNav fr">
+      <!-- 注释掉右侧的内容 -->
+      <!-- <div class="rightNav fr">
         <headerSearch></headerSearch>
         <screenFull></screenFull>
-      </div>
+      </div> -->
     </div>
     <!-- <el-button @click="setParams">传参</el-button> -->
   </div>
 </template>
 
 <script>
-import breadcrumb from "@/components/dashboard/view/breadcrumb";
-import headerSearch from "@/components/dashboard/view/headerSearch";
-import screenFull from "@/components/dashboard/view/screenFull";
+import topMenus from "@/components/dashboard/view/topMenus";
+// import headerSearch from "@/components/dashboard/view/headerSearch";
+// import screenFull from "@/components/dashboard/view/screenFull";
 export default {
   name: "headNav",
   components: {
-    breadcrumb,
-    headerSearch,
-    screenFull
+    topMenus
+    // headerSearch,
+    // screenFull
   },
   data() {
     return {
       togel: false,
-      icon: "el-icon-s-fold",
-      id: "yuhenglongid",
-      person: "yuyu"
+      icon: "el-icon-s-fold"
     };
   },
   methods: {
@@ -42,15 +41,6 @@ export default {
       } else {
         this.icon = "el-icon-s-fold";
       }
-    },
-    setParams() {
-      this.$router.push({
-        name: "yunguIndex",
-        params: {
-          id: this.id,
-          person: this.person
-        }
-      });
     }
   }
 };
@@ -73,6 +63,7 @@ export default {
     display: inline;
   }
   .pad_i {
+    float:left;
     padding: 17px;
     background-color: #fff;
     cursor: pointer;

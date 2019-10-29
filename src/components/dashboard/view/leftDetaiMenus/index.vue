@@ -1,7 +1,6 @@
-<template>
-  <div class="leftMenus">
-    <headPortrait></headPortrait>
-    <el-menu
+<template> 
+ <div class="leftDetaiMenus">
+<el-menu
       default-active="1-4-1"
       class="el-menu-vertical-demo"
       @open="handleOpen"
@@ -47,15 +46,12 @@
         <span slot="title">我发起的</span>
       </el-menu-item>
     </el-menu>
-  </div>
+
+ </div>
 </template>
 <script>
-import headPortrait from "@/components/dashboard/view/headPortrait"
 export default {
-  name: "leftMenus",
-  components:{
-    headPortrait
-  },
+  name: "leftDetaiMenus",
   data() {
     return {
     };
@@ -73,10 +69,10 @@ export default {
       return this.$store.state.isCollapse
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
-.leftMenus {
+.leftDetaiMenus {
   width: auto;
   height: 100%;
   background-color: #fff;
