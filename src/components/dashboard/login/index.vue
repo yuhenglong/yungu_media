@@ -6,54 +6,53 @@
       </div>
       <div class="content ov">
         <div class="left">
-          <img src="../../../assets/login_bg.jpg" alt="">
+          <img src="../../../assets/login_bg.jpg" alt />
         </div>
         <div class="right">
-              <el-form
-        :model="loginUser"
-        :rules="rules"
-        ref="loginForm"
-        class="loginForm"
-        label-width="80px"
-      >
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="loginUser.username" placeholder="请输入用户名"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="loginUser.password" placeholder="请输入密码" type="password"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <!-- <el-button type="primary" @keyup.enter="submitForm('loginForm')" class="submit_btn">登 录</el-button> -->
-          <el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登 录</el-button>
-        </el-form-item>
-        <div class="tiparea">
-          <p>
-            还没有账号？现在
-            <router-link to="/register">注册</router-link>
-          </p>
-        </div>
-      </el-form>
+          <el-form
+            :model="loginUser"
+            :rules="rules"
+            ref="loginForm"
+            class="loginForm"
+            label-width="80px"
+          >
+            <el-form-item label="用户名" prop="userName">
+              <el-input v-model="loginUser.userName" placeholder="请输入用户名"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input v-model="loginUser.password" placeholder="请输入密码" type="password"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <!-- <el-button type="primary" @keyup.enter="submitForm('loginForm')" class="submit_btn">登 录</el-button> -->
+              <el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登 录</el-button>
+            </el-form-item>
+            <div class="tiparea">
+              <p>
+                还没有账号？现在
+                <router-link to="/register">注册</router-link>
+              </p>
+            </div>
+          </el-form>
         </div>
       </div>
-
-  
     </section>
   </div>
 </template>
 
 <script>
+import qs from "qs";
 export default {
   name: "login",
   data() {
     return {
       loginUser: {
-        username: "",
-        password: ""
+        userName: "test",
+        password: "123456"
       },
       rules: {
-        username: [
+        userName: [
           { required: true, message: "用户名不能为空", trigger: "blur" },
-          { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
+          { min: 4, max: 30, message: "长度在 4 到 30 个字符", trigger: "blur" }
         ],
         password: [
           { required: true, message: "密码不能为空", trigger: "blur" },
@@ -66,20 +65,21 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // fetch方法
-          fetch("/api/account/login", {
+          // 用fetch请求这样避开在登录时没有token的请求
+          fetch("/login", {
             method: "POST",
-            body: JSON.stringify(this.loginUser),
+            body: qs.stringify(this.loginUser),
             mode: "cors",
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
           })
             .then(res => {
               return res.json();
             })
             .then(json => {
-              console.log("后端返回的数据:", json);
+              console.log(json)
               if (json.meta.code == 200) {
-                this.$router.push("/index");
+                localStorage.setItem("eleToken", json.data.token);
+                this.$router.push("/");
               } else {
                 this.$message({
                   type: "error",
@@ -117,10 +117,10 @@ export default {
   background: url(../../../assets/bg.jpg) no-repeat center center;
   background-size: 100% 100%;
 }
-.left{
-  img{
-    width:500px;
-    height:auto;
+.left {
+  img {
+    width: 500px;
+    height: auto;
   }
 }
 
@@ -137,8 +137,8 @@ export default {
   border-radius: 5px;
   text-align: center;
 }
-.content{
-  margin-top:30px;
+.content {
+  margin-top: 30px;
 }
 .form_container .manage_tip .title {
   font-family: "Microsoft YaHei";
@@ -147,8 +147,8 @@ export default {
   color: #fff;
 }
 .loginForm {
-  width:400px;
-  height:250px;
+  width: 400px;
+  height: 250px;
   background-color: #fff;
   padding: 106px 40px 20px 20px;
   border-radius: 30px;
@@ -167,14 +167,14 @@ export default {
   color: #409eff;
   text-decoration: none;
 }
-.ov{
-  overflow:hidden;
+.ov {
+  overflow: hidden;
 }
-.left{
-  float:left;
+.left {
+  float: left;
 }
-.right{
-  float:right;
+.right {
+  float: right;
 }
 </style>
 

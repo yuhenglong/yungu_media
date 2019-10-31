@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import qs from "qs"
 export default {
   name: "register",
   data() {
@@ -135,24 +136,12 @@ export default {
         if (valid) {
           // 赋值给createTime
           this.getDate();
-          // 提交表单
-          // axios的方法
-          // this.$axios
-          //   .post("/api/account/register", JSON.stringify(this.registerUser),{headers:{'Content-Type':'application/json'}})
-          //   .then(res => {
-          //     // 注册成功
-          //     this.$message({
-          //       message: "注册成功！",
-          //       type: "success"
-          //     });
-          //     // this.$router.push("/login");
-          //   });
           // fetch的方法请求数据
-          fetch("/api/account/register", {
+          fetch("/register", {
             method: "POST",
-            body: JSON.stringify(this.registerUser),
+            body: qs.stringify(this.registerUser),
             mode: "cors",
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
           })
             .then(res => {
               return res.json();
@@ -161,19 +150,7 @@ export default {
               console.log("这是fetch的请求", json);
               // 注册成功3秒返回到登录页面
               if (json.meta.code == 200) {
-                this.$message({
-                  message: "注册成功,即将跳到登录页！",
-                  type: "success"
-                });
-                setTimeout(() => {
-                  this.$router.push({
-                    name: "login",
-                    params: {
-                      username: this.registerUser.username,
-                      password: this.registerUser.password
-                    }
-                  });
-                }, 3000);
+                
               }
             })
             .catch(err => {

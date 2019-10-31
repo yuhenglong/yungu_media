@@ -13,19 +13,19 @@
   </div>
 </template>
 <style lang="scss" scoped>
-.headPortrait{
-    border:1px dashed #409eff;
-    border-radius:50%;
-    margin:50px 10px 30px;
-    overflow:hidden;
+.headPortrait {
+  border: 1px dashed #409eff;
+  border-radius: 50%;
+  margin: 50px 10px 30px;
+  overflow: hidden;
 }
 .avatar-uploader .el-upload {
-    border: 1px dashed #409eff;
-    border-radius:50%;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
+  border: 1px dashed #409eff;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
 
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
@@ -69,8 +69,8 @@ export default {
       return isJPG && isLt2M;
     }
   },
-  computed:{
-    isCollapse(){
+  computed: {
+    isCollapse() {
       return this.$store.state.isCollapse;
     }
   }

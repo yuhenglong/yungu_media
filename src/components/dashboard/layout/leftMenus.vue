@@ -2,62 +2,38 @@
   <div class="leftMenus">
     <headPortrait></headPortrait>
     <el-menu
-      default-active="1-4-1"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
       :collapse="isCollapse"
+      :router="true"
     >
-      <!-- <el-submenu index="1"> -->
-        <!-- <template slot="title">
-          <i class="el-icon-location"></i>
-          <span slot="title">个人办公</span>
-        </template> -->
-        <!-- <el-menu-item-group>
-          <span slot="title">分组一</span>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <span slot="title">选项4</span>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
-        </el-submenu> -->
-      <!-- </el-submenu> -->
-       <el-menu-item index="1">
-        <i class="el-icon-location"></i>
-        <span slot="title">个人办公</span>
-      </el-menu-item>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">流程发起</span>
-      </el-menu-item>
-      <el-menu-item index="3">
-        <i class="el-icon-document"></i>
-        <span slot="title">待办流程</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">已办流程</span>
-      </el-menu-item>
-      <el-menu-item index="5">
-        <i class="el-icon-setting"></i>
-        <span slot="title">我发起的</span>
-      </el-menu-item>
+      <template v-for="(item,index) in menusTree">
+        <el-submenu :index="item.icon" :key="index">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span slot="title">{{item.name}}</span>
+          </template>
+          <template v-for="(itemb,indexb) in item.subList">
+            <el-menu-item-group :key="indexb">
+              <el-menu-item :index="itemb.url">{{itemb.name}}</el-menu-item>
+            </el-menu-item-group>
+          </template>
+        </el-submenu>
+      </template>
     </el-menu>
   </div>
 </template>
 <script>
-import headPortrait from "@/components/dashboard/view/headPortrait"
+import headPortrait from "@/components/dashboard/view/headPortrait";
 export default {
   name: "leftMenus",
-  components:{
+  components: {
     headPortrait
   },
   data() {
     return {
+      menusTree: []
     };
   },
   methods: {
@@ -66,12 +42,24 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    getMenus() {
+      this.$http.post("/sysUser/getAuthorityResourceByUid").then(res => {
+        console.log("带token请求回来的数据", res);
+        if (res.data.meta.code == 200) {
+          console.log(res.data.data.obj);
+          this.menusTree = res.data.data.obj;
+        }
+      });
     }
   },
-  computed:{
-    isCollapse(){
-      return this.$store.state.isCollapse
+  computed: {
+    isCollapse() {
+      return this.$store.state.isCollapse;
     }
+  },
+  created() {
+    this.getMenus();
   }
 };
 </script>
@@ -80,17 +68,17 @@ export default {
   width: auto;
   height: 100%;
   background-color: #fff;
-  border-right:1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
   position: fixed;
-  top:0;
+  top: 0;
   left: 0;
   z-index: 99;
 }
-.el-menu{
-  border-right:none;
+.el-menu {
+  border-right: none;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
-  height: 100%; 
+  height: 100%;
 }
 </style>
