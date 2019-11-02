@@ -9,9 +9,9 @@
       :router="true"
     >
       <template v-for="(item,index) in menusTree">
-        <el-submenu :index="item.icon" :key="index">
+        <el-submenu :index='item.icon' :key="index">
           <template slot="title">
-            <i class="el-icon-location"></i>
+            <i :class="item.icon"></i>
             <span slot="title">{{item.name}}</span>
           </template>
           <template v-for="(itemb,indexb) in item.subList">
@@ -38,10 +38,10 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     getMenus() {
       this.$http.post("/sysUser/getAuthorityResourceByUid").then(res => {

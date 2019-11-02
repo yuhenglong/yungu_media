@@ -22,7 +22,7 @@ export default {
   name: "headerSearch",
   data() {
     return {
-      isShow:false,
+      isShow: false,
       options: [],
       value: [],
       list: [],
@@ -86,13 +86,13 @@ export default {
       return { value: item, label: item };
     });
   },
-  watch:{
-    isShow(value){
-      console.log('这是value',value);
-      if(value){
-        document.body.addEventListener('click',this.clickShow)
-      }else{
-        document.body.removeEventListener('click',this.clickShow)
+  watch: {
+    isShow(value) {
+      console.log("这是value", value);
+      if (value) {
+        document.body.addEventListener("click", this.clickShow);
+      } else {
+        document.body.removeEventListener("click", this.clickShow);
       }
     }
   },
@@ -110,11 +110,11 @@ export default {
         this.options = [];
       }
     },
-    clickShow(){
-      this.isShow = !this.isShow; 
-      if(this.isShow){
+    clickShow() {
+      this.isShow = !this.isShow;
+      if (this.isShow) {
         this.$refs.headerSearch.focus();
-      }else{
+      } else {
         this.$refs.headerSearch.blur();
       }
     }
@@ -123,7 +123,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .headerSearch {
-  display:inline-block;
+  display: inline-block;
   .icon {
     display: inline-block;
     padding: 17px 10px;
@@ -137,5 +137,27 @@ export default {
       margin-left: 10px;
     }
   }
+}
+</style>
+<style lang="scss">
+.headerSearch .header-search-select {
+  font-size: 18px;
+  transition: width 0.2s;
+  width: 0;
+  overflow: hidden;
+  background: transparent;
+  border-radius: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.headerSearch .header-search-select .el-input .el-input__inner {
+  border-radius: 0;
+  border: 0;
+  padding-left: 15px;
+  padding-right: 0;
+  box-shadow: none !important;
+  border-bottom: 1px solid #d9d9d9;
+  vertical-align: middle;
 }
 </style>

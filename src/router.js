@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import yunguIndex from '@/components/dashboard/view/yunguIndex'
 import login from '@/components/dashboard/login'
 import register from '@/components/dashboard/register'
-import index from '@/components/dashboard/index.vue'
-import notfound from '@/components/dashboard/404.vue'
+import index from '@/components/dashboard/index'
+import notfound from '@/components/dashboard/404'
+import areaManage from '@/components/dashboard/view/areaManage'
 
 Vue.use(Router)
 
@@ -16,6 +17,9 @@ const router = new Router({
         children: [{
             path: '/',
             component: yunguIndex
+        }, {
+            path: '/areaManage',
+            component: areaManage
         }]
     }, {
         path: '*',
