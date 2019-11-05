@@ -6,6 +6,13 @@ import register from '@/components/dashboard/register'
 import index from '@/components/dashboard/index'
 import notfound from '@/components/dashboard/404'
 import areaManage from '@/components/dashboard/view/areaManage'
+import addArea from '@/components/dashboard/view/addArea'
+
+import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
+import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
+import filialeManage from '@/components/dashboard/view/sys/filialeManage/index'
+import resourceManage from '@/components/dashboard/view/sys/resourceManage.vue'
+
 
 Vue.use(Router)
 
@@ -15,12 +22,30 @@ const router = new Router({
         path: '/',
         component: index,
         children: [{
-            path: '/',
-            component: yunguIndex
-        }, {
-            path: '/areaManage',
-            component: areaManage
-        }]
+                path: '/',
+                component: yunguIndex
+            },
+            {
+                path: 'userManage',
+                component: sysUse
+            }, {
+                path: 'roleManage',
+                component: roleManage
+            }, {
+                path: 'resourceManage',
+                component: resourceManage
+            },
+            {
+                path: 'filialeManage',
+                component: filialeManage
+            }, {
+                path: '/areaManage',
+                component: areaManage
+            }, {
+                path: '/addArea',
+                component: addArea
+            }
+        ]
     }, {
         path: '*',
         name: 'notfound',
