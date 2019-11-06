@@ -33,22 +33,15 @@
                   :value="item.did"
                 ></el-option>
               </el-select>
-              <!-- <el-input v-model="yunguAreaProjectModel.protecter" placeholder="维护人员"></el-input> -->
             </el-form-item>
             <el-form-item label="所属部门" prop="dept">
               <el-select v-model="yunguAreaProjectModel.dept" placeholder="所属部门">
-                <el-option-group
-                  v-for="group in manageCompany"
-                  :key="group.label"
-                  :label="group.label"
-                >
-                  <el-option
-                    v-for="item in group.options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-option-group>
+                <el-option
+                  v-for="item in manageCompanyTwo"
+                  :key="item.name"
+                  :label="item.name"
+                  :value="item.did"
+                ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="一级属性">
@@ -203,9 +196,6 @@
             <el-form-item label="业主收入水平">
               <el-input v-model="yunguAreaProjectDetailModel.ownerIncome" placeholder="业主收入水平"></el-input>
             </el-form-item>
-            <el-form-item label="配套设施">
-              <el-input v-model="yunguAreaProjectDetailModel.matchFacility" placeholder="配套设施"></el-input>
-            </el-form-item>
             <el-form-item label="覆盖电梯间数">
               <el-input v-model="yunguAreaProjectDetailModel.coverCount" placeholder="覆盖电梯间数"></el-input>
             </el-form-item>
@@ -219,6 +209,9 @@
         </el-tab-pane>
         <el-tab-pane label="项目属性三">
           <el-form :inline="true" class="demo-form-inline">
+            <el-form-item label="配套设施">
+              <el-input v-model="yunguAreaProjectDetailModel.matchFacility" placeholder="配套设施"></el-input>
+            </el-form-item>
             <el-form-item label="是否可直投">
               <el-radio v-model="yunguAreaProjectDetailModel.isStraight" label="0">是</el-radio>
               <el-radio v-model="yunguAreaProjectDetailModel.isStraight" label="1">否</el-radio>
@@ -274,18 +267,59 @@
               <el-radio v-model="yunguAreaProjectDetailModel.receiptStatus" label="0">有</el-radio>
               <el-radio v-model="yunguAreaProjectDetailModel.receiptStatus" label="1">无</el-radio>
             </el-form-item>
-            <el-form-item label="支付方式">
-              <el-select v-model="yunguPayMethodModelList.payName" placeholder="名称：">
-                <el-option label="工商银行" value="0"></el-option>
-                <el-option label="建设银行" value="1"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="账号">
-              <el-input v-model="yunguPayMethodModelList.account" placeholder="账号"></el-input>
-            </el-form-item>
-            <el-form-item label="银行名称">
-              <el-input v-model="yunguPayMethodModelList.bankName" placeholder="银行名称"></el-input>
-            </el-form-item>
+            <div class="pay">
+              <h3
+                style="padding-left:100px;margin-bottom:20px;font-size:22px;line-height:22px;"
+              >支付管理：</h3>
+              <el-form-item label="支付方式">
+                <el-select v-model="yunguPayMethodModelList.payName" placeholder="名称：" id="payText">
+                  <el-option label="银行卡" value="0"></el-option>
+                  <el-option label="支付宝" value="1"></el-option>
+                  <el-option label="微信" value="2"></el-option>
+                  <el-option label="现金" value="3"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="账号">
+                <el-input v-model="yunguPayMethodModelList.account" placeholder="账号"></el-input>
+              </el-form-item>
+              <el-form-item label="银行名称">
+                <el-input v-model="yunguPayMethodModelList.bankName" placeholder="银行名称"></el-input>
+              </el-form-item>
+            </div>
+            <div class="addAdress">
+              <el-button type="primary" class="addAdr" plain @click="addPayTable">增加支付方式</el-button>
+            </div>
+            <el-table
+              :data="yunguPayMethodModelList_arr"
+              style="width: 100%;margin-top:20px;"
+              border
+            >
+              <el-table-column label="支付方式" width="180">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.payText }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="支付方式" width="180">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.account }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="支付方式" width="180">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.bankName }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="payEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="PayDel(scope.$index, scope.row)"
+                  >删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="点位信息">
@@ -320,7 +354,14 @@
               <uploadPicture></uploadPicture>
             </el-form-item>
             <el-form-item label="呈现方式" prop="showMode">
-              <el-input v-model="yunguAreaPostionModelList.showMode" placeholder="呈现方式"></el-input>
+              <el-select v-model="yunguAreaPostionModelList.showMode" placeholder="请选择">
+                <el-option
+                  v-for="item in showModeList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="设备规格" prop="size">
               <el-input v-model="yunguAreaPostionModelList.size" placeholder="设备规格"></el-input>
@@ -332,6 +373,7 @@
           <addAdrTable
             :formData="yunguAreaProjectModelListTwo"
             :projectName="yunguAreaProjectModel.projectName"
+            @delParentData = "delTable"
           ></addAdrTable>
         </el-tab-pane>
       </el-tabs>
@@ -359,6 +401,20 @@ export default {
   },
   data() {
     return {
+      showModeList: [
+        {
+          value: "0",
+          label: "3D液晶"
+        },
+        {
+          value: "1",
+          label: "2D平面"
+        },
+        {
+          value: "2",
+          label: "楼梯屏"
+        }
+      ],
       manageCompany: [],
       protecterList: [],
       yunguAreaProjectModelListTwo: [],
@@ -443,8 +499,10 @@ export default {
         mediaName: "",
         isSave: ""
       },
+      yunguPayMethodModelList_arr: [],
       yunguPayMethodModelList: {
         payName: "",
+        payText: "",
         account: "",
         bankName: ""
       },
@@ -466,11 +524,27 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+    delTable(index){
+      this.yunguAreaProjectModelListTwo.splice(index,1);
     },
-    setAddress() {
-      console.log("这是地址");
+    addPayTable() {
+      this.yunguPayMethodModelList.payText = document.getElementById(
+        "payText"
+      ).value;
+      this.yunguPayMethodModelList_arr.push(this.yunguPayMethodModelList);
+      this.yunguPayMethodModelList = {
+        payName: "",
+        payText: "",
+        account: "",
+        bankName: ""
+      };
+    },
+    PayDel(index,row){
+      console.log(index, row);
+      this.yunguPayMethodModelList_arr.splice(index,1);
+    },
+    payEdit(){
+      console.log("暂时不能编辑");
     },
     addTable() {
       this.yunguAreaProjectModelListTwo.push(this.yunguAreaPostionModelList);
@@ -502,10 +576,10 @@ export default {
           const obj = {};
           obj.yunguAreaPostionModelList = [];
           obj.yunguPayMethodModelList = [];
-          obj.yunguAreaPostionModelList.push(this.yunguAreaPostionModelList);
+          obj.yunguAreaPostionModelList = this.yunguAreaProjectModelListTwo;
           obj.yunguAreaProjectDetailModel = this.yunguAreaProjectDetailModel;
           obj.yunguAreaProjectModel = this.yunguAreaProjectModel;
-          obj.yunguPayMethodModelList.push(this.yunguPayMethodModelList);
+          obj.yunguPayMethodModelList = this.yunguPayMethodModelList_arr;
           this.$http
             .post("/yunguAreaProject/insertYunguAreaProject", obj)
             .then(res => {
@@ -522,10 +596,9 @@ export default {
     },
     // 获取部门列表
     getDepartOptions() {
-      this.$http.post("/sysDept/getCompanyDepListSelect").then(res => {
+      this.$http.get("/sysDept/getDeptListByStatus?status=1").then(res => {
         if (res.data.meta.code == 200) {
           this.manageCompany = res.data.data.obj;
-          console.log("所属部门", this.manageCompany);
         } else {
           console.log("选项列表获取错误");
         }
@@ -545,15 +618,16 @@ export default {
         });
     }
   },
-  watch:{
-    yunguAreaProjectModel:{
-      handler(val,oldVal){
-        console.log('好饿啊');
-      },
-      deep:true
+  computed: {
+    manageCompanyTwo() {
+      const that = this;
+      const num = that.yunguAreaProjectModel.protecter;
+      return that.manageCompany.filter(item => {
+        return item.did == num;
+      });
     }
   },
-  mounted() {
+  created() {
     this.getDepartOptions();
     this.getPersonOptions();
   }

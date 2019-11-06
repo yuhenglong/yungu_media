@@ -12,7 +12,7 @@
         <el-radio-button label="我跟踪的"></el-radio-button>
       </el-radio-group>
       <div class="ta">
-        <el-table class="tabl" :data="tableData" style="width: 100%">
+        <el-table class="tabl" :data="tableData" style="width: 100%" border>
           <el-table-column prop="thing" label="事项" width="180"></el-table-column>
           <el-table-column prop="date" label="日期" width="180"></el-table-column>
           <el-table-column prop="bz" label="备注"></el-table-column>
@@ -212,7 +212,8 @@ export default {
 .yunguIndex {
   width: 100%;
   padding: 30px;
-  background-color: #ccc;
+  height:auto;
+  overflow:auto;
   .ov {
     overflow: hidden;
   }
