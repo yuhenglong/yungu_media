@@ -7,6 +7,7 @@
       @close="handleClose"
       :collapse="isCollapse"
       :router="true"
+      :unique-opened="true"
     >
       <template v-for="(item,index) in menusTree">
         <el-submenu :index='item.icon' :key="index">
@@ -45,9 +46,9 @@ export default {
     },
     getMenus() {
       this.$http.post("/sysUser/getAuthorityResourceByUid").then(res => {
-        console.log("带token请求回来的数据", res);
+        // console.log("带token请求回来的数据", res);
         if (res.data.meta.code == 200) {
-          console.log(res.data.data.obj);
+          // console.log(res.data.data.obj);
           this.menusTree = res.data.data.obj;
         }
       });
