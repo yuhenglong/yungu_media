@@ -90,15 +90,16 @@
         <el-table-column label="操作" width="400">
           <template slot-scope="scope">
             <el-button size="mini" @click="checkRow(scope.$index, scope.row)">查看</el-button>
-            <el-button
+            <!-- <el-button
               size="mini"
               @click="startFor(scope.$index, scope.row)"
-            >{{ scope.row.status !==0?"启用":"禁用" }}</el-button>
-            <el-button
+            >{{ scope.row.status !==0?"启用":"禁用" }}</el-button>-->
+            <!-- <el-button
               size="mini"
               @click="editDialog(scope.$index, scope.row)"
               v-if="scope.row.verify_stauts ==1 && scope.row.status ==1?'true':'false'"
-            >编辑</el-button>
+            >编辑</el-button>-->
+            <el-button size="mini" @click="audit(scope.$index, scope.row)">审核</el-button>
             <el-button size="mini" @click="lookInfo(scope.$index, scope.row)">查看审核记录</el-button>
           </template>
         </el-table-column>
@@ -219,6 +220,28 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+    <!-- 审核 -->
+    <el-dialog
+      :title="title"
+      :visible.sync="dialogAuditVisible"
+      width="800px"
+      center
+      :append-to-body="true"
+    >
+      <el-form ref="form" :model="checkDia" label-width="80px">
+        <el-form-item label="处理方式">
+          <el-radio v-model="checkDia.verifyResult" label="0">通过</el-radio>
+          <el-radio v-model="checkDia.verifyResult" label="1">拒绝</el-radio>
+        </el-form-item>
+        <el-form-item label="备注原由">
+          <el-input type="textarea" v-model="checkDia.refuseReason"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="deilComfirm">确定</el-button>
+          <el-button type="success" @click="deilDel">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -232,6 +255,7 @@ export default {
   },
   data() {
     return {
+      diaTextArea: "",
       temporaryArr: [],
       title: "当前客户信息",
       labelPosition: "right",
@@ -247,9 +271,16 @@ export default {
         status: "",
         verify_stauts: ""
       },
+      checkDia: {
+        verifyResult: "",
+        type: 2,
+        refuseReason: "",
+        identificationCode: ""
+      },
       dialogVisible: false,
       dialogCheckVisible: false,
       dialogEditVisible: false,
+      dialogAuditVisible: false,
       titleTwo: "场地客户审核列表",
       titleThr: "编辑客户数据",
       formCheckList: {
@@ -296,13 +327,39 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
+    audit(index, row) {
+      this.dialogAuditVisible = true;
+      this.checkDia.identificationCode = row.identificationCode;
+    },
+    deilComfirm() {
+      this.$http
+        .post("/yunguVerifyNote/customerVerify", this.checkDia)
+        .then(res => {
+          console.log("这是保存信息的", res);
+          if (res.data.meta.code == 200) {
+            this.$message({
+              type: "success",
+              message: `处理成功！`
+            });
+            this.dialogAuditVisible = false;
+          }else{
+            this.$message({
+              type: "error",
+              message: `处理失败！请重新提交。`
+            });
+          }
+        });
+    },
+    deilDel() {
+      this.dialogAuditVisible = false;
+    },
     editConfirm() {
       const obj = {
         applyDept: this.formRowList.apply_dept,
         applyName: this.formRowList.apply_name,
         cityId: this.formRowList.city_id,
         companyPhone: this.formRowList.company_phone,
-        contactCommunication:this.formRowList.contact_communication,
+        contactCommunication: this.formRowList.contact_communication,
         contactDept: this.formRowList.contact_dept,
         contactEmail: this.formRowList.contact_email,
         contactLevel: this.formRowList.contact_level,

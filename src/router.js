@@ -10,6 +10,8 @@ import addArea from '@/components/dashboard/view/addArea'
 import customerManage from '@/components/dashboard/view/customerManage'
 import checkCustomer from '@/components/dashboard/view/checkCustomer'
 import advertiserList from '@/components/dashboard/view/advertiserList'
+import contractList from '@/components/dashboard/view/contractList'
+import areaList from '@/components/dashboard/view/areaList'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -77,6 +79,14 @@ const router = new Router({
                 {
                     path: '/toDoTaskList',
                     component: toDoTaskList
+                },
+                {
+                    path: '/contractList',
+                    component: contractList
+                },
+                {
+                    path: '/areaList',
+                    component: areaList
                 }
             ]
         },

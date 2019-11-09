@@ -136,7 +136,7 @@ export default {
 
 <style scoped>
 .linkage {
-  width: 100%;
+  width: 700px;
 }
 .linkage .el-select {
   margin: 0 10px 0 0;
