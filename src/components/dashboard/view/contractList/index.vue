@@ -94,6 +94,7 @@ export default {
         region: "",
         lastDate: ""
       },
+      total:0,
       pageInfo: {
         pageNum: 1,
         pageSize: 10

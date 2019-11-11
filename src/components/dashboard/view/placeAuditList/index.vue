@@ -1,16 +1,7 @@
 <template>
-  <div class="areaList">
-    <h2>场地项目列表</h2>
+  <div class="placeAuditList">
+    <h2>场地项目审核列表</h2>
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
-      <el-form-item label="合同编号">
-        <el-input v-model="formInline.user" placeholder="合同编号"></el-input>
-      </el-form-item>
-      <el-form-item label="合同类型">
-        <el-select v-model="formInline.region" placeholder="活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
       <el-form-item label="维护人员">
         <el-select v-model="formInline.region" placeholder="活动区域">
           <el-option label="区域一" value="shanghai"></el-option>
@@ -18,16 +9,35 @@
         </el-select>
       </el-form-item>
       <el-form-item label="开发人员">
+        <el-select v-model="formInline.region" placeholder="全部">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="项目编号">
+        <el-input v-model="formInline.user" placeholder="项目编号"></el-input>
+      </el-form-item>
+      <el-form-item label="项目名称">
+        <el-input v-model="formInline.user" placeholder="项目名称"></el-input>
+      </el-form-item>
+      <el-form-item label="项目地址">
+        <el-input v-model="formInline.user" placeholder="项目地址"></el-input>
+      </el-form-item>
+      <el-form-item label="所属部门">
+        <el-select v-model="formInline.region" placeholder="选择">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="项目一级属性">
         <el-select v-model="formInline.region" placeholder="活动区域">
           <el-option label="区域一" value="shanghai"></el-option>
           <el-option label="区域二" value="beijing"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="审核阶段">
-        <el-select v-model="formInline.region" placeholder="活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
+      <el-form-item label="所属区域">
+          <linkage></linkage>
       </el-form-item>
       <el-form-item label="项目名称">
         <el-input v-model="formInline.user" placeholder="项目名称"></el-input>
@@ -63,14 +73,13 @@
       <el-table-column prop="project_address" label="城市" width="120"></el-table-column>
       <el-table-column prop="protecter" label="维护人员" width="120"></el-table-column>
       <el-table-column prop="dept" label="所属部门" width="300"></el-table-column>
-      <el-table-column prop="customer_id" label="管理公司" width="120"></el-table-column>
+      <el-table-column prop="developer" label="管理公司" width="120"></el-table-column>
       <el-table-column prop="project_type" label="项目属性" width="120"></el-table-column>
       <el-table-column prop="activity_status" label="项目状态" width="120"></el-table-column>
       <el-table-column prop="verify_status" label="业务状态" width="120"></el-table-column>
-      <el-table-column fixed="right" label="操作">
+      <el-table-column fixed="right" label="操作" width>
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="editPage(scope.$index,scope.row)" type="text" size="small">编辑</el-button>
           <el-button type="text" size="small">审核记录</el-button>
         </template>
       </el-table-column>
@@ -90,9 +99,12 @@
 </template>
 
 <script>
+import linkage from '@/components/dashboard/view/linkage';
 export default {
-  name: "areaList",
-  components: {},
+  name: "placeAuditList",
+  components: {
+      linkage
+  },
   data() {
     return {
       formInline: {
@@ -100,26 +112,12 @@ export default {
         region: "",
         lastDate: ""
       },
-      labelPosition: "right",
       pageInfo: {
         pageNum: 1,
         pageSize: 10
       },
       total: 0,
-      areaList: [],
-      title: "编辑场地项目",
-      dialogEditVisible: false,
-      formRowList:{
-        identification_code:'',
-        project_name:'',
-        project_address:'',
-        protecter:'',
-        dept:'',
-        developer:'',
-        project_type:'',
-        activity_status:'',
-        verify_status:''
-      }
+      areaList: []
     };
   },
   methods: {
@@ -136,10 +134,6 @@ export default {
     },
     handleClick(row) {
       console.log(row);
-    },
-    editPage(index, row) {
-      localStorage.setItem('aid',row.aid);
-      this.$router.push('/editPlaceAudit');
     },
     getTableData() {
       this.$http
@@ -160,16 +154,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.areaList {
+.placeAuditList {
   width: 95%;
   padding: 30px 2.5%;
   height: auto;
   overflow: auto;
-  h2 {
-    font-size: 26px;
-    line-height: 26px;
-    margin: 10px 0;
-    text-align: center;
+  h2{
+      font-size:26px;
+      line-height:26px;
+      margin:10px 0;
   }
   .pagi {
     width: 100%;

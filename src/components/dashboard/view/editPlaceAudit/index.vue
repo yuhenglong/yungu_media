@@ -1,6 +1,6 @@
 <template>
-  <div class="addArea">
-    <h2>场地项目添加</h2>
+  <div class="editPlaceAudit">
+    <h2>场地项目编辑</h2>
     <div class="tabs">
       <el-tabs type="border-card">
         <el-tab-pane label="基本信息">
@@ -324,6 +324,8 @@
               <el-select v-model="yunguAreaPostionModelList.company" placeholder="管理公司">
                 <el-option label="广州海云投资信息咨询有限公司" value="0"></el-option>
                 <el-option label="停车场" value="1"></el-option>
+                <!-- <el-option label="停车场weff" value="11222"></el-option> -->
+                <el-option label="11222" value="停车场"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="安装名称">
@@ -379,17 +381,18 @@
         type="primary"
         size="medium"
         @click="commit('yunguAreaProjectModel')"
-      >提&nbsp;&nbsp;&nbsp;交</el-button>
+      >提交修改</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import qs from "qs";
 import addAdrTable from "@/components/dashboard/view/addAdrTable";
 import uploadPicture from "@/components/dashboard/view/uploadPicture";
 import linkage from "@/components/dashboard/view/linkage";
 export default {
-  name: "areaManage",
+  name: "editPlaceAudit",
   components: {
     linkage,
     uploadPicture,
@@ -612,6 +615,26 @@ export default {
             console.log("选项列表获取错误");
           }
         });
+    },
+    getAidData() {
+      const aid = localStorage.getItem("aid");
+      this.$http
+        .post(
+          "/yunguAreaProject/getYunguAreaProjectById",
+          qs.stringify({ id: aid })
+        )
+        .then(res => {
+          console.log("二次请求", res);
+          if(res.data.meta.code ==200){
+          this.yunguAreaPostionModelList = res.data.data.obj.areaPostionList[0];
+          this.yunguAreaProjectModelListTwo = res.data.data.obj.areaPostionList;
+          this.yunguPayMethodModelList_arr = res.data.data.obj.paymethodList;
+          this.yunguAreaProjectModel = res.data.data.obj.areaProject;
+          this.yunguAreaProjectDetailModel = res.data.data.obj.areaProjectDetail;
+          }else{
+              console.log('回调出错了');
+          }
+        });
     }
   },
   computed: {
@@ -624,6 +647,7 @@ export default {
     }
   },
   created() {
+    this.getAidData();
     this.getDepartOptions();
     this.getPersonOptions();
   }
@@ -631,7 +655,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addArea {
+.editPlaceAudit {
   width: 95%;
   padding: 30px 2.5%;
   height: auto;

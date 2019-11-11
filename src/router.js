@@ -5,13 +5,14 @@ import login from '@/components/dashboard/login'
 import register from '@/components/dashboard/register'
 import index from '@/components/dashboard/index'
 import notfound from '@/components/dashboard/404'
-import areaManage from '@/components/dashboard/view/areaManage'
 import addArea from '@/components/dashboard/view/addArea'
 import customerManage from '@/components/dashboard/view/customerManage'
 import checkCustomer from '@/components/dashboard/view/checkCustomer'
 import advertiserList from '@/components/dashboard/view/advertiserList'
 import contractList from '@/components/dashboard/view/contractList'
 import areaList from '@/components/dashboard/view/areaList'
+import placeAuditList from '@/components/dashboard/view/placeAuditList'
+import editPlaceAudit from '@/components/dashboard/view/editPlaceAudit'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -47,9 +48,6 @@ const router = new Router({
                 {
                     path: 'filialeManage',
                     component: filialeManage
-                }, {
-                    path: '/areaManage',
-                    component: areaManage
                 }, {
                     path: '/addArea',
                     component: addArea
@@ -87,6 +85,14 @@ const router = new Router({
                 {
                     path: '/areaList',
                     component: areaList
+                },
+                {
+                    path: '/placeAuditList',
+                    component: placeAuditList
+                },
+                {
+                    path: '/editPlaceAudit',
+                    component: editPlaceAudit
                 }
             ]
         },
