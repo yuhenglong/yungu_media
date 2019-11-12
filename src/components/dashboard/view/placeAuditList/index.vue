@@ -67,7 +67,7 @@
       </el-form-item>
     </el-form>
     <!-- 表格 -->
-    <el-table :data="areaList" border style="width: 100%">
+    <el-table :data="areaTableList" border style="width: 100%">
       <el-table-column fixed prop="identification_code" label="项目编号" width="150"></el-table-column>
       <el-table-column prop="project_name" label="项目名称" width="120"></el-table-column>
       <el-table-column prop="project_address" label="城市" width="120"></el-table-column>
@@ -117,17 +117,19 @@ export default {
         pageSize: 10
       },
       total: 0,
-      areaList: []
+      areaTableList: []
     };
   },
   methods: {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
+      this.getTableData();
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.pageInfo.pageNum = val;
+      this.getTableData();
     },
     onSubmit() {
       console.log("submit!");
@@ -137,11 +139,11 @@ export default {
     },
     getTableData() {
       this.$http
-        .post("/yunguAreaProject/getYunguAreaProjectPageList", this.pageInfo)
+        .post("/yunguAreaProject/getWaitVerifyAreaProjectPageList", this.pageInfo)
         .then(res => {
           console.log("数据", res);
           if (res.data.meta.code == 200) {
-            this.areaList = res.data.data.obj.data;
+            this.areaTableList = res.data.data.obj.data;
             this.total = res.data.data.obj.count;
           }
         });

@@ -13,16 +13,16 @@
             ref="yunguAreaProjectModel"
           >
             <el-form-item label="项目名称" prop="projectName">
-              <el-input v-model="yunguAreaProjectModel.projectName" placeholder="项目名称"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectModel.projectName" placeholder="项目名称"></el-input>
             </el-form-item>
             <el-form-item label="项目地址" prop="projectAddress">
-              <el-input v-model="yunguAreaProjectModel.projectAddress" placeholder="项目地址"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectModel.projectAddress" placeholder="项目地址"></el-input>
             </el-form-item>
             <el-form-item label="位置信息">
-              <el-input v-model="yunguAreaProjectModel.projectPosition" placeholder="位置信息"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectModel.projectPosition" placeholder="位置信息"></el-input>
             </el-form-item>
             <el-form-item label="开发人员" prop="developer">
-              <el-input v-model="yunguAreaProjectModel.developer" placeholder="开发人员"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectModel.developer" placeholder="开发人员"></el-input>
             </el-form-item>
             <el-form-item label="维护人员" prop="protecter">
               <el-select v-model="yunguAreaProjectModel.protecter" placeholder="请选择">
@@ -60,91 +60,91 @@
               </el-select>
             </el-form-item>
             <el-form-item label="是否备案">
-              <el-radio v-model="yunguAreaProjectModel.isSave" :label="0">是</el-radio>
-              <el-radio v-model="yunguAreaProjectModel.isSave" :label="1">否</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectModel.isSave" :label="0">是</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectModel.isSave" :label="1">否</el-radio>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="项目属性一">
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="项目规模">
-              <el-input v-model="yunguAreaProjectDetailModel.projectCount " placeholder="项目规模"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.projectCount " placeholder="项目规模"></el-input>
             </el-form-item>
             <el-form-item label="周围环境">
-              <el-input v-model="yunguAreaProjectDetailModel.surrounding" placeholder="周围环境"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.surrounding" placeholder="周围环境"></el-input>
             </el-form-item>
             <el-form-item label="环境关键字">
-              <el-input v-model="yunguAreaProjectDetailModel.keyword" placeholder="环境关键字"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.keyword" placeholder="环境关键字"></el-input>
             </el-form-item>
             <el-form-item label="交通特征">
-              <el-input v-model="yunguAreaProjectDetailModel.trafficConditions" placeholder="交通特征"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.trafficConditions" placeholder="交通特征"></el-input>
             </el-form-item>
             <el-form-item label="地上停车位">
-              <el-input v-model="yunguAreaProjectDetailModel.upCount" placeholder="地上停车位"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.upCount" placeholder="地上停车位"></el-input>
             </el-form-item>
             <el-form-item label="共存媒体">
-              <el-input v-model="yunguAreaProjectDetailModel.otherMedia" placeholder="共存媒体"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.otherMedia" placeholder="共存媒体"></el-input>
             </el-form-item>
             <el-form-item label="禁忌行业">
-              <el-input v-model="yunguAreaProjectDetailModel.banIndustry" placeholder="禁忌行业"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.banIndustry" placeholder="禁忌行业"></el-input>
             </el-form-item>
             <el-form-item label="禁忌关键词">
-              <el-input v-model="yunguAreaProjectDetailModel.forbidKeyword" placeholder="禁忌关键词"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.forbidKeyword" placeholder="禁忌关键词"></el-input>
             </el-form-item>
             <el-form-item label="是否有偿宣传">
-              <el-radio v-model="yunguAreaProjectDetailModel.isvaluePublicity" :label="0">是</el-radio>
-              <el-radio v-model="yunguAreaProjectDetailModel.isvaluePublicity" :label="1">否</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isvaluePublicity" :label="0">是</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isvaluePublicity" :label="1">否</el-radio>
             </el-form-item>
             <el-form-item label="接受宣传形式">
-              <el-radio v-model="yunguAreaProjectDetailModel.publicityWay" :label="0">是</el-radio>
-              <el-radio v-model="yunguAreaProjectDetailModel.publicityWay" :label="1">否</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.publicityWay" :label="0">是</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.publicityWay" :label="1">否</el-radio>
             </el-form-item>
             <el-form-item label="受众人群">
-              <el-input v-model="yunguAreaProjectDetailModel.audiences" placeholder="受众人群"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.audiences" placeholder="受众人群"></el-input>
             </el-form-item>
             <el-form-item label="商圈">
-              <el-input v-model="yunguAreaProjectDetailModel.businessArea" placeholder="商圈"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.businessArea" placeholder="商圈"></el-input>
             </el-form-item>
             <el-form-item label="是否有委员会">
-              <el-radio v-model="yunguAreaProjectDetailModel.isownersCommittee" :label="0">是</el-radio>
-              <el-radio v-model="yunguAreaProjectDetailModel.isownersCommittee" :label="1">否</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isownersCommittee" :label="0">是</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isownersCommittee" :label="1">否</el-radio>
             </el-form-item>
             <el-form-item label="委会负责人手机">
-              <el-input v-model="yunguAreaProjectDetailModel.principalPhone" placeholder="业委会负责人手机"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.principalPhone" placeholder="业委会负责人手机"></el-input>
             </el-form-item>
             <el-form-item label="委会负责人电话">
-              <el-input
+              <el-input :readonly="true"
                 v-model="yunguAreaProjectDetailModel.principalTelephone"
                 placeholder="业委会负责人电话"
               ></el-input>
             </el-form-item>
             <el-form-item label="委会负责人">
-              <el-input v-model="yunguAreaProjectDetailModel.principals" placeholder="业委会负责人"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.principals" placeholder="业委会负责人"></el-input>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="项目属性二">
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="项目经办人">
-              <el-input v-model="yunguAreaProjectDetailModel.transactor" placeholder="项目经办人"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.transactor" placeholder="项目经办人"></el-input>
             </el-form-item>
             <el-form-item label="项目经办人手机">
-              <el-input v-model="yunguAreaProjectDetailModel.transactorPhone" placeholder="项目经办人手机"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.transactorPhone" placeholder="项目经办人手机"></el-input>
             </el-form-item>
             <el-form-item label="项目经办人电话">
-              <el-input
+              <el-input :readonly="true"
                 v-model="yunguAreaProjectDetailModel.transactorTelephone"
                 placeholder="项目经办人电话"
               ></el-input>
             </el-form-item>
             <el-form-item label="项目负责人姓名">
-              <el-input v-model="yunguAreaProjectDetailModel.projectman" placeholder="项目负责人姓名"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.projectman" placeholder="项目负责人姓名"></el-input>
             </el-form-item>
             <el-form-item label="项目负责人手机">
-              <el-input v-model="yunguAreaProjectDetailModel.projectmanPhone" placeholder="项目负责人手机"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.projectmanPhone" placeholder="项目负责人手机"></el-input>
             </el-form-item>
             <el-form-item label="项目负责人电话">
-              <el-input
+              <el-input :readonly="true"
                 v-model="yunguAreaProjectDetailModel.projectmanTelephone"
                 placeholder="项目负责人电话"
               ></el-input>
@@ -153,10 +153,10 @@
               <el-date-picker v-model="openTimeFir" type="date" placeholder="选择日期" id="openTimeFir"></el-date-picker>
             </el-form-item>
             <el-form-item label="最低层数">
-              <el-input v-model="yunguAreaProjectDetailModel.lowfloorCount" placeholder="最低层数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.lowfloorCount" placeholder="最低层数"></el-input>
             </el-form-item>
             <el-form-item label="最高层数">
-              <el-input v-model="yunguAreaProjectDetailModel.heightfloorCount" placeholder="最高层数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.heightfloorCount" placeholder="最高层数"></el-input>
             </el-form-item>
             <el-form-item label="社区入住时间">
               <el-date-picker
@@ -167,105 +167,105 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="物业费">
-              <el-input v-model="yunguAreaProjectDetailModel.propertyCost" placeholder="物业费（元/平米）"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.propertyCost" placeholder="物业费（元/平米）"></el-input>
             </el-form-item>
             <el-form-item label="现在均价">
-              <el-input v-model="yunguAreaProjectDetailModel.rentAvg" placeholder="现在均价（元/平米）"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.rentAvg" placeholder="现在均价（元/平米）"></el-input>
             </el-form-item>
             <el-form-item label="租金(最高)">
-              <el-input
+              <el-input :readonly="true"
                 v-model="yunguAreaProjectDetailModel.rentHight"
                 placeholder="租金(最高)(元/平米/天)"
               ></el-input>
             </el-form-item>
             <el-form-item label="总单元数">
-              <el-input v-model="yunguAreaProjectDetailModel.unitTotal" placeholder="总单元数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.unitTotal" placeholder="总单元数"></el-input>
             </el-form-item>
             <el-form-item label="平均每单元户数">
-              <el-input v-model="yunguAreaProjectDetailModel.householdsAvg" placeholder="平均每单元户数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.householdsAvg" placeholder="平均每单元户数"></el-input>
             </el-form-item>
             <el-form-item label="总户数">
-              <el-input v-model="yunguAreaProjectDetailModel.householdsTotal" placeholder="总户数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.householdsTotal" placeholder="总户数"></el-input>
             </el-form-item>
             <el-form-item label="入住总户数">
-              <el-input v-model="yunguAreaProjectDetailModel.occupancyTotal" placeholder="入住总户数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.occupancyTotal" placeholder="入住总户数"></el-input>
             </el-form-item>
             <el-form-item label="入住率">
-              <el-input v-model="yunguAreaProjectDetailModel.occupancyRate" placeholder="入住率"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.occupancyRate" placeholder="入住率"></el-input>
             </el-form-item>
             <el-form-item label="业主收入水平">
-              <el-input v-model="yunguAreaProjectDetailModel.ownerIncome" placeholder="业主收入水平"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.ownerIncome" placeholder="业主收入水平"></el-input>
             </el-form-item>
             <el-form-item label="覆盖电梯间数">
-              <el-input v-model="yunguAreaProjectDetailModel.coverCount" placeholder="覆盖电梯间数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.coverCount" placeholder="覆盖电梯间数"></el-input>
             </el-form-item>
             <el-form-item label="覆盖客梯数">
-              <el-input v-model="yunguAreaProjectDetailModel.coverPassengers" placeholder="覆盖客梯数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.coverPassengers" placeholder="覆盖客梯数"></el-input>
             </el-form-item>
             <el-form-item label="覆盖货梯数">
-              <el-input v-model="yunguAreaProjectDetailModel.coverGoods" placeholder="覆盖货梯数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.coverGoods" placeholder="覆盖货梯数"></el-input>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="项目属性三">
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="配套设施">
-              <el-input v-model="yunguAreaProjectDetailModel.matchFacility" placeholder="配套设施"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.matchFacility" placeholder="配套设施"></el-input>
             </el-form-item>
             <el-form-item label="是否可直投">
-              <el-radio v-model="yunguAreaProjectDetailModel.isStraight" :label="0">是</el-radio>
-              <el-radio v-model="yunguAreaProjectDetailModel.isStraight" :label="1">否</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isStraight" :label="0">是</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isStraight" :label="1">否</el-radio>
             </el-form-item>
             <el-form-item label="直投方式">
-              <el-input v-model="yunguAreaProjectDetailModel.straightMode" placeholder="直投方式"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.straightMode" placeholder="直投方式"></el-input>
             </el-form-item>
             <el-form-item label="宣传收费标准">
-              <el-input v-model="yunguAreaProjectDetailModel.standardCharge" placeholder="宣传收费标准"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.standardCharge" placeholder="宣传收费标准"></el-input>
             </el-form-item>
             <el-form-item label="有无电信机站">
-              <el-radio v-model="yunguAreaProjectDetailModel.isMachinestation" :label="0">是</el-radio>
-              <el-radio v-model="yunguAreaProjectDetailModel.isMachinestation" :label="1">否</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isMachinestation" :label="0">是</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isMachinestation" :label="1">否</el-radio>
             </el-form-item>
             <el-form-item label="电信机站名称">
-              <el-input
+              <el-input :readonly="true"
                 v-model="yunguAreaProjectDetailModel.machinestationName"
                 placeholder="电信机站名称"
               ></el-input>
             </el-form-item>
             <el-form-item label="项目数棟数">
-              <el-input v-model="yunguAreaProjectDetailModel.houseNumber" placeholder="项目数棟数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.houseNumber" placeholder="项目数棟数"></el-input>
             </el-form-item>
             <el-form-item label="楼盘荣誉描述">
-              <el-input v-model="yunguAreaProjectDetailModel.descript" placeholder="楼盘荣誉(亮点):描述"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.descript" placeholder="楼盘荣誉(亮点):描述"></el-input>
             </el-form-item>
             <el-form-item label="地下室层数">
-              <el-input v-model="yunguAreaProjectDetailModel.undergroundCount" placeholder="地下室层数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.undergroundCount" placeholder="地下室层数"></el-input>
             </el-form-item>
             <el-form-item label="等候厅数">
-              <el-input v-model="yunguAreaProjectDetailModel.waitCount" placeholder="等候厅数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.waitCount" placeholder="等候厅数"></el-input>
             </el-form-item>
             <el-form-item label="知名企业">
-              <el-input v-model="yunguAreaProjectDetailModel.wellCompany" placeholder="知名企业"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.wellCompany" placeholder="知名企业"></el-input>
             </el-form-item>
             <el-form-item label="所属商业区">
-              <el-input v-model="yunguAreaProjectDetailModel.downtown" placeholder="所属商业区"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.downtown" placeholder="所属商业区"></el-input>
             </el-form-item>
             <el-form-item label="特许关键字">
-              <el-input v-model="yunguAreaProjectDetailModel.specialKeyword" placeholder="特许关键字"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.specialKeyword" placeholder="特许关键字"></el-input>
             </el-form-item>
             <el-form-item label="特许业主">
-              <el-input v-model="yunguAreaProjectDetailModel.specialOwner" placeholder="特许业主"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.specialOwner" placeholder="特许业主"></el-input>
             </el-form-item>
             <el-form-item label="是否可以楼秀">
-              <el-radio v-model="yunguAreaProjectDetailModel.isShow" :label="0">是</el-radio>
-              <el-radio v-model="yunguAreaProjectDetailModel.isShow" :label="1">否</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isShow" :label="0">是</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.isShow" :label="1">否</el-radio>
             </el-form-item>
             <el-form-item label="楼秀费用">
-              <el-input v-model="yunguAreaProjectDetailModel.showCost" placeholder="楼秀费用(元/天)"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaProjectDetailModel.showCost" placeholder="楼秀费用(元/天)"></el-input>
             </el-form-item>
             <el-form-item label="回票情况">
-              <el-radio v-model="yunguAreaProjectDetailModel.receiptStatus" :label="0">有</el-radio>
-              <el-radio v-model="yunguAreaProjectDetailModel.receiptStatus" :label="1">无</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.receiptStatus" :label="0">有</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaProjectDetailModel.receiptStatus" :label="1">无</el-radio>
             </el-form-item>
             <div class="pay">
               <h3
@@ -280,10 +280,10 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="账号">
-                <el-input v-model="yunguPayMethodModelList.account" placeholder="账号"></el-input>
+                <el-input :readonly="true" v-model="yunguPayMethodModelList.account" placeholder="账号"></el-input>
               </el-form-item>
               <el-form-item label="银行名称">
-                <el-input v-model="yunguPayMethodModelList.bankName" placeholder="银行名称"></el-input>
+                <el-input :readonly="true" v-model="yunguPayMethodModelList.bankName" placeholder="银行名称"></el-input>
               </el-form-item>
             </div>
             <div class="addAdress">
@@ -329,24 +329,24 @@
               </el-select>
             </el-form-item>
             <el-form-item label="安装名称">
-              <el-input v-model="yunguAreaPostionModelList.installName" placeholder="联系人名称"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaPostionModelList.installName" placeholder="联系人名称"></el-input>
             </el-form-item>
             <el-form-item label="具体安装位置">
-              <el-input v-model="yunguAreaPostionModelList.installPosition" placeholder="联系人名称"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaPostionModelList.installPosition" placeholder="联系人名称"></el-input>
             </el-form-item>
             <el-form-item label="是否有机身贴">
-              <el-radio v-model="yunguAreaPostionModelList.isBody" :label="0">是</el-radio>
-              <el-radio v-model="yunguAreaPostionModelList.isBody" :label="1">否</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaPostionModelList.isBody" :label="0">是</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaPostionModelList.isBody" :label="1">否</el-radio>
             </el-form-item>
             <el-form-item label="是否赠品">
-              <el-radio v-model="yunguAreaPostionModelList.isGive" :label="0">是</el-radio>
-              <el-radio v-model="yunguAreaPostionModelList.isGive" :label="1">否</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaPostionModelList.isGive" :label="0">是</el-radio>
+              <el-radio :disabled="true" v-model="yunguAreaPostionModelList.isGive" :label="1">否</el-radio>
             </el-form-item>
             <el-form-item label="媒体名称" prop="mediaName">
-              <el-input v-model="yunguAreaPostionModelList.mediaName" placeholder="媒体名称"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaPostionModelList.mediaName" placeholder="媒体名称"></el-input>
             </el-form-item>
             <el-form-item label="点位名称" prop="pointName">
-              <el-input v-model="yunguAreaPostionModelList.pointName" placeholder="点位名称"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaPostionModelList.pointName" placeholder="点位名称"></el-input>
             </el-form-item>
             <el-form-item label="点位图片" prop="positionPicture">
               <uploadPicture></uploadPicture>
@@ -362,7 +362,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="设备规格" prop="size">
-              <el-input v-model="yunguAreaPostionModelList.size" placeholder="设备规格"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaPostionModelList.size" placeholder="设备规格"></el-input>
             </el-form-item>
             <div class="addAdress">
               <el-button type="primary" class="addAdr" plain @click="addTable">增加场地点位</el-button>

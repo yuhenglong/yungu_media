@@ -13,6 +13,8 @@ import contractList from '@/components/dashboard/view/contractList'
 import areaList from '@/components/dashboard/view/areaList'
 import placeAuditList from '@/components/dashboard/view/placeAuditList'
 import editPlaceAudit from '@/components/dashboard/view/editPlaceAudit'
+import equipList from '@/components/dashboard/view/equipList'
+import examinePage from '@/components/dashboard/view/examinePage'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -93,6 +95,14 @@ const router = new Router({
                 {
                     path: '/editPlaceAudit',
                     component: editPlaceAudit
+                },
+                {
+                    path: '/equipList',
+                    component: equipList
+                },
+                {
+                    path: '/examinePage',
+                    component: examinePage
                 }
             ]
         },

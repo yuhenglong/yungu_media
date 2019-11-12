@@ -57,7 +57,7 @@
       </el-form-item>
     </el-form>
     <!-- 表格 -->
-    <el-table :data="areaList" border style="width: 100%">
+    <el-table :data="areaTableList" border style="width: 100%">
       <el-table-column fixed prop="identification_code" label="项目编号" width="150"></el-table-column>
       <el-table-column prop="project_name" label="项目名称" width="120"></el-table-column>
       <el-table-column prop="project_address" label="城市" width="120"></el-table-column>
@@ -69,7 +69,7 @@
       <el-table-column prop="verify_status" label="业务状态" width="120"></el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="examine(scope.row)" type="text" size="small">查看</el-button>
           <el-button @click="editPage(scope.$index,scope.row)" type="text" size="small">编辑</el-button>
           <el-button type="text" size="small">审核记录</el-button>
         </template>
@@ -106,19 +106,19 @@ export default {
         pageSize: 10
       },
       total: 0,
-      areaList: [],
+      areaTableList: [],
       title: "编辑场地项目",
       dialogEditVisible: false,
-      formRowList:{
-        identification_code:'',
-        project_name:'',
-        project_address:'',
-        protecter:'',
-        dept:'',
-        developer:'',
-        project_type:'',
-        activity_status:'',
-        verify_status:''
+      formRowList: {
+        identification_code: "",
+        project_name: "",
+        project_address: "",
+        protecter: "",
+        dept: "",
+        developer: "",
+        project_type: "",
+        activity_status: "",
+        verify_status: ""
       }
     };
   },
@@ -126,20 +126,24 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
+      this.getTableData();
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.pageInfo.pageNum = val;
+      this.getTableData();
     },
     onSubmit() {
       console.log("submit!");
     },
-    handleClick(row) {
+    examine(row) {
+      this.$router.push('/examinePage')
       console.log(row);
     },
     editPage(index, row) {
-      localStorage.setItem('aid',row.aid);
-      this.$router.push('/editPlaceAudit');
+      localStorage.setItem("aid", row.aid);
+      localStorage.setItem("identification_code", row.identification_code);
+      this.$router.push("/editPlaceAudit");
     },
     getTableData() {
       this.$http
@@ -147,7 +151,7 @@ export default {
         .then(res => {
           console.log("数据", res);
           if (res.data.meta.code == 200) {
-            this.areaList = res.data.data.obj.data;
+            this.areaTableList = res.data.data.obj.data;
             this.total = res.data.data.obj.count;
           }
         });

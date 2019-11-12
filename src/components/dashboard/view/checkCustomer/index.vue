@@ -329,7 +329,7 @@ export default {
     },
     audit(index, row) {
       this.dialogAuditVisible = true;
-      this.checkDia.identificationCode = row.identificationCode;
+      this.checkDia.identificationCode = row.customer_code;
     },
     deilComfirm() {
       this.$http
@@ -342,6 +342,7 @@ export default {
               message: `处理成功！`
             });
             this.dialogAuditVisible = false;
+            this.getTableData();
           }else{
             this.$message({
               type: "error",

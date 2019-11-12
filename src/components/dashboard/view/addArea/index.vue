@@ -420,14 +420,15 @@ export default {
         company: "",
         installName: "",
         installPosition: "",
-        isBody: "",
-        isGive: "",
+        isBody: "0",
+        isGive: "0",
         pointName: "",
         positionPicture: "",
         showMode: "",
         size: ""
       },
       yunguAreaProjectDetailModel: {
+        publicityWay: "0",
         projectCount: "",
         surrounding: "",
         keyword: "",
@@ -436,10 +437,10 @@ export default {
         otherMedia: "",
         banIndustry: "",
         forbidKeyword: "",
-        isvaluePublicity: "",
+        isvaluePublicity: "0",
         audiences: "",
         businessArea: "",
-        isownersCommittee: "",
+        isownersCommittee: "0",
         principalPhone: "",
         principalTelephone: "",
         principals: "",
@@ -466,10 +467,10 @@ export default {
         coverCount: "",
         coverPassengers: "",
         coverGoods: "",
-        isStraight: "",
+        isStraight: "0",
         straightMode: "",
         standardCharge: "",
-        isMachinestation: "",
+        isMachinestation: "0",
         machinestationName: "",
         houseNumber: "",
         descript: "",
@@ -479,9 +480,9 @@ export default {
         downtown: "",
         specialKeyword: "",
         specialOwner: "",
-        isShow: "",
+        isShow: "0",
         showCost: "",
-        receiptStatus: ""
+        receiptStatus: "0"
       },
       yunguAreaProjectModel: {
         projectArea: "",
@@ -493,7 +494,7 @@ export default {
         dept: "",
         projectType: "",
         mediaName: "",
-        isSave: ""
+        isSave: "0"
       },
       yunguPayMethodModelList_arr: [],
       yunguPayMethodModelList: {
@@ -579,6 +580,13 @@ export default {
           this.$http
             .post("/yunguAreaProject/insertYunguAreaProject", obj)
             .then(res => {
+              this.$message({
+                type: "success",
+                message: "新增场地成功，即将跳转列表页。"
+              });
+              setTimeout(() => {
+                this.$router.push("/areaList");
+              }, 3000);
               console.log("这是上传", res);
             });
         } else {
@@ -607,7 +615,6 @@ export default {
         .then(res => {
           if (res.data.meta.code == 200) {
             this.protecterList = res.data.data.obj.data;
-            console.log("维护列表", this.protecterList);
           } else {
             console.log("选项列表获取错误");
           }
@@ -644,7 +651,7 @@ export default {
     text-align: center;
   }
   .el-form-item {
-    width: 49%;
+    width: 50%;
   }
   .el-input,
   .el-select {
@@ -665,12 +672,18 @@ export default {
       margin: 10px 0;
     }
   }
+  .el-form--inline .el-form-item {
+    margin-right: 0;
+  }
 }
 </style>
 <style lang="scss">
-.areaManage {
+.addArea {
   .el-form--inline .el-form-item__label {
     width: 120px;
+  }
+  .linkage {
+    width: 612px !important;
   }
 }
 </style>

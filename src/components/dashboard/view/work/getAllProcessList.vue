@@ -70,6 +70,7 @@ export default {
      getAllProcessList(){
         this.$http.get("/activity/getAllProcessList").then(res => {
             if (res.data.meta.code == 200) {
+                console.log('返回数据',res);
                 this.allProcessList = res.data.data.data;
             }
         });
@@ -85,7 +86,6 @@ export default {
         this.newCreateIndex = index;
         this.newCreate = false;
     }
- 
   },
   mounted() {
       this.getVariousProcessCount();
