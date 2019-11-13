@@ -71,7 +71,7 @@
         <template slot-scope="scope">
           <el-button @click="examine(scope.row)" type="text" size="small">查看</el-button>
           <el-button @click="editPage(scope.$index,scope.row)" type="text" size="small">编辑</el-button>
-          <el-button type="text" size="small">审核记录</el-button>
+          <el-button type="text" size="small" @click="auditLogging(scope.$index,scope.row)">审核记录</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -86,10 +86,28 @@
         :total="total"
       ></el-pagination>
     </div>
+    <!-- 查看审核记录 -->
+    <el-dialog
+      :title="titleTwo"
+      :visible.sync="dialogCheckVisible"
+      width="1000px"
+      center
+      :append-to-body="true"
+    >
+      <el-table :data="formCheckList" border>
+        <el-table-column property="identificationCode" label="序号"></el-table-column>
+        <el-table-column property="verifyUserName" label="审核用户"></el-table-column>
+        <el-table-column property="verifyResult" label="审核结果"></el-table-column>
+        <el-table-column property="type" label="审核类型"></el-table-column>
+        <el-table-column property="refuseReason" label="拒绝原因"></el-table-column>
+        <el-table-column property="verifyTime" label="添加时间"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import qs from 'qs';
 export default {
   name: "areaList",
   components: {},
@@ -100,6 +118,14 @@ export default {
         region: "",
         lastDate: ""
       },
+      formCheckList:{
+        identificationCode:'',
+        verifyUserName:'',
+        verifyResult:'',
+        type:'',
+        refuseReason:'',
+        verifyTime:''
+      },
       labelPosition: "right",
       pageInfo: {
         pageNum: 1,
@@ -108,7 +134,9 @@ export default {
       total: 0,
       areaTableList: [],
       title: "编辑场地项目",
+      titleTwo: "场地项目审核列表",
       dialogEditVisible: false,
+      dialogCheckVisible: false,
       formRowList: {
         identification_code: "",
         project_name: "",
@@ -136,8 +164,17 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
+    auditLogging(index,row) {
+      this.$http.post("/yunguVerifyNote/getVerifyNoteListByCode",qs.stringify({ code: row.identification_code })).then(res =>{
+         if (res.data.meta.code == 200) {
+           this.dialogCheckVisible = true;
+            this.formCheckList = res.data.data.obj;
+            console.log(this.formCheckList);
+          }
+      })
+    },
     examine(row) {
-      this.$router.push('/examinePage')
+      this.$router.push("/examinePage");
       console.log(row);
     },
     editPage(index, row) {

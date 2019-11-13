@@ -25,7 +25,7 @@
               <el-input :readonly="true" v-model="yunguAreaProjectModel.developer" placeholder="开发人员"></el-input>
             </el-form-item>
             <el-form-item label="维护人员" prop="protecter">
-              <el-select v-model="yunguAreaProjectModel.protecter" placeholder="请选择">
+              <el-select disabled v-model="yunguAreaProjectModel.protecter" placeholder="请选择">
                 <el-option
                   v-for="(item,index) in protecterList"
                   :key="item.index"
@@ -35,7 +35,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="所属部门" prop="dept">
-              <el-select v-model="yunguAreaProjectModel.dept" placeholder="所属部门">
+              <el-select disabled v-model="yunguAreaProjectModel.dept" placeholder="所属部门">
                 <el-option
                   v-for="item in manageCompanyTwo"
                   :key="item.name"
@@ -45,7 +45,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="一级属性">
-              <el-select v-model="yunguAreaProjectModel.projectType" placeholder="一级属性">
+              <el-select disabled v-model="yunguAreaProjectModel.projectType" placeholder="一级属性">
                 <el-option label="写字楼" value="0"></el-option>
                 <el-option label="停车场" value="1"></el-option>
               </el-select>
@@ -54,7 +54,7 @@
               <linkage @childFn="proectAreaChild"></linkage>
             </el-form-item>
             <el-form-item label="套餐赠送">
-              <el-select v-model="yunguAreaProjectModel.setMeal" placeholder="套餐赠送">
+              <el-select disabled v-model="yunguAreaProjectModel.setMeal" placeholder="套餐赠送">
                 <el-option label="套餐一" value="0"></el-option>
                 <el-option label="套餐二" value="1"></el-option>
               </el-select>
@@ -272,7 +272,7 @@
                 style="padding-left:100px;margin-bottom:20px;font-size:22px;line-height:22px;"
               >支付管理：</h3>
               <el-form-item label="支付方式">
-                <el-select v-model="yunguPayMethodModelList.payName" placeholder="名称：" id="payText">
+                <el-select disabled v-model="yunguPayMethodModelList.payName" placeholder="名称：" id="payText">
                   <el-option label="银行卡" value="0"></el-option>
                   <el-option label="支付宝" value="1"></el-option>
                   <el-option label="微信" value="2"></el-option>
@@ -321,7 +321,7 @@
         <el-tab-pane label="点位信息">
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="管理公司">
-              <el-select v-model="yunguAreaPostionModelList.company" placeholder="管理公司">
+              <el-select disabled v-model="yunguAreaPostionModelList.company" placeholder="管理公司">
                 <el-option label="广州海云投资信息咨询有限公司" value="0"></el-option>
                 <el-option label="停车场" value="1"></el-option>
                 <!-- <el-option label="停车场weff" value="11222"></el-option> -->
@@ -352,7 +352,7 @@
               <uploadPicture></uploadPicture>
             </el-form-item>
             <el-form-item label="呈现方式" prop="showMode">
-              <el-select v-model="yunguAreaPostionModelList.showMode" placeholder="请选择">
+              <el-select disabled v-model="yunguAreaPostionModelList.showMode" placeholder="请选择">
                 <el-option
                   v-for="item in showModeList"
                   :key="item.value"
@@ -377,8 +377,7 @@
       </el-tabs>
     </div>
     <div class="btn">
-      <el-button type="primary" size="medium" @click="commit()">提交修改</el-button>
-      <el-button @click="waiveCommit()" type="info">放弃修改</el-button>
+      <el-button type="primary" size="medium" @click="goBack()">返回列表页</el-button>
     </div>
   </div>
 </template>
@@ -523,6 +522,9 @@ export default {
   methods: {
     delTable(index) {
       this.yunguAreaProjectModelListTwo.splice(index, 1);
+    },
+    goBack(){
+      this.$router.go(-1);
     },
     addPayTable() {
       this.yunguPayMethodModelList.payText = document.getElementById(

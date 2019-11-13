@@ -37,7 +37,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="所属区域">
-          <linkage></linkage>
+        <linkage></linkage>
       </el-form-item>
       <el-form-item label="项目名称">
         <el-input v-model="formInline.user" placeholder="项目名称"></el-input>
@@ -79,8 +79,8 @@
       <el-table-column prop="verify_status" label="业务状态" width="120"></el-table-column>
       <el-table-column fixed="right" label="操作" width>
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">审核记录</el-button>
+          <el-button @click="examine(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="auditLogging(scope.$index,scope.row)" type="text" size="small">审核记录</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -95,18 +95,46 @@
         :total="total"
       ></el-pagination>
     </div>
+    <!-- 查看审核记录 -->
+    <el-dialog
+      :title="titleTwo"
+      :visible.sync="dialogCheckVisible"
+      width="1000px"
+      center
+      :append-to-body="true"
+    >
+      <el-table :data="formCheckList" border>
+        <el-table-column property="identificationCode" label="序号"></el-table-column>
+        <el-table-column property="verifyUserName" label="审核用户"></el-table-column>
+        <el-table-column property="verifyResult" label="审核结果"></el-table-column>
+        <el-table-column property="type" label="审核类型"></el-table-column>
+        <el-table-column property="refuseReason" label="拒绝原因"></el-table-column>
+        <el-table-column property="verifyTime" label="添加时间"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import linkage from '@/components/dashboard/view/linkage';
+import qs from 'qs';
+import linkage from "@/components/dashboard/view/linkage";
 export default {
   name: "placeAuditList",
   components: {
-      linkage
+    linkage
   },
   data() {
     return {
+      titleTwo: "场地项目审核列表",
+      dialogCheckVisible: false,
+      formCheckList: {
+        identificationCode: "",
+        verifyUserName: "",
+        verifyResult: "",
+        type: "",
+        refuseReason: "",
+        verifyTime: ""
+      },
       formInline: {
         user: "",
         region: "",
@@ -126,6 +154,10 @@ export default {
       this.pageInfo.pageSize = val;
       this.getTableData();
     },
+    examine(row) {
+      this.$router.push("/examinePage");
+      console.log(row);
+    },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.pageInfo.pageNum = val;
@@ -134,12 +166,29 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
+    auditLogging(index, row) {
+      this.$http
+        .post(
+          "/yunguVerifyNote/getVerifyNoteListByCode",
+          qs.stringify({ code: row.identification_code })
+        )
+        .then(res => {
+          if (res.data.meta.code == 200) {
+            this.dialogCheckVisible = true;
+            this.formCheckList = res.data.data.obj;
+            console.log(this.formCheckList);
+          }
+        });
+    },
     handleClick(row) {
       console.log(row);
     },
     getTableData() {
       this.$http
-        .post("/yunguAreaProject/getWaitVerifyAreaProjectPageList", this.pageInfo)
+        .post(
+          "/yunguAreaProject/getWaitVerifyAreaProjectPageList",
+          this.pageInfo
+        )
         .then(res => {
           console.log("数据", res);
           if (res.data.meta.code == 200) {
@@ -161,10 +210,10 @@ export default {
   padding: 30px 2.5%;
   height: auto;
   overflow: auto;
-  h2{
-      font-size:26px;
-      line-height:26px;
-      margin:10px 0;
+  h2 {
+    font-size: 26px;
+    line-height: 26px;
+    margin: 10px 0;
   }
   .pagi {
     width: 100%;

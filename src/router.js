@@ -15,6 +15,9 @@ import placeAuditList from '@/components/dashboard/view/placeAuditList'
 import editPlaceAudit from '@/components/dashboard/view/editPlaceAudit'
 import equipList from '@/components/dashboard/view/equipList'
 import examinePage from '@/components/dashboard/view/examinePage'
+import checkEquipTable from '@/components/dashboard/view/checkEquipTable'
+import editEquipTable from '@/components/dashboard/view/editEquipTable'
+import addNewEquip from '@/components/dashboard/view/addNewEquip'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -103,6 +106,20 @@ const router = new Router({
                 {
                     path: '/examinePage',
                     component: examinePage
+                },
+                {
+                    path: '/checkEquipTable',
+                    name: 'checkEquipTable',
+                    component: checkEquipTable
+                },
+                {
+                    path: '/editEquipTable',
+                    name: 'editEquipTable',
+                    component: editEquipTable
+                },
+                {
+                    path: '/addNewEquip',
+                    component: addNewEquip
                 }
             ]
         },

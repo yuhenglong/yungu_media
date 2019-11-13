@@ -380,6 +380,11 @@
         size="medium"
         @click="commit('yunguAreaProjectModel')"
       >提&nbsp;&nbsp;&nbsp;交</el-button>
+      <el-button
+        type="success"
+        size="medium"
+        @click="commit('yunguAreaProjectModel',true)"
+      >保&nbsp;&nbsp;&nbsp;存</el-button>
     </div>
   </div>
 </template>
@@ -566,11 +571,14 @@ export default {
       this.yunguAreaProjectDetailModel.checkinTime = detailTimeSec;
     },
 
-    commit(formName) {
+    commit(formName,isSave) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.getDate();
           const obj = {};
+          if(isSave==true){
+            obj.proceeKey = 'areaProject';
+          }
           obj.yunguAreaPostionModelList = [];
           obj.yunguPayMethodModelList = [];
           obj.yunguAreaPostionModelList = this.yunguAreaProjectModelListTwo;
