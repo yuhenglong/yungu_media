@@ -56,16 +56,48 @@
     </el-form>
     <!-- 表格 -->
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="date" label="日期" width="150"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-      <el-table-column prop="province" label="省份" width="120"></el-table-column>
-      <el-table-column prop="city" label="市区" width="120"></el-table-column>
-      <el-table-column prop="address" label="地址" width="300"></el-table-column>
-      <el-table-column prop="zip" label="邮编" width="120"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="100">
+      <el-table-column prop="contract_code" label="合同编号"></el-table-column>
+      <el-table-column prop="project_name" label="项目名称" width="120"></el-table-column>
+      <el-table-column prop="project_address" label="项目所在地区"></el-table-column>
+      <el-table-column prop="project_type" label="项目属性"></el-table-column>
+      <el-table-column prop="contract_type" label="合同类型" width="120"></el-table-column>
+      <el-table-column prop="dept" label="部门" width="120"></el-table-column>
+      <el-table-column prop="developer" label="开发人员" width="120"></el-table-column>
+      <el-table-column prop="protecter" label="维护人员" width="120"></el-table-column>
+      <el-table-column prop="contract_endtime" label="到期时间"></el-table-column>
+      <el-table-column prop="media_number" label="媒体签约间数" width="120"></el-table-column>
+      <el-table-column prop="activity_status" label="项目状态" width="120"></el-table-column>
+      <el-table-column label="业务状态">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <span v-if="scope.row.verify_status == null">待录入合同信息</span>
+          <span v-if="scope.row.verify_status == 0">未通过</span>
+          <span v-if="scope.row.verify_status == 1">已通过</span>
+          <span v-if="scope.row.verify_status == 2">审核中</span>
+          <span v-if="scope.row.verify_status == 3">编辑状态</span>
+          <span v-if="scope.row.verify_status == 4">付款计划审核中</span>
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" label="操作">
+        <template slot-scope="scope">
+          <el-button @click="examine(scope.row)" type="text" size="small">查看项目信息</el-button>
+          <el-button
+            @click="lookConInfo(scope.row)"
+            v-if="scope.row.verify_status !== null"
+            type="text"
+            size="small"
+          >查看合同信息</el-button>
+          <el-button
+            type="text"
+            size="small"
+            v-if="scope.row.contract_code == null || scope.row.contract_code == ''"
+          >录入</el-button>
+          <el-button type="text" size="small" v-else>编辑</el-button>
+          <el-button
+            @click="handleClick(scope.row)"
+            type="text"
+            size="small"
+            v-if="!scope.row.verify_status == null"
+          >查看审核记录</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -94,45 +126,12 @@ export default {
         region: "",
         lastDate: ""
       },
-      total:0,
+      total: 0,
       pageInfo: {
         pageNum: 1,
         pageSize: 10
       },
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333
-        }
-      ]
+      tableData: []
     };
   },
   methods: {
@@ -147,16 +146,23 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
-    handleClick(row) {
+    examine(row) {
       console.log(row);
+      localStorage.setItem("aid", row.aid);
+      this.$router.push("/examinePage");
+    },
+    lookConInfo(row) {
+      console.log(row);
+      localStorage.setItem('contract_id',row.contract_id);
+      
     },
     getTableData() {
       this.$http
         .post("/yunguareacontract/getAreaContractPageList", this.pageInfo)
         .then(res => {
-          console.log("数据", res);
+          console.log("合同数据", res);
           if (res.data.meta.code == 200) {
-            this.customerTable = res.data.data.obj.data;
+            this.tableData = res.data.data.obj.data;
             this.total = res.data.data.obj.count;
           }
         });

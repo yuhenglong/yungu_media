@@ -25,7 +25,7 @@
               <el-input v-model="yunguAreaProjectModel.developer" placeholder="开发人员"></el-input>
             </el-form-item>
             <el-form-item label="维护人员" prop="protecter">
-              <el-select v-model="yunguAreaProjectModel.protecter" placeholder="请选择">
+              <el-select v-model="yunguAreaProjectModel.protecter" placeholder="请选择" @change="chooseDept">
                 <el-option
                   v-for="(item,index) in protecterList"
                   :key="item.index"
@@ -37,7 +37,7 @@
             <el-form-item label="所属部门" prop="dept">
               <el-select v-model="yunguAreaProjectModel.dept" placeholder="所属部门">
                 <el-option
-                  v-for="item in manageCompanyTwo"
+                  v-for="item in manageCompany"
                   :key="item.name"
                   :label="item.name"
                   :value="item.did"
@@ -526,6 +526,9 @@ export default {
     };
   },
   methods: {
+    chooseDept(){
+      this.yunguAreaProjectModel.dept = this.yunguAreaProjectModel.protecter;
+    },
     delTable(index) {
       this.yunguAreaProjectModelListTwo.splice(index, 1);
     },
@@ -610,6 +613,7 @@ export default {
     getDepartOptions() {
       this.$http.get("/sysDept/getDeptListByStatus?status=1").then(res => {
         if (res.data.meta.code == 200) {
+          console.log('所属部门',res);
           this.manageCompany = res.data.data.obj;
         } else {
           console.log("选项列表获取错误");
@@ -622,20 +626,12 @@ export default {
         .post("/sysUser/getSysUserPageList", { roleStatus: 1, status: 1 })
         .then(res => {
           if (res.data.meta.code == 200) {
+            console.log('维护人员',res);
             this.protecterList = res.data.data.obj.data;
           } else {
             console.log("选项列表获取错误");
           }
         });
-    }
-  },
-  computed: {
-    manageCompanyTwo() {
-      const that = this;
-      const num = that.yunguAreaProjectModel.protecter;
-      return that.manageCompany.filter(item => {
-        return item.did == num;
-      });
     }
   },
   created() {

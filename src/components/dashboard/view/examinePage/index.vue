@@ -1,6 +1,6 @@
 <template>
   <div class="editPlaceAudit">
-    <h2>场地项目编辑</h2>
+    <h2>场地项目</h2>
     <div class="tabs">
       <el-tabs type="border-card">
         <el-tab-pane label="基本信息">

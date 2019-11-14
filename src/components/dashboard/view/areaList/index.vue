@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import qs from 'qs';
+import qs from "qs";
 export default {
   name: "areaList",
   components: {},
@@ -118,13 +118,13 @@ export default {
         region: "",
         lastDate: ""
       },
-      formCheckList:{
-        identificationCode:'',
-        verifyUserName:'',
-        verifyResult:'',
-        type:'',
-        refuseReason:'',
-        verifyTime:''
+      formCheckList: {
+        identificationCode: "",
+        verifyUserName: "",
+        verifyResult: "",
+        type: "",
+        refuseReason: "",
+        verifyTime: ""
       },
       labelPosition: "right",
       pageInfo: {
@@ -164,16 +164,22 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
-    auditLogging(index,row) {
-      this.$http.post("/yunguVerifyNote/getVerifyNoteListByCode",qs.stringify({ code: row.identification_code })).then(res =>{
-         if (res.data.meta.code == 200) {
-           this.dialogCheckVisible = true;
+    auditLogging(index, row) {
+      this.$http
+        .post(
+          "/yunguVerifyNote/getVerifyNoteListByCode",
+          qs.stringify({ code: row.identification_code })
+        )
+        .then(res => {
+          if (res.data.meta.code == 200) {
+            this.dialogCheckVisible = true;
             this.formCheckList = res.data.data.obj;
             console.log(this.formCheckList);
           }
-      })
+        });
     },
     examine(row) {
+      localStorage.setItem("aid", row.aid);
       this.$router.push("/examinePage");
       console.log(row);
     },

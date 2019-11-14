@@ -18,6 +18,7 @@ import examinePage from '@/components/dashboard/view/examinePage'
 import checkEquipTable from '@/components/dashboard/view/checkEquipTable'
 import editEquipTable from '@/components/dashboard/view/editEquipTable'
 import addNewEquip from '@/components/dashboard/view/addNewEquip'
+import addContract from '@/components/dashboard/view/addContract'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -120,6 +121,10 @@ const router = new Router({
                 {
                     path: '/addNewEquip',
                     component: addNewEquip
+                },
+                {
+                    path: '/addContract',
+                    component: addContract
                 }
             ]
         },
