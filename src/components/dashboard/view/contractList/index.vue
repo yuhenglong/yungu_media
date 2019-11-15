@@ -87,6 +87,7 @@
             size="small"
           >查看合同信息</el-button>
           <el-button
+            @click="routerNext(scope.row)"
             type="text"
             size="small"
             v-if="scope.row.contract_code == null || scope.row.contract_code == ''"
@@ -135,6 +136,10 @@ export default {
     };
   },
   methods: {
+    routerNext(row){
+      console.log('这是每行的信息',row);
+      this.$router.push('/addContract');
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
