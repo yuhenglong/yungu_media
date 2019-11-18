@@ -8,7 +8,6 @@
             :inline="true"
             label-width="170px"
             class="demo-form-inline"
-            :rules="baseInfoOne"
             :model="yunguAreaContractModel"
             ref="yunguAreaContractModel"
           >
@@ -46,10 +45,11 @@
             </el-form-item>
             <el-form-item label="合同到期时间">
               <el-date-picker
-                v-model="contractEndtime"
+                v-model="yunguAreaContractModel.contractEndtime"
                 type="date"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="选择日期"
-                id="openTimeFir"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="合同属性">
@@ -122,7 +122,8 @@
                 v-model="yunguAreaContractdetailModel.exeStarttime"
                 type="date"
                 placeholder="选择日期"
-                id="openTimeFir"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="实际执行结束日期">
@@ -130,7 +131,8 @@
                 v-model="yunguAreaContractdetailModel.exeEndtime"
                 type="date"
                 placeholder="选择日期"
-                id="openTimeFir"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="合同期限(月)">
@@ -141,7 +143,8 @@
                 v-model="yunguAreaContractdetailModel.rentfreeStarttime"
                 type="date"
                 placeholder="选择日期"
-                id="openTimeFir"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="免租期结束日期">
@@ -149,16 +152,12 @@
                 v-model="yunguAreaContractdetailModel.rentfreeEndtime"
                 type="date"
                 placeholder="选择日期"
-                id="openTimeFir"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="免租期(月)">
-              <el-date-picker
-                v-model="yunguAreaContractdetailModel.rentfree"
-                type="date"
-                placeholder="选择日期"
-                id="openTimeFir"
-              ></el-date-picker>
+              <el-input v-model="yunguAreaContractdetailModel.rentfree" placeholder="免租期(月)"></el-input>
             </el-form-item>
             <el-form-item label="签约电梯数">
               <el-input v-model="yunguAreaContractdetailModel.signNumber" placeholder="签约电梯数"></el-input>
@@ -219,7 +218,7 @@
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="支付主体">
               <el-select
-                v-model="yunguContractPayModelChild.payMode"
+                v-model="yunguContractPayModelChild.paySubject"
                 placeholder="选择"
                 @change="changeId()"
               >
@@ -229,7 +228,11 @@
               </el-select>
             </el-form-item>
             <el-form-item label="支付主体编号">
-              <el-input v-model="yunguContractPayModelChild.customerCode" placeholder="编号" :disabled="true"></el-input>
+              <el-input
+                v-model="yunguContractPayModelChild.customerCode"
+                placeholder="编号"
+                :disabled="true"
+              ></el-input>
             </el-form-item>
             <el-form-item label="费用类别">
               <el-select v-model="yunguContractPayModelChild.costType" placeholder="选择">
@@ -238,7 +241,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="备注">
-              <el-input v-model="yunguContractPayModelChild" placeholder="备注信息"></el-input>
+              <el-input v-model="yunguContractPayModelChild.remark" placeholder="备注信息"></el-input>
             </el-form-item>
             <el-form-item label="支付方式">
               <el-select v-model="yunguContractPayModelChild.payMode" placeholder="选择">
@@ -268,7 +271,8 @@
                 v-model="yunguContractPayModelChild.payStarttime"
                 type="date"
                 placeholder="选择日期"
-                id="openTimeFir"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="付费结束时间">
@@ -276,7 +280,8 @@
                 v-model="yunguContractPayModelChild.payEndtime"
                 type="date"
                 placeholder="选择日期"
-                id="openTimeFir"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="计划周期">
@@ -294,53 +299,53 @@
             <el-form-item label="账号">
               <el-input v-model="yunguContractPayModelChild.bankAccount" placeholder="账号"></el-input>
             </el-form-item>
-            <el-form-item label="">
-              <el-button @click="commitTable">添加付款计划</el-button>
-            </el-form-item>
+            <div style="text-align:center;">
+              <el-button @click="commitTable" type="success">添加付款计划</el-button>
+            </div>
             <el-table :data="yunguContractPayModel" style="width: 100%;margin-top:20px;" border>
               <el-table-column label="支付主体" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.payText }}</span>
+                  <span>{{ scope.row.payMode }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="费用类别" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.account }}</span>
+                  <span>{{ scope.row.costType }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="支付形式" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
+                  <span>{{ scope.row.costType }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="支付方式" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
+                  <span>{{ scope.row.costType }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="付费开始时间" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
+                  <span>{{ scope.row.payStarttime }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="付费结束时间" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
+                  <span>{{ scope.row.payEndtime }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="是否有发票" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
+                  <span>{{ scope.row.isInvoice ==0?'是':'否' }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="应付金额" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
+                  <span>{{ scope.row.payTotal }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="已付金额" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
+                  <span>{{ scope.row.payTotal }}</span>
                 </template>
               </el-table-column>
 
@@ -351,13 +356,13 @@
               </el-table-column>
               <el-table-column label="账号" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
+                  <span>{{ scope.row.bankAccount }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="操作">
+              <el-table-column label="操作" width="300px;">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="payEdit(scope.$index, scope.row)">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="PayDel(scope.$index, scope.row)">删除</el-button>
+                  <el-button @click="payEdit(scope.$index, scope.row)" type="success">编辑</el-button>
+                  <el-button @click="PayDel(scope.$index, scope.row)" type="danger">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -381,7 +386,7 @@
 </template>
 
 <script>
-import qs from 'qs';
+import qs from "qs";
 import addAdrTable from "@/components/dashboard/view/addAdrTable";
 import uploadPicture from "@/components/dashboard/view/uploadPicture";
 export default {
@@ -397,101 +402,97 @@ export default {
           name: "food.jpeg",
           url:
             "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
         }
       ],
       yunguAreaContractModel: {
-        areaProjectId: 0,
-        contractAttrubite: 0,
+        areaProjectId: null,
+        contractAttrubite: null,
         contractEndtime: "",
         contractFile: "",
-        contractSignType: 0,
-        contractType: 0,
-        developer: 0,
-        id: 0,
+        contractSignType: null,
+        contractType: null,
+        developer: null,
+        id: null,
         identificationCode: "",
-        isNewsigin: 0,
-        isStandard: 0,
-        isSublet: 0,
-        payCustomer: 0,
-        siginType: 0,
-        signCustomer: 0,
-        verifyStatus: 0
+        isNewsigin: null,
+        isStandard: null,
+        isSublet: null,
+        payCustomer: null,
+        siginType: null,
+        signCustomer: null,
+        verifyStatus: null
       },
       yunguAreaContractdetailModel: {
-        accountCheck: 0,
-        amortizeMode: 0,
-        areaContractId: 0,
-        chargeMode: 0,
-        deadline: 0,
-        depositAmount: 0,
+        accountCheck: null,
+        amortizeMode: null,
+        areaContractId: null,
+        chargeMode: null,
+        deadline: null,
+        depositAmount: null,
         exclusiveMode: "",
         exeEndtime: "",
         exeStarttime: "",
-        giveMediacount: 0,
-        givePropertycount: 0,
-        giveUse: 0,
-        id: 0,
-        intallCost: 0,
-        intallNumber: 0,
-        mangerTotal: 0,
-        mediaNumber: 0,
-        notFullscreen: 0,
-        otherAmount: 0,
-        paperAvg: 0,
-        paperRent: 0,
-        protectNumber: 0,
+        // giveMediacount: null,
+        // givePropertycount: null,
+        // giveUse: null,
+        id: null,
+        intallCost: null,
+        intallNumber: null,
+        mangerTotal: null,
+        mediaNumber: null,
+        notFullscreen: null,
+        otherAmount: null,
+        paperAvg: null,
+        paperRent: null,
+        protectNumber: null,
         remark: "",
-        renewalRights: 0,
-        rentRate: 0,
-        rentTotal: 0,
-        rentfree: 0,
+        renewalRights: null,
+        rentRate: null,
+        rentTotal: null,
+        rentfree: null,
         rentfreeEndtime: "",
         rentfreeStarttime: "",
-        signAvgprice: 0,
-        signMonthprice: 0,
-        signNumber: 0,
-        signPositionnumber: 0,
-        signPrice: 0,
-        signWaitnumber: 0,
-        signWaitpositionnumber: 0,
-        signWaitprice: 0,
-        signYearprice: 0,
-        total: 0,
-        totalAmount: 0,
-        useMediacount: 0,
-        waitAvgprice: 0,
-        yearRent: 0
+        signAvgprice: null,
+        signMonthprice: null,
+        signNumber: null,
+        signPositionnumber: null,
+        signPrice: null,
+        signWaitnumber: null,
+        signWaitpositionnumber: null,
+        signWaitprice: null,
+        signYearprice: null,
+        total: null,
+        totalAmount: null,
+        useMediacount: null,
+        waitAvgprice: null,
+        yearRent: null
       },
       yunguContractPayModel: [],
       yunguContractPayModelChild: {
-        areaContractId: 0,
+        remark: "",
+        areaContractId: null,
         bankAccount: "",
         bankName: "",
-        costType: 0,
-        isInvoice: 0,
-        isPersonal: 0,
+        costType: null,
+        isInvoice: null,
+        isPersonal: null,
         payEndtime: "",
-        payId: 0,
-        payMode: 0,
+        payId: null,
+        payMode: null,
         payStarttime: "",
-        payStatus: 0,
-        paySubject: 0,
-        payTotal: 0,
-        planPeriod: 0,
-        customerCode:'',
+        payStatus: null,
+        paySubject: null,
+        payTotal: null,
+        planPeriod: null,
+        customerCode: "",
         yunguContractPaydetailList: []
       },
       yunguContractPaydetail: {
-        contractPayId: 0,
-        id: 0,
+        contractPayId: null,
+        id: null,
         payAmount: 0,
         payRemark: "",
-        payTime: "",
+        payTime: "2019-12-12 00:00:00",
         seq: 0
       },
       yunguContractPaydetailList: [],
@@ -500,6 +501,9 @@ export default {
     };
   },
   methods: {
+    // selectInput() {
+    //   console.log(this.yunguAreaContractdetailModel.rentfreeEndtime);
+    // },
     getData() {
       this.$http
         .post("/yunguAreaCustomer/getYunguAreaCustomerList")
@@ -510,20 +514,62 @@ export default {
         });
     },
     changeId() {
-      console.log("id", this.yunguContractPayModelChild.payMode);
-      this.$http.post('/yunguAreaCustomer/getYunguAreaCustomerById',qs.stringify({id:this.yunguContractPayModelChild.payMode})).then(res=>{
-
-        this.yunguContractPayModelChild.customerCode = res.data.data.obj.customerCode;
-      })
+      console.log("id", this.yunguContractPayModelChild.paySubject);
+      this.$http
+        .post(
+          "/yunguAreaCustomer/getYunguAreaCustomerById",
+          qs.stringify({ id: this.yunguContractPayModelChild.paySubject })
+        )
+        .then(res => {
+          if (res.data.meta.code == 200) {
+            this.yunguContractPayModelChild.customerCode =
+              res.data.data.obj.customerCode;
+          }
+        });
     },
-    commitTable(){
-      console.log('饭局');
+    commitTable() {
+      this.yunguContractPayModel.push(this.yunguContractPayModelChild);
+      this.yunguContractPayModelChild = {
+        remark: "",
+        areaContractId: null,
+        bankAccount: "",
+        bankName: "",
+        costType: null,
+        isInvoice: null,
+        isPersonal: null,
+        payEndtime: "",
+        payId: null,
+        payMode: null,
+        payStarttime: "",
+        payStatus: null,
+        paySubject: null,
+        payTotal: null,
+        planPeriod: null,
+        customerCode: "",
+        yunguContractPaydetailList: []
+      };
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
     handlePreview(file) {
       console.log(file);
+    },
+    commit(check, isSave) {
+      this.yunguContractPayModelChild.yunguContractPaydetailList.push(this.yunguContractPaydetail);
+      this.yunguContractPayModel.push(this.yunguContractPayModelChild);
+      const obj = {};
+      if (isSave) {
+        obj.taskId = localStorage.getItem('task_id');
+      }
+      obj.yunguAreaContractModel = this.yunguAreaContractModel;
+      obj.yunguAreaContractdetailModel = this.yunguAreaContractdetailModel;
+      obj.yunguContractPayModel = this.yunguContractPayModel;
+      this.$http
+        .post("/yunguareacontract/insertYunguAreaContract", obj)
+        .then(res => {
+          console.log("上传", res);
+        });
     },
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -570,6 +616,11 @@ export default {
   }
   .el-button {
     width: 300px;
+  }
+  .el-table {
+    .el-button {
+      width: 80px;
+    }
   }
   .addAdress {
     text-align: center;

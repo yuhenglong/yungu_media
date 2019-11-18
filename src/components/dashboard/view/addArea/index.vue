@@ -25,7 +25,11 @@
               <el-input v-model="yunguAreaProjectModel.developer" placeholder="开发人员"></el-input>
             </el-form-item>
             <el-form-item label="维护人员" prop="protecter">
-              <el-select v-model="yunguAreaProjectModel.protecter" placeholder="请选择" @change="chooseDept">
+              <el-select
+                v-model="yunguAreaProjectModel.protecter"
+                placeholder="请选择"
+                @change="chooseDept"
+              >
                 <el-option
                   v-for="(item,index) in protecterList"
                   :key="item.index"
@@ -150,7 +154,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="开盘时间">
-              <el-date-picker v-model="openTimeFir" type="date" placeholder="选择日期" id="openTimeFir"></el-date-picker>
+              <el-date-picker
+                v-model="yunguAreaProjectDetailModel.openTime"
+                type="date"
+                placeholder="选择日期"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
+              ></el-date-picker>
+              <!-- <el-date-picker v-model="openTimeFir" type="date" placeholder="选择日期" id="openTimeFir"></el-date-picker> -->
             </el-form-item>
             <el-form-item label="最低层数">
               <el-input v-model="yunguAreaProjectDetailModel.lowfloorCount" placeholder="最低层数"></el-input>
@@ -160,11 +171,18 @@
             </el-form-item>
             <el-form-item label="社区入住时间">
               <el-date-picker
+                v-model="yunguAreaProjectDetailModel.checkinTime"
+                type="date"
+                placeholder="选择日期"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
+              ></el-date-picker>
+              <!-- <el-date-picker
                 v-model="checkinTimeFir"
                 type="date"
                 placeholder="选择日期"
                 id="checkinTimeFir"
-              ></el-date-picker>
+              ></el-date-picker>-->
             </el-form-item>
             <el-form-item label="物业费">
               <el-input v-model="yunguAreaProjectDetailModel.propertyCost" placeholder="物业费（元/平米）"></el-input>
@@ -378,12 +396,12 @@
       <el-button
         type="primary"
         size="medium"
-        @click="commit('yunguAreaProjectModel')"
+        @click="commit('yunguAreaProjectModel',true)"
       >提&nbsp;&nbsp;&nbsp;交</el-button>
       <el-button
         type="success"
         size="medium"
-        @click="commit('yunguAreaProjectModel',true)"
+        @click="commit('yunguAreaProjectModel')"
       >保&nbsp;&nbsp;&nbsp;存</el-button>
     </div>
   </div>
@@ -419,8 +437,6 @@ export default {
       manageCompany: [],
       protecterList: [],
       yunguAreaProjectModelListTwo: [],
-      openTimeFir: "",
-      checkinTimeFir: "",
       yunguAreaPostionModelList: {
         company: "",
         installName: "",
@@ -526,7 +542,7 @@ export default {
     };
   },
   methods: {
-    chooseDept(){
+    chooseDept() {
       this.yunguAreaProjectModel.dept = this.yunguAreaProjectModel.protecter;
     },
     delTable(index) {
@@ -565,22 +581,21 @@ export default {
         size: ""
       };
     },
-    getDate() {
-      const openTimeSub = document.getElementById("openTimeFir").value;
-      const checkinTimeSub = document.getElementById("checkinTimeFir").value;
-      const detailTimeFir = openTimeSub + " 00:00:00";
-      const detailTimeSec = checkinTimeSub + " 00:00:00";
-      this.yunguAreaProjectDetailModel.openTime = detailTimeFir;
-      this.yunguAreaProjectDetailModel.checkinTime = detailTimeSec;
-    },
+    // getDate() {
+    //   const openTimeSub = document.getElementById("openTimeFir").value;
+    //   const checkinTimeSub = document.getElementById("checkinTimeFir").value;
+    //   const detailTimeFir = openTimeSub + " 00:00:00";
+    //   const detailTimeSec = checkinTimeSub + " 00:00:00";
+    //   this.yunguAreaProjectDetailModel.openTime = detailTimeFir;
+    //   this.yunguAreaProjectDetailModel.checkinTime = detailTimeSec;
+    // },
 
-    commit(formName,isSave) {
+    commit(formName, isSave) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.getDate();
           const obj = {};
-          if(isSave==true){
-            obj.proceeKey = 'areaProject';
+          if (isSave == true) {
+            obj.processKey = "areaProject";
           }
           obj.yunguAreaPostionModelList = [];
           obj.yunguPayMethodModelList = [];
@@ -613,7 +628,7 @@ export default {
     getDepartOptions() {
       this.$http.get("/sysDept/getDeptListByStatus?status=1").then(res => {
         if (res.data.meta.code == 200) {
-          console.log('所属部门',res);
+          console.log("所属部门", res);
           this.manageCompany = res.data.data.obj;
         } else {
           console.log("选项列表获取错误");
@@ -626,7 +641,7 @@ export default {
         .post("/sysUser/getSysUserPageList", { roleStatus: 1, status: 1 })
         .then(res => {
           if (res.data.meta.code == 200) {
-            console.log('维护人员',res);
+            console.log("维护人员", res);
             this.protecterList = res.data.data.obj.data;
           } else {
             console.log("选项列表获取错误");

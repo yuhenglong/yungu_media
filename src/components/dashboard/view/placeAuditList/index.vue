@@ -76,11 +76,19 @@
       <el-table-column prop="developer" label="管理公司" width="120"></el-table-column>
       <el-table-column prop="project_type" label="项目属性" width="120"></el-table-column>
       <el-table-column prop="activity_status" label="项目状态" width="120"></el-table-column>
-      <el-table-column prop="verify_status" label="业务状态" width="120"></el-table-column>
+      <el-table-column label="业务状态" width="120">
+        <template slot-scope="scope">
+          <span v-if="scope.row.verify_status == 0">审核不通过</span>
+          <span v-else-if="scope.row.verify_status == 1">审核通过</span>
+          <span v-else-if="scope.row.verify_status == 2">待审核</span>
+          <span v-else-if="scope.row.verify_status == 3">编辑状态</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width>
         <template slot-scope="scope">
           <el-button @click="examine(scope.row)" type="text" size="small">查看</el-button>
           <el-button @click="auditLogging(scope.$index,scope.row)" type="text" size="small">审核记录</el-button>
+          <el-button type="text" size="small" @click="audit(scope.$index, scope.row)">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -112,11 +120,33 @@
         <el-table-column property="verifyTime" label="添加时间"></el-table-column>
       </el-table>
     </el-dialog>
+    <!-- 审核 -->
+    <el-dialog
+      :title="title"
+      :visible.sync="dialogAuditVisible"
+      width="800px"
+      center
+      :append-to-body="true"
+    >
+      <el-form ref="form" :model="checkDia" label-width="80px">
+        <el-form-item label="处理方式">
+          <el-radio v-model="checkDia.verifyResult" label="1">通过</el-radio>
+          <el-radio v-model="checkDia.verifyResult" label="0">拒绝</el-radio>
+        </el-form-item>
+        <el-form-item label="备注原由">
+          <el-input type="textarea" v-model="checkDia.refuseReason"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="deilComfirm">确定</el-button>
+          <el-button type="success" @click="deilDel">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import qs from 'qs';
+import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
 export default {
   name: "placeAuditList",
@@ -125,8 +155,10 @@ export default {
   },
   data() {
     return {
+      title: "审核处理",
       titleTwo: "场地项目审核列表",
       dialogCheckVisible: false,
+      dialogAuditVisible: false,
       formCheckList: {
         identificationCode: "",
         verifyUserName: "",
@@ -134,6 +166,13 @@ export default {
         type: "",
         refuseReason: "",
         verifyTime: ""
+      },
+      checkDia: {
+        verifyResult: "",
+        type: 3,
+        refuseReason: "",
+        identificationCode: "",
+        taskId: ""
       },
       formInline: {
         user: "",
@@ -149,6 +188,49 @@ export default {
     };
   },
   methods: {
+    deilDel() {
+      this.dialogAuditVisible = false;
+    },
+    audit(index, row) {
+      this.dialogAuditVisible = true;
+      this.checkDia.identificationCode = row.customer_code;
+      this.checkDia.taskId = row.task_id;
+    },
+    deilComfirm() {
+      this.$http
+        .post("/areaProjectActivity/areaProjectVerify", this.checkDia)
+        .then(res => {
+          console.log("这是保存信息的", res);
+          if (res.data.meta.code == 200) {
+            this.$message({
+              type: "success",
+              message: `处理成功！`
+            });
+            this.dialogAuditVisible = false;
+            this.getTableData();
+          } else {
+            this.$message({
+              type: "error",
+              message: `处理失败！请重新提交。`
+            });
+          }
+        });
+    },
+    checkDialog(index, row) {
+      console.log(index, row);
+      this.$http
+        .post(
+          "/yunguVerifyNote/getVerifyNoteListByCode",
+          qs.stringify({ code: row.identification_code })
+        )
+        .then(res => {
+          if (res.data.meta.code == 200) {
+            this.dialogCheckVisible = true;
+            this.formCheckList = res.data.data.obj;
+            console.log(this.formCheckList);
+          }
+        });
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;

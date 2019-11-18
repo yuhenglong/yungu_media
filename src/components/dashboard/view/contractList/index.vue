@@ -138,6 +138,7 @@ export default {
   methods: {
     routerNext(row){
       console.log('这是每行的信息',row);
+      localStorage.setItem('task_id',row.task_id);
       this.$router.push('/addContract');
     },
     handleSizeChange(val) {
