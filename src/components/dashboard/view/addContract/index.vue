@@ -81,7 +81,7 @@
             </el-form-item>
             <!-- <el-form-item label="项目地址" prop="developer">
               <el-input v-model="yunguAreaContractModel.developer" placeholder="开发人员"></el-input>
-            </el-form-item> -->
+            </el-form-item>-->
             <el-form-item label="合同签约类型">
               <el-select v-model="yunguAreaContractModel.contractSignType" placeholder="选择">
                 <el-option label="普通合同" value="0"></el-option>
@@ -382,6 +382,8 @@
         @click="commit('yunguAreaContractModel')"
       >保&nbsp;&nbsp;&nbsp;存</el-button>
     </div>
+    <router-link to="/addContract/lizi">去例子</router-link>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -550,7 +552,7 @@ export default {
       console.log(file);
     },
     commit(check, isSave) {
-      this.yunguAreaContractModel.areaProjectId = localStorage.getItem('aid');
+      this.yunguAreaContractModel.areaProjectId = localStorage.getItem("aid");
       this.yunguContractPayModelChild.yunguContractPaydetailList.push(
         this.yunguContractPaydetail
       );
@@ -568,10 +570,9 @@ export default {
           this.yunguContractPayModel = [];
           if (res.data.meta.code == 200) {
             console.log("上传", res);
-            this.$router.push('/contractList');
+            this.$router.push("/contractList");
           }
         });
-
     },
     handleExceed(files, fileList) {
       this.$message.warning(

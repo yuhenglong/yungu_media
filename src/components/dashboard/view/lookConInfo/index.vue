@@ -586,7 +586,7 @@ export default {
   },
   methods: {
     giveUp() {
-      this.$router.push('/contractList');
+      this.$router.go(-1);
     },
     getData() {
       this.$http

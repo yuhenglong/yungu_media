@@ -559,39 +559,39 @@ export default {
         size: ""
       };
     },
-    getDate() {
-      const openTimeSub = document.getElementById("openTimeFir").value;
-      const checkinTimeSub = document.getElementById("checkinTimeFir").value;
-      const detailTimeFir = openTimeSub + " 00:00:00";
-      const detailTimeSec = checkinTimeSub + " 00:00:00";
-      this.yunguAreaProjectDetailModel.openTime = detailTimeFir;
-      this.yunguAreaProjectDetailModel.checkinTime = detailTimeSec;
-    },
-    commit() {
-      this.yunguPayMethodModelList.identificationCode = localStorage.getItem(
-        "identification_code"
-      );
-      const obj = {};
-      obj.code = localStorage.getItem("identification_code");
-      obj.projectId = localStorage.getItem("aid");
-      obj.yunguAreaPostionModelList = this.yunguAreaProjectModelListTwo;
-      obj.yunguAreaProjectDetailModel = this.yunguAreaProjectDetailModel;
-      obj.yunguAreaProjectModel = this.yunguAreaProjectModel;
-      obj.yunguPayMethodModelList = this.yunguPayMethodModelList_arr;
-      console.log("这是obj", obj);
-      this.$http
-        .post("/yunguAreaProject/updateYunguAreaProject", obj)
-        .then(res => {
-          console.log("修改更新", res);
-          if (res.data.meta.code == 200) {
-            this.$message({
-              type: "success",
-              message: "信息修改成功！"
-            });
-            this.$router.push("/areaList");
-          }
-        });
-    },
+    // getDate() {
+    //   const openTimeSub = document.getElementById("openTimeFir").value;
+    //   const checkinTimeSub = document.getElementById("checkinTimeFir").value;
+    //   const detailTimeFir = openTimeSub + " 00:00:00";
+    //   const detailTimeSec = checkinTimeSub + " 00:00:00";
+    //   this.yunguAreaProjectDetailModel.openTime = detailTimeFir;
+    //   this.yunguAreaProjectDetailModel.checkinTime = detailTimeSec;
+    // },
+    // commit() {
+    //   this.yunguPayMethodModelList.identificationCode = localStorage.getItem(
+    //     "identification_code"
+    //   );
+    //   const obj = {};
+    //   obj.code = localStorage.getItem("identification_code");
+    //   obj.projectId = localStorage.getItem("aid");
+    //   obj.yunguAreaPostionModelList = this.yunguAreaProjectModelListTwo;
+    //   obj.yunguAreaProjectDetailModel = this.yunguAreaProjectDetailModel;
+    //   obj.yunguAreaProjectModel = this.yunguAreaProjectModel;
+    //   obj.yunguPayMethodModelList = this.yunguPayMethodModelList_arr;
+    //   console.log("这是obj", obj);
+    //   this.$http
+    //     .post("/yunguAreaProject/updateYunguAreaProject", obj)
+    //     .then(res => {
+    //       console.log("修改更新", res);
+    //       if (res.data.meta.code == 200) {
+    //         this.$message({
+    //           type: "success",
+    //           message: "信息修改成功！"
+    //         });
+    //         this.$router.push("/areaList");
+    //       }
+    //     });
+    // },
     waiveCommit() {
       this.$router.push("/areaList");
     },
