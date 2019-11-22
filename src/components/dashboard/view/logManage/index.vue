@@ -1,35 +1,25 @@
 <template>
-  <div class="checkCustomer">
+  <div class="logManage">
     <h1 style="text-align:center;">场地客户审核列表</h1>
     <div style="margin-top:30px;">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="客户管理" style="width:290px;">
+        <el-form-item label="记录序号" style="width:290px;">
           <el-input v-model="formInline.user" placeholder="审批人"></el-input>
         </el-form-item>
-        <el-form-item label="所属区域">
-          <linkage></linkage>
+        <el-form-item label="设备序号" style="width:290px;">
+          <el-input v-model="formInline.user" placeholder="审批人"></el-input>
         </el-form-item>
-        <el-form-item label="所属部门" style="width:290px;">
-          <el-select v-model="formInline.region" placeholder="活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="客户类型" style="width:290px;">
-          <el-select v-model="formInline.region" placeholder="活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="是否禁用" style="width:290px;">
-          <el-select v-model="formInline.region" placeholder="活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
+        <el-form-item label="设备序号" style="width:500px;">
+          <el-date-picker
+            v-model="value3"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item style="width:70px;">
           <el-button type="primary" @click="onSubmit">搜索</el-button>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -90,6 +80,15 @@
         <el-table-column label="操作" width="400">
           <template slot-scope="scope">
             <el-button size="mini" @click="checkRow(scope.$index, scope.row)">查看</el-button>
+            <!-- <el-button
+              size="mini"
+              @click="startFor(scope.$index, scope.row)"
+            >{{ scope.row.status !==0?"启用":"禁用" }}</el-button>-->
+            <!-- <el-button
+              size="mini"
+              @click="editDialog(scope.$index, scope.row)"
+              v-if="scope.row.verify_stauts ==1 && scope.row.status ==1?'true':'false'"
+            >编辑</el-button>-->
             <el-button size="mini" @click="audit(scope.$index, scope.row)">审核</el-button>
             <el-button size="mini" @click="lookInfo(scope.$index, scope.row)">查看审核记录</el-button>
           </template>
@@ -240,7 +239,7 @@
 import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
 export default {
-  name: "checkCustomer",
+  name: "logManage",
   components: {
     linkage
   },
@@ -293,7 +292,39 @@ export default {
         pageSize: 10
       },
       customerTable: [],
-      total: 0
+      total: 0,
+      pickerOptions2: {
+        shortcuts: [
+          {
+            text: "最近一周",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "最近一个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "最近三个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit("pick", [start, end]);
+            }
+          }
+        ]
+      },
+      value3: []
     };
   },
   computed: {
@@ -334,7 +365,7 @@ export default {
             });
             this.dialogAuditVisible = false;
             this.getTableData();
-          }else{
+          } else {
             this.$message({
               type: "error",
               message: `处理失败！请重新提交。`
@@ -459,7 +490,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.checkCustomer {
+.logManage {
   width: 95%;
   padding: 30px 2.5%;
   height: auto;
@@ -467,7 +498,7 @@ export default {
 }
 </style>
 <style lang="scss">
-.checkCustomer {
+.logManage {
   .el-form--inline .el-select {
     width: 200px;
   }

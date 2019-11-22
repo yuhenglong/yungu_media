@@ -10,7 +10,7 @@
       :unique-opened="true"
     >
       <template v-for="(item,index) in menusTree">
-        <el-submenu :index='item.icon' :key="index">
+        <el-submenu :index="item.icon" :key="index">
           <template slot="title">
             <i :class="item.icon"></i>
             <span slot="title">{{item.name}}</span>
@@ -64,7 +64,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .leftMenus {
   width: auto;
   height: 100%;
@@ -74,12 +74,15 @@ export default {
   top: 0;
   left: 0;
   z-index: 99;
-}
-.el-menu {
-  border-right: none;
-}
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  height: 100%;
+  .el-menu {
+    border-right: none;
+  }
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    height: 100%;
+  }
+  .el-menu-item-group .el-menu-item-group__title {
+    padding: 0;
+  }
 }
 </style>

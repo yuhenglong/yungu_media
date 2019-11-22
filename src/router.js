@@ -6,12 +6,16 @@ import register from '@/components/dashboard/register'
 import index from '@/components/dashboard/index'
 import notfound from '@/components/dashboard/404'
 import addArea from '@/components/dashboard/view/addArea'
+import addAreaPlace from '@/components/dashboard/view/addAreaPlace'
 import customerManage from '@/components/dashboard/view/customerManage'
 import checkCustomer from '@/components/dashboard/view/checkCustomer'
 import advertiserList from '@/components/dashboard/view/advertiserList'
 import contractList from '@/components/dashboard/view/contractList'
 import areaList from '@/components/dashboard/view/areaList'
 import placeAuditList from '@/components/dashboard/view/placeAuditList'
+import getYunguInstallPageList from '@/components/dashboard/view/getYunguInstallPageList'
+import getWaitEngineeringInstallPageList from '@/components/dashboard/view/getWaitEngineeringInstallPageList'
+import getFeedBackList from '@/components/dashboard/view/getFeedBackList'
 import editPlaceAudit from '@/components/dashboard/view/editPlaceAudit'
 import equipList from '@/components/dashboard/view/equipList'
 import examinePage from '@/components/dashboard/view/examinePage'
@@ -19,6 +23,12 @@ import checkEquipTable from '@/components/dashboard/view/checkEquipTable'
 import editEquipTable from '@/components/dashboard/view/editEquipTable'
 import addNewEquip from '@/components/dashboard/view/addNewEquip'
 import addContract from '@/components/dashboard/view/addContract'
+import logManage from '@/components/dashboard/view/logManage'
+import waitConList from '@/components/dashboard/view/waitConList'
+import checkContract from '@/components/dashboard/view/checkContract'
+import planPayDetail from '@/components/dashboard/view/planPayDetail'
+import editContractPage from '@/components/dashboard/view/editContractPage'
+import lookConInfo from '@/components/dashboard/view/lookConInfo'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -54,10 +64,16 @@ const router = new Router({
                 {
                     path: 'filialeManage',
                     component: filialeManage
-                }, {
+                },
+                {
                     path: '/addArea',
                     component: addArea
-                }, {
+                },
+                {
+                    path: '/addAreaPlace',
+                    component: addAreaPlace
+                },
+                {
                     path: '/customerManage',
                     component: customerManage,
                 }, {
@@ -97,6 +113,18 @@ const router = new Router({
                     component: placeAuditList
                 },
                 {
+                    path: 'getWaitEngineeringInstallPageList',
+                    component: getWaitEngineeringInstallPageList
+                },
+                {
+                    path: 'getYunguInstallPageList',
+                    component: getYunguInstallPageList
+                },
+                {
+                    path: '/getFeedBackList',
+                    component: getFeedBackList
+                },
+                {
                     path: '/editPlaceAudit',
                     component: editPlaceAudit
                 },
@@ -125,6 +153,31 @@ const router = new Router({
                 {
                     path: '/addContract',
                     component: addContract
+                },
+                {
+                    path: '/logManage',
+                    component: logManage
+                },
+                {
+                    path: '/waitConList',
+                    component: waitConList
+                },
+                {
+                    path: '/checkContract',
+                    component: checkContract
+                },
+                {
+                    path: '/planPayDetail',
+                    name: 'planPayDetail',
+                    component: planPayDetail
+                },
+                {
+                    path: '/editContractPage',
+                    component: editContractPage
+                },
+                {
+                    path: '/lookConInfo',
+                    component: lookConInfo
                 }
             ]
         },

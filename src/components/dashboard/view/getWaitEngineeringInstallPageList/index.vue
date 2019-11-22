@@ -1,17 +1,17 @@
 <template>
-  <div class="placeAuditList">
-    <h2>场地项目审核列表</h2>
+  <div class="getWaitEngineeringInstallPageList">
+    <h2>场地项目安装单审核列表</h2>
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="维护人员">
-        <el-select v-model="formInline.region" placeholder="活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+        <el-select v-model="formInline.region" placeholder="维护人员">
+          <el-option label="维护人员一" value="shanghai"></el-option>
+          <el-option label="维护人员二" value="beijing"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="开发人员">
-        <el-select v-model="formInline.region" placeholder="全部">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+        <el-select v-model="formInline.region" placeholder="开发人员">
+          <el-option label="开发一" value="shanghai"></el-option>
+          <el-option label="开发二" value="beijing"></el-option>
         </el-select>
       </el-form-item>
 
@@ -25,25 +25,22 @@
         <el-input v-model="formInline.user" placeholder="项目地址"></el-input>
       </el-form-item>
       <el-form-item label="所属部门">
-        <el-select v-model="formInline.region" placeholder="选择">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+        <el-select v-model="formInline.region" placeholder="部门选择">
+          <el-option label="部门一" value="shanghai"></el-option>
+          <el-option label="部门二二" value="beijing"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="项目一级属性">
-        <el-select v-model="formInline.region" placeholder="活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+        <el-select v-model="formInline.region" placeholder="项目属性">
+          <el-option label="属性一" value="shanghai"></el-option>
+          <el-option label="属性二" value="beijing"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="所属区域">
         <linkage></linkage>
       </el-form-item>
-      <el-form-item label="项目名称">
-        <el-input v-model="formInline.user" placeholder="项目名称"></el-input>
-      </el-form-item>
-      <el-form-item label="项目属性">
-        <el-select v-model="formInline.region" placeholder="全部">
+            <el-form-item label="项目状态">
+        <el-select v-model="formInline.region" placeholder="项目状态">
           <el-option label="区域一" value="shanghai"></el-option>
           <el-option label="区域二" value="beijing"></el-option>
         </el-select>
@@ -51,8 +48,8 @@
       <el-form-item label="管理公司">
         <el-input v-model="formInline.user" placeholder="管理公司"></el-input>
       </el-form-item>
-      <el-form-item label="部门选择">
-        <el-select v-model="formInline.region" placeholder="选择部门">
+      <el-form-item label="安装结果">
+        <el-select v-model="formInline.region" placeholder="安装结果">
           <el-option label="区域一" value="shanghai"></el-option>
           <el-option label="区域二" value="beijing"></el-option>
         </el-select>
@@ -149,14 +146,14 @@
 import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
 export default {
-  name: "placeAuditList",
+  name: "getWaitEngineeringInstallPageList",
   components: {
     linkage
   },
   data() {
     return {
       title: "审核处理",
-      titleTwo: "场地项目审核列表",
+      titleTwo: "场地项目单安装单审核列表",
       dialogCheckVisible: false,
       dialogAuditVisible: false,
       formCheckList: {
@@ -193,14 +190,14 @@ export default {
     },
     audit(index, row) {
       this.dialogAuditVisible = true;
-      this.checkDia.identificationCode = row.identification_code;
-      console.log(this.checkDia.identificationCode,'dada');
+      this.checkDia.identificationCode = row.customer_code;
       this.checkDia.taskId = row.task_id;
     },
     deilComfirm() {
       this.$http
         .post("/areaProjectActivity/areaProjectVerify", this.checkDia)
         .then(res => {
+          console.log("这是保存信息的", res);
           if (res.data.meta.code == 200) {
             this.$message({
               type: "success",
@@ -227,6 +224,7 @@ export default {
           if (res.data.meta.code == 200) {
             this.dialogCheckVisible = true;
             this.formCheckList = res.data.data.obj;
+            console.log(this.formCheckList);
           }
         });
     },
@@ -254,9 +252,10 @@ export default {
           qs.stringify({ code: row.identification_code })
         )
         .then(res => {
-          if (res.status == 200) {
+          if (res.data.meta.code == 200) {
             this.dialogCheckVisible = true;
             this.formCheckList = res.data.data.obj;
+            console.log(this.formCheckList);
           }
         });
     },
@@ -266,10 +265,11 @@ export default {
     getTableData() {
       this.$http
         .post(
-          "/yunguAreaProject/getWaitVerifyAreaProjectPageList",
+          "/yunguInstallList/getWaitEngineeringInstallPageList",
           this.pageInfo
         )
         .then(res => {
+          console.log("数据", res);
           if (res.data.meta.code == 200) {
             this.areaTableList = res.data.data.obj.data;
             this.total = res.data.data.obj.count;
@@ -284,7 +284,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.placeAuditList {
+.getWaitEngineeringInstallPageList {
   width: 95%;
   padding: 30px 2.5%;
   height: auto;

@@ -1,6 +1,6 @@
 <template>
   <div class="addArea">
-    <h2>场地合同添加</h2>
+    <h2>场地合同查看</h2>
     <div class="tabs">
       <el-tabs type="border-card">
         <el-tab-pane label="基本信息">
@@ -12,35 +12,35 @@
             ref="yunguAreaContractModel"
           >
             <el-form-item label="合同类型">
-              <el-select v-model="yunguAreaContractModel.contractType" placeholder="选择">
-                <el-option label="数码海报" value="0"></el-option>
-                <el-option label="电梯投影" value="1"></el-option>
-                <el-option label="电梯视窗" value="2"></el-option>
-                <el-option label="液晶" value="3"></el-option>
+              <el-select disabled v-model="yunguAreaContractModel.contractType" placeholder="选择">
+                <el-option label="数码海报" :value="0"></el-option>
+                <el-option label="电梯投影" :value="1"></el-option>
+                <el-option label="电梯视窗" :value="2"></el-option>
+                <el-option label="液晶" :value="3"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="签约性质">
-              <el-select v-model="yunguAreaContractModel.siginType" placeholder="选择">
-                <el-option label="新签" value="0"></el-option>
-                <el-option label="旧签" value="1"></el-option>
+              <el-select disabled v-model="yunguAreaContractModel.siginType" placeholder="选择">
+                <el-option label="新签" :value="0"></el-option>
+                <el-option label="旧签" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="净签约">
-              <el-select v-model="yunguAreaContractModel.isNewsigin" placeholder="选择">
-                <el-option label="是" value="0"></el-option>
-                <el-option label="否" value="1"></el-option>
+              <el-select disabled v-model="yunguAreaContractModel.isNewsigin" placeholder="选择">
+                <el-option label="是" :value="0"></el-option>
+                <el-option label="否" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="开发人员">
-              <el-select v-model="yunguAreaContractModel.developer" placeholder="选择">
-                <el-option label="隆" value="0"></el-option>
-                <el-option label="华" value="1"></el-option>
+              <el-select disabled v-model="yunguAreaContractModel.developer" placeholder="选择">
+                <el-option label="隆" :value="0"></el-option>
+                <el-option label="华" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="标准合同">
-              <el-select v-model="yunguAreaContractModel.isStandard" placeholder="选择">
-                <el-option label="是" value="0"></el-option>
-                <el-option label="否" value="1"></el-option>
+              <el-select disabled v-model="yunguAreaContractModel.isStandard" placeholder="选择">
+                <el-option label="是" :value="0"></el-option>
+                <el-option label="否" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="合同到期时间">
@@ -53,45 +53,45 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="合同属性">
-              <el-select v-model="yunguAreaContractModel.contractAttrubite" placeholder="选择">
-                <el-option label="楼宇" value="0"></el-option>
-                <el-option label="框架" value="1"></el-option>
+              <el-select disabled v-model="yunguAreaContractModel.contractAttrubite" placeholder="选择">
+                <el-option label="楼宇" :value="0"></el-option>
+                <el-option label="框架" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="签约主体">
-              <el-select v-model="yunguAreaContractModel.signCustomer" placeholder="选择">
-                <el-option label="楼宇" value="0"></el-option>
-                <el-option label="框架" value="1"></el-option>
+              <el-select disabled v-model="yunguAreaContractModel.signCustomer" placeholder="选择">
+                <el-option label="楼宇" :value="0"></el-option>
+                <el-option label="框架" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="付费主体">
-              <el-select v-model="yunguAreaContractModel.payCustomer" placeholder="选择">
-                <el-option label="楼宇" value="0"></el-option>
-                <el-option label="框架" value="1"></el-option>
+              <el-select disabled v-model="yunguAreaContractModel.payCustomer" placeholder="选择">
+                <el-option label="楼宇" :value="0"></el-option>
+                <el-option label="框架" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="项目名称" prop="projectName">
-              <el-input v-model="yunguAreaContractModel.projectName" placeholder="项目名称"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractModel.projectName" placeholder="项目名称"></el-input>
             </el-form-item>
             <el-form-item label="城市区域" prop="projectAddress">
-              <el-input v-model="yunguAreaContractModel.projectAddress" placeholder="项目地址"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractModel.projectAddress" placeholder="项目地址"></el-input>
             </el-form-item>
             <el-form-item label="项目属性">
-              <el-input v-model="yunguAreaContractModel.projectPosition" placeholder="位置信息"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractModel.projectPosition" placeholder="位置信息"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="项目地址" prop="developer">
-              <el-input v-model="yunguAreaContractModel.developer" placeholder="开发人员"></el-input>
-            </el-form-item> -->
+            <el-form-item label="项目地址" prop="developer">
+              <el-input :readonly="true" v-model="yunguAreaContractModel.developer" placeholder="开发人员"></el-input>
+            </el-form-item>
             <el-form-item label="合同签约类型">
-              <el-select v-model="yunguAreaContractModel.contractSignType" placeholder="选择">
+              <el-select disabled v-model="yunguAreaContractModel.contractSignType" placeholder="选择">
                 <el-option label="普通合同" value="0"></el-option>
                 <el-option label="置换合同" value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="是否转租">
-              <el-select v-model="yunguAreaContractModel.isSublet" placeholder="选择">
-                <el-option label="是" value="0"></el-option>
-                <el-option label="否" value="1"></el-option>
+              <el-select disabled v-model="yunguAreaContractModel.isSublet" placeholder="选择">
+                <el-option label="是" :value="0"></el-option>
+                <el-option label="否" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="合同文件">
@@ -115,7 +115,7 @@
         <el-tab-pane label="分区价格信息">
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="签约媒体位数">
-              <el-input v-model="yunguAreaContractdetailModel.mediaNumber " placeholder="签约媒体位数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.mediaNumber " placeholder="签约媒体位数"></el-input>
             </el-form-item>
             <el-form-item label="实际执行开始日期">
               <el-date-picker
@@ -136,7 +136,7 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="合同期限(月)">
-              <el-input v-model="yunguAreaContractdetailModel.deadline" placeholder="合同期限(月)"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.deadline" placeholder="合同期限(月)"></el-input>
             </el-form-item>
             <el-form-item label="免租期开始日期">
               <el-date-picker
@@ -157,16 +157,16 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="免租期(月)">
-              <el-input v-model="yunguAreaContractdetailModel.rentfree" placeholder="免租期(月)"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.rentfree" placeholder="免租期(月)"></el-input>
             </el-form-item>
             <el-form-item label="签约电梯数">
-              <el-input v-model="yunguAreaContractdetailModel.signNumber" placeholder="签约电梯数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.signNumber" placeholder="签约电梯数"></el-input>
             </el-form-item>
             <el-form-item label="签约等候厅数">
-              <el-input v-model="yunguAreaContractdetailModel.signWaitnumber" placeholder="签约等候厅数"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.signWaitnumber" placeholder="签约等候厅数"></el-input>
             </el-form-item>
             <el-form-item label="签约等候厅单价">
-              <el-input v-model="yunguAreaContractdetailModel.signWaitprice" placeholder="签约等候厅单价"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.signWaitprice" placeholder="签约等候厅单价"></el-input>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -174,213 +174,114 @@
           <h3>常规金额信息:</h3>
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="租金费用总额">
-              <el-input v-model="yunguAreaContractdetailModel.rentTotal" placeholder="租金费用总额"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.rentTotal" placeholder="租金费用总额"></el-input>
             </el-form-item>
             <el-form-item label="管理费用总额">
-              <el-input v-model="yunguAreaContractdetailModel.mangerTotal" placeholder="管理费用总额"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.mangerTotal" placeholder="管理费用总额"></el-input>
             </el-form-item>
             <el-form-item label="合同总金额">
-              <el-input v-model="yunguAreaContractdetailModel.totalAmount" placeholder="合同总金额"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.totalAmount" placeholder="合同总金额"></el-input>
             </el-form-item>
           </el-form>
           <h3>非回购合同信息:</h3>
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="纸质合同单屏均价">
-              <el-input v-model="yunguAreaContractdetailModel.paperAvg" placeholder="纸质合同单屏均价"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.paperAvg" placeholder="纸质合同单屏均价"></el-input>
             </el-form-item>
             <el-form-item label="纸质合同年租金">
-              <el-input v-model="yunguAreaContractdetailModel.paperRent" placeholder="纸质合同年租金"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.paperRent" placeholder="纸质合同年租金"></el-input>
             </el-form-item>
             <el-form-item label="其它费用总额">
-              <el-input v-model="yunguAreaContractdetailModel.otherAmount" placeholder="其它费用总额"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.otherAmount" placeholder="其它费用总额"></el-input>
             </el-form-item>
             <el-form-item label="押金金额">
-              <el-input v-model="yunguAreaContractdetailModel.depositAmount" placeholder="押金金额"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.depositAmount" placeholder="押金金额"></el-input>
             </el-form-item>
             <el-form-item label="签约媒体单价(年)">
-              <el-input
+              <el-input :readonly="true"
                 v-model="yunguAreaContractdetailModel.signYearprice"
                 placeholder="签约媒体单价(年)"
               ></el-input>
             </el-form-item>
             <el-form-item label="签约媒体单价(月)">
-              <el-input
+              <el-input :readonly="true"
                 v-model="yunguAreaContractdetailModel.signMonthprice"
                 placeholder="签约媒体单价(月)"
               ></el-input>
             </el-form-item>
             <el-form-item label="租金包含电费">
-              <el-input v-model="yunguAreaContractdetailModel.total" placeholder="租金包含电费"></el-input>
+              <el-input :readonly="true" v-model="yunguAreaContractdetailModel.total" placeholder="租金包含电费"></el-input>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="付款计划">
-          <el-form :inline="true" class="demo-form-inline">
-            <el-form-item label="支付主体">
-              <el-select
-                v-model="yunguContractPayModelChild.paySubject"
-                placeholder="选择"
-                @change="changeId()"
-              >
-                <template v-for="(item,index) in payModeList">
-                  <el-option :label="item.user_name" :value="item.id" :key="index"></el-option>
-                </template>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="支付主体编号">
-              <el-input
-                v-model="yunguContractPayModelChild.customerCode"
-                placeholder="编号"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="费用类别">
-              <el-select v-model="yunguContractPayModelChild.costType" placeholder="选择">
-                <el-option label="押金" value="0"></el-option>
-                <el-option label="租金" value="1"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="备注">
-              <el-input v-model="yunguContractPayModelChild.remark" placeholder="备注信息"></el-input>
-            </el-form-item>
-            <el-form-item label="支付方式">
-              <el-select v-model="yunguContractPayModelChild.payMode" placeholder="选择">
-                <el-option label="银行卡" value="0"></el-option>
-                <el-option label="支付宝" value="1"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="总支付金额">
-              <el-input v-model="yunguContractPayModelChild.payTotal" placeholder="金额"></el-input>
-            </el-form-item>
-            <el-form-item label="是否有发票">
-              <el-radio v-model="yunguContractPayModelChild.isInvoice" label="0">是</el-radio>
-              <el-radio v-model="yunguContractPayModelChild.isInvoice" label="1">否</el-radio>
-            </el-form-item>
-            <el-form-item label="是否个人收款">
-              <el-radio v-model="yunguContractPayModelChild.isPersonal" label="0">是</el-radio>
-              <el-radio v-model="yunguContractPayModelChild.isPersonal" label="1">否</el-radio>
-            </el-form-item>
-            <el-form-item label="付款状态">
-              <el-select v-model="yunguContractPayModelChild.payStatus" placeholder="选择">
-                <el-option label="待支付" value="0"></el-option>
-                <el-option label="已支付" value="1"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="付费开始时间">
-              <el-date-picker
-                v-model="yunguContractPayModelChild.payStarttime"
-                type="date"
-                placeholder="选择日期"
-                format="yyyy-MM-dd HH:mm:ss"
-                value-format="yyyy-MM-dd HH:mm:ss"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="付费结束时间">
-              <el-date-picker
-                v-model="yunguContractPayModelChild.payEndtime"
-                type="date"
-                placeholder="选择日期"
-                format="yyyy-MM-dd HH:mm:ss"
-                value-format="yyyy-MM-dd HH:mm:ss"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="计划周期">
-              <el-select v-model="yunguContractPayModelChild.planPeriod" placeholder="请选择">
-                <el-option label="待支付" value="0"></el-option>
-                <el-option label="已支付" value="1"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="开户行">
-              <el-select v-model="yunguContractPayModelChild.bankName" placeholder="请选择">
-                <el-option label="中国银行" value="0"></el-option>
-                <el-option label="已支付" value="1"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="账号">
-              <el-input v-model="yunguContractPayModelChild.bankAccount" placeholder="账号"></el-input>
-            </el-form-item>
-            <div style="text-align:center;">
-              <el-button @click="commitTable" type="success">添加付款计划</el-button>
-            </div>
-            <el-table :data="yunguContractPayModel" style="width: 100%;margin-top:20px;" border>
-              <el-table-column label="支付主体" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.payMode }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="费用类别" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.costType }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="支付形式" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.costType }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="支付方式" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.costType }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="付费开始时间" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.payStarttime }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="付费结束时间" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.payEndtime }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="是否有发票" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.isInvoice ==0?'是':'否' }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="应付金额" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.payTotal }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="已付金额" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.payTotal }}</span>
-                </template>
-              </el-table-column>
+          <h3 style="text-align:center;">付款计划</h3>
+          <el-table :data="yunguContractPayModel" style="width: 100%;margin-top:20px;" border>
+            <el-table-column label="支付主体">
+              <template slot-scope="scope">
+                <span>{{ scope.row.pay_mode }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="费用类别">
+              <template slot-scope="scope">
+                <span>{{ scope.row.cost_type }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="支付形式">
+              <template slot-scope="scope">
+                <span>{{ scope.row.pay_mode }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="支付方式">
+              <template slot-scope="scope">
+                <span>{{ scope.row.pay_status }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="付费开始时间">
+              <template slot-scope="scope">
+                <span>{{ scope.row.pay_starttime }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="付费结束时间">
+              <template slot-scope="scope">
+                <span>{{ scope.row.pay_endtime }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="是否有发票">
+              <template slot-scope="scope">
+                <span>{{ scope.row.is_invoice ==0?'是':'否' }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="应付金额">
+              <template slot-scope="scope">
+                <span>{{ scope.row.plan_period }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="已付金额">
+              <template slot-scope="scope">
+                <span>{{ scope.row.bank_account }}</span>
+              </template>
+            </el-table-column>
 
-              <el-table-column label="开户行" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="账号" width="180">
-                <template slot-scope="scope">
-                  <span>{{ scope.row.bankAccount }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="操作" width="300px;">
-                <template slot-scope="scope">
-                  <el-button @click="payEdit(scope.$index, scope.row)" type="success">编辑</el-button>
-                  <el-button @click="PayDel(scope.$index, scope.row)" type="danger">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-form>
+            <el-table-column label="开户行">
+              <template slot-scope="scope">
+                <span>{{ scope.row.bank_name }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="账号">
+              <template slot-scope="scope">
+                <span>{{ scope.row.bank_account }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button @click="checkPayList(scope.row)" type="primary">查看</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <!-- </el-form> -->
         </el-tab-pane>
       </el-tabs>
-    </div>
-    <div class="btn">
-      <el-button
-        type="primary"
-        size="medium"
-        @click="commit('yunguAreaContractModel',true)"
-      >提&nbsp;&nbsp;&nbsp;交</el-button>
-      <el-button
-        type="success"
-        size="medium"
-        @click="commit('yunguAreaContractModel')"
-      >保&nbsp;&nbsp;&nbsp;存</el-button>
     </div>
   </div>
 </template>
@@ -499,13 +400,54 @@ export default {
   },
   methods: {
     getData() {
+      const id = localStorage.getItem("aid");
       this.$http
-        .post("/yunguAreaCustomer/getYunguAreaCustomerList")
+        .post(
+          "/yunguareacontract/getYunguAreaContractById",
+          qs.stringify({ id: id })
+        )
         .then(res => {
           if (res.data.meta.code == 200) {
-            this.payModeList = res.data.data.obj;
+            console.log("查看的数据", res);
+            this.yunguAreaContractModel = res.data.data.obj.contract;
+            this.yunguAreaContractdetailModel =
+              res.data.data.obj.contractdetail;
+            this.yunguAreaContractdetailModel.mediaNumber =
+              res.data.data.obj.contractdetail.media_number;
+            this.yunguAreaContractdetailModel.signNumber =
+              res.data.data.obj.contractdetail.sign_number;
+            this.yunguAreaContractdetailModel.signWaitnumber =
+              res.data.data.obj.contractdetail.sign_waitnumber;
+            this.yunguAreaContractdetailModel.signWaitprice =
+              res.data.data.obj.contractdetail.sign_waitprice;
+            this.yunguAreaContractdetailModel.rentTotal =
+              res.data.data.obj.contractdetail.rent_total;
+            this.yunguAreaContractdetailModel.mangerTotal =
+              res.data.data.obj.contractdetail.manger_total;
+            this.yunguAreaContractdetailModel.totalAmount =
+              res.data.data.obj.contractdetail.total_amount;
+            this.yunguAreaContractdetailModel.paperAvg =
+              res.data.data.obj.contractdetail.paper_avg;
+            this.yunguAreaContractdetailModel.paperRent =
+              res.data.data.obj.contractdetail.paper_rent;
+            this.yunguAreaContractdetailModel.otherAmount =
+              res.data.data.obj.contractdetail.other_amount;
+            this.yunguAreaContractdetailModel.depositAmount =
+              res.data.data.obj.contractdetail.deposit_amount;
+            this.yunguAreaContractdetailModel.signYearprice =
+              res.data.data.obj.contractdetail.sign_yearprice;
+            this.yunguAreaContractdetailModel.signMonthprice =
+              res.data.data.obj.contractdetail.sign_monthprice;
+            this.yunguContractPayModel = res.data.data.obj.payList;
           }
         });
+    },
+    checkPayList(row){
+      console.log(row);
+      this.$router.push({
+        name:'planPayDetail',
+        query:row
+      })
     },
     changeId() {
       console.log("id", this.yunguContractPayModelChild.paySubject);
@@ -550,7 +492,6 @@ export default {
       console.log(file);
     },
     commit(check, isSave) {
-      this.yunguAreaContractModel.areaProjectId = localStorage.getItem('aid');
       this.yunguContractPayModelChild.yunguContractPaydetailList.push(
         this.yunguContractPaydetail
       );
@@ -565,13 +506,8 @@ export default {
       this.$http
         .post("/yunguareacontract/insertYunguAreaContract", obj)
         .then(res => {
-          this.yunguContractPayModel = [];
-          if (res.data.meta.code == 200) {
-            console.log("上传", res);
-            this.$router.push('/contractList');
-          }
+          console.log("上传", res);
         });
-
     },
     handleExceed(files, fileList) {
       this.$message.warning(

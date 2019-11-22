@@ -1,6 +1,6 @@
 <template>
-  <div class="addArea">
-    <h2>场地合同添加</h2>
+  <div class="editContractPage">
+    <h2>场地合同修改</h2>
     <div class="tabs">
       <el-tabs type="border-card">
         <el-tab-pane label="基本信息">
@@ -13,34 +13,34 @@
           >
             <el-form-item label="合同类型">
               <el-select v-model="yunguAreaContractModel.contractType" placeholder="选择">
-                <el-option label="数码海报" value="0"></el-option>
-                <el-option label="电梯投影" value="1"></el-option>
-                <el-option label="电梯视窗" value="2"></el-option>
-                <el-option label="液晶" value="3"></el-option>
+                <el-option label="数码海报" :value="0"></el-option>
+                <el-option label="电梯投影" :value="1"></el-option>
+                <el-option label="电梯视窗" :value="2"></el-option>
+                <el-option label="液晶" :value="3"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="签约性质">
               <el-select v-model="yunguAreaContractModel.siginType" placeholder="选择">
-                <el-option label="新签" value="0"></el-option>
-                <el-option label="旧签" value="1"></el-option>
+                <el-option label="新签" :value="0"></el-option>
+                <el-option label="旧签" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="净签约">
               <el-select v-model="yunguAreaContractModel.isNewsigin" placeholder="选择">
-                <el-option label="是" value="0"></el-option>
-                <el-option label="否" value="1"></el-option>
+                <el-option label="是" :value="0"></el-option>
+                <el-option label="否" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="开发人员">
               <el-select v-model="yunguAreaContractModel.developer" placeholder="选择">
-                <el-option label="隆" value="0"></el-option>
-                <el-option label="华" value="1"></el-option>
+                <el-option label="隆" :value="0"></el-option>
+                <el-option label="华" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="标准合同">
               <el-select v-model="yunguAreaContractModel.isStandard" placeholder="选择">
-                <el-option label="是" value="0"></el-option>
-                <el-option label="否" value="1"></el-option>
+                <el-option label="是" :value="0"></el-option>
+                <el-option label="否" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="合同到期时间">
@@ -54,20 +54,20 @@
             </el-form-item>
             <el-form-item label="合同属性">
               <el-select v-model="yunguAreaContractModel.contractAttrubite" placeholder="选择">
-                <el-option label="楼宇" value="0"></el-option>
-                <el-option label="框架" value="1"></el-option>
+                <el-option label="楼宇" :value="0"></el-option>
+                <el-option label="框架" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="签约主体">
               <el-select v-model="yunguAreaContractModel.signCustomer" placeholder="选择">
-                <el-option label="楼宇" value="0"></el-option>
-                <el-option label="框架" value="1"></el-option>
+                <el-option label="楼宇" :value="0"></el-option>
+                <el-option label="框架" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="付费主体">
               <el-select v-model="yunguAreaContractModel.payCustomer" placeholder="选择">
-                <el-option label="楼宇" value="0"></el-option>
-                <el-option label="框架" value="1"></el-option>
+                <el-option label="楼宇" :value="0"></el-option>
+                <el-option label="框架" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="项目名称" prop="projectName">
@@ -79,19 +79,16 @@
             <el-form-item label="项目属性">
               <el-input v-model="yunguAreaContractModel.projectPosition" placeholder="位置信息"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="项目地址" prop="developer">
-              <el-input v-model="yunguAreaContractModel.developer" placeholder="开发人员"></el-input>
-            </el-form-item> -->
             <el-form-item label="合同签约类型">
               <el-select v-model="yunguAreaContractModel.contractSignType" placeholder="选择">
-                <el-option label="普通合同" value="0"></el-option>
-                <el-option label="置换合同" value="1"></el-option>
+                <el-option label="普通合同" :value="0"></el-option>
+                <el-option label="置换合同" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="是否转租">
               <el-select v-model="yunguAreaContractModel.isSublet" placeholder="选择">
-                <el-option label="是" value="0"></el-option>
-                <el-option label="否" value="1"></el-option>
+                <el-option label="是" :value="0"></el-option>
+                <el-option label="否" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="合同文件">
@@ -114,8 +111,8 @@
         </el-tab-pane>
         <el-tab-pane label="分区价格信息">
           <el-form :inline="true" class="demo-form-inline">
-            <el-form-item label="签约媒体位数">
-              <el-input v-model="yunguAreaContractdetailModel.mediaNumber " placeholder="签约媒体位数"></el-input>
+            <el-form-item label="签约媒体位数" prop="mediaNumber">
+              <el-input v-model="yunguAreaContractdetailModel.mediaNumber" placeholder="签约媒体位数"></el-input>
             </el-form-item>
             <el-form-item label="实际执行开始日期">
               <el-date-picker
@@ -195,7 +192,7 @@
               <el-input v-model="yunguAreaContractdetailModel.otherAmount" placeholder="其它费用总额"></el-input>
             </el-form-item>
             <el-form-item label="押金金额">
-              <el-input v-model="yunguAreaContractdetailModel.depositAmount" placeholder="押金金额"></el-input>
+              <el-input v-model="yunguAreaContractdetailModel.depositaAmount" placeholder="押金金额"></el-input>
             </el-form-item>
             <el-form-item label="签约媒体单价(年)">
               <el-input
@@ -236,8 +233,8 @@
             </el-form-item>
             <el-form-item label="费用类别">
               <el-select v-model="yunguContractPayModelChild.costType" placeholder="选择">
-                <el-option label="押金" value="0"></el-option>
-                <el-option label="租金" value="1"></el-option>
+                <el-option label="押金" :value="0"></el-option>
+                <el-option label="租金" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="备注">
@@ -245,8 +242,8 @@
             </el-form-item>
             <el-form-item label="支付方式">
               <el-select v-model="yunguContractPayModelChild.payMode" placeholder="选择">
-                <el-option label="银行卡" value="0"></el-option>
-                <el-option label="支付宝" value="1"></el-option>
+                <el-option label="银行卡" :value="0"></el-option>
+                <el-option label="支付宝" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="总支付金额">
@@ -262,8 +259,8 @@
             </el-form-item>
             <el-form-item label="付款状态">
               <el-select v-model="yunguContractPayModelChild.payStatus" placeholder="选择">
-                <el-option label="待支付" value="0"></el-option>
-                <el-option label="已支付" value="1"></el-option>
+                <el-option label="待支付" :value="0"></el-option>
+                <el-option label="已支付" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="付费开始时间">
@@ -292,8 +289,8 @@
             </el-form-item>
             <el-form-item label="开户行">
               <el-select v-model="yunguContractPayModelChild.bankName" placeholder="请选择">
-                <el-option label="中国银行" value="0"></el-option>
-                <el-option label="已支付" value="1"></el-option>
+                <el-option label="中国银行" :value="0"></el-option>
+                <el-option label="已支付" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="账号">
@@ -305,7 +302,7 @@
             <el-table :data="yunguContractPayModel" style="width: 100%;margin-top:20px;" border>
               <el-table-column label="支付主体" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.payMode }}</span>
+                  <span>{{ scope.row.paySubject }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="费用类别" width="180">
@@ -320,7 +317,7 @@
               </el-table-column>
               <el-table-column label="支付方式" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.costType }}</span>
+                  <span>{{ scope.row.payMode }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="付费开始时间" width="180">
@@ -348,7 +345,6 @@
                   <span>{{ scope.row.payTotal }}</span>
                 </template>
               </el-table-column>
-
               <el-table-column label="开户行" width="180">
                 <template slot-scope="scope">
                   <span>{{ scope.row.bankName }}</span>
@@ -381,6 +377,7 @@
         size="medium"
         @click="commit('yunguAreaContractModel')"
       >保&nbsp;&nbsp;&nbsp;存</el-button>
+      <el-button type="warning" size="medium" @click="giveUp()">放弃修改并返回</el-button>
     </div>
   </div>
 </template>
@@ -405,90 +402,88 @@ export default {
         }
       ],
       yunguAreaContractModel: {
-        areaProjectId: null,
-        contractAttrubite: null,
+        areaProjectId: "",
+        contractAttrubite: "",
         contractEndtime: "",
         contractFile: "",
-        contractSignType: null,
-        contractType: null,
-        developer: null,
-        id: null,
+        contractSignType: "",
+        contractType: "",
+        developer: "",
+        id: "",
         identificationCode: "",
-        isNewsigin: null,
-        isStandard: null,
-        isSublet: null,
-        payCustomer: null,
-        siginType: null,
-        signCustomer: null,
-        verifyStatus: null
+        isNewsigin: "",
+        isStandard: "",
+        isSublet: "",
+        payCustomer: "",
+        siginType: "",
+        signCustomer: "",
+        verifyStatus: ""
       },
       yunguAreaContractdetailModel: {
-        accountCheck: null,
-        amortizeMode: null,
-        areaContractId: null,
-        chargeMode: null,
-        deadline: null,
-        depositAmount: null,
+        areaContractId: "",
+        chargeMode: "",
+        deadline: "",
+        depositaAmount: "",
         exclusiveMode: "",
         exeEndtime: "",
         exeStarttime: "",
-        id: null,
-        intallCost: null,
-        intallNumber: null,
-        mangerTotal: null,
-        mediaNumber: null,
-        notFullscreen: null,
-        otherAmount: null,
-        paperAvg: null,
-        paperRent: null,
-        protectNumber: null,
+        id: "",
+        // intallCost: "",
+        // intallNumber: "",
+        mangerTotal: "",
+        mediaNumber: "",
+        notFullscreen: "",
+        otherAmount: "",
+        paperAvg: "",
+        paperRent: "",
+        protectNumber: "",
         remark: "",
-        renewalRights: null,
-        rentRate: null,
-        rentTotal: null,
-        rentfree: null,
+        renewalRights: "",
+        rentRate: "",
+        rentTotal: "",
+        rentfree: "",
         rentfreeEndtime: "",
         rentfreeStarttime: "",
-        signAvgprice: null,
-        signMonthprice: null,
-        signNumber: null,
-        signPositionnumber: null,
-        signPrice: null,
-        signWaitnumber: null,
-        signWaitpositionnumber: null,
-        signWaitprice: null,
-        signYearprice: null,
-        total: null,
-        totalAmount: null,
-        useMediacount: null,
-        waitAvgprice: null,
-        yearRent: null
+        signAvgprice: "",
+        signMonthprice: "",
+        signNumber: "",
+        // signPositionnumber: "",
+        signPrice: "",
+        signWaitnumber: "",
+        signWaitpositionnumber: "",
+        signWaitprice: "",
+        signYearprice: "",
+        total: "",
+        totalAmount: "",
+        // useMediacount: "",
+        waitAvgprice: "",
+        yearRent: ""
       },
       yunguContractPayModel: [],
       yunguContractPayModelChild: {
-        remark: "",
+        remark: null,
         areaContractId: null,
-        bankAccount: "",
-        bankName: "",
+        bankAccount: null,
+        bankName: null,
         costType: null,
         isInvoice: null,
         isPersonal: null,
-        payEndtime: "",
+        payEndtime: null,
         payId: null,
         payMode: null,
-        payStarttime: "",
+        payStarttime: null,
         payStatus: null,
         paySubject: null,
         payTotal: null,
         planPeriod: null,
-        customerCode: "",
+        customerCode: null,
         yunguContractPaydetailList: []
       },
       yunguContractPaydetail: {
         contractPayId: null,
         id: null,
         payAmount: 0,
-        payRemark: "",
+        payRemark: null,
         payTime: "2019-12-12 00:00:00",
         seq: 0
       },
@@ -498,12 +493,33 @@ export default {
     };
   },
   methods: {
+    giveUp() {
+      this.$router.push("/contractList");
+    },
     getData() {
       this.$http
         .post("/yunguAreaCustomer/getYunguAreaCustomerList")
         .then(res => {
           if (res.data.meta.code == 200) {
             this.payModeList = res.data.data.obj;
+          }
+        });
+    },
+    // 获取更新对象信息
+    getUpdateInfo() {
+      const contract_id = localStorage.getItem("contract_id");
+      this.$http
+        .post(
+          "/yunguareacontract/getYunguAreaContractById",
+          qs.stringify({ id: contract_id })
+        )
+        .then(res => {
+          console.log("编辑获取的内容", res);
+          if (res.data.meta.code == 200) {
+            this.yunguAreaContractModel = res.data.data.obj.contract;
+            this.yunguAreaContractdetailModel =
+              res.data.data.obj.contractdetail;
+            this.yunguContractPayModel = res.data.data.obj.payList;
           }
         });
     },
@@ -525,20 +541,20 @@ export default {
       this.yunguContractPayModel.push(this.yunguContractPayModelChild);
       this.yunguContractPayModelChild = {
         remark: "",
-        areaContractId: null,
+        areaContractId: "",
         bankAccount: "",
         bankName: "",
-        costType: null,
-        isInvoice: null,
-        isPersonal: null,
+        costType: "",
+        isInvoice: "",
+        isPersonal: "",
         payEndtime: "",
-        payId: null,
-        payMode: null,
+        payId: "",
+        payMode: "",
         payStarttime: "",
-        payStatus: null,
-        paySubject: null,
-        payTotal: null,
-        planPeriod: null,
+        payStatus: "",
+        paySubject: "",
+        payTotal: "",
+        planPeriod: "",
         customerCode: "",
         yunguContractPaydetailList: []
       };
@@ -550,28 +566,34 @@ export default {
       console.log(file);
     },
     commit(check, isSave) {
-      this.yunguAreaContractModel.areaProjectId = localStorage.getItem('aid');
-      this.yunguContractPayModelChild.yunguContractPaydetailList.push(
-        this.yunguContractPaydetail
-      );
-      this.yunguContractPayModel.push(this.yunguContractPayModelChild);
+      this.yunguAreaContractModel.areaProjectId = localStorage.getItem("aid");
+      // this.yunguContractPayModelChild.yunguContractPaydetailList.push(
+      //   this.yunguContractPaydetail
+      // );
+      // this.yunguContractPayModel.push(this.yunguContractPayModelChild);
       const obj = {};
       if (isSave) {
         obj.taskId = localStorage.getItem("task_id");
       }
       obj.yunguAreaContractModel = this.yunguAreaContractModel;
-      obj.yunguAreaContractdetailModel = this.yunguAreaContractdetailModel;
       obj.yunguContractPayModel = this.yunguContractPayModel;
+   
+      // 把重新组装的对象复制到对象属性内
+      obj.yunguAreaContractdetailModel = this.yunguAreaContractdetailModel;
+      console.log("这是上传的内容", obj);
       this.$http
-        .post("/yunguareacontract/insertYunguAreaContract", obj)
+        .post("/yunguareacontract/updateYunguAreaContract", obj)
         .then(res => {
-          this.yunguContractPayModel = [];
           if (res.data.meta.code == 200) {
-            console.log("上传", res);
-            this.$router.push('/contractList');
+            this.$message({
+              type: "success",
+              text: "修改成功，即将返回列表页。"
+            });
+            setTimeout(() => {
+              this.$router.push("/contractList");
+            }, 2000);
           }
         });
-
     },
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -586,12 +608,13 @@ export default {
   },
   mounted() {
     this.getData();
+    this.getUpdateInfo();
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.addArea {
+.editContractPage {
   width: 95%;
   padding: 30px 2.5%;
   height: auto;
@@ -636,7 +659,7 @@ export default {
 }
 </style>
 <style lang="scss">
-.addArea {
+.editContractPage {
   .el-form--inline .el-form-item__label {
     width: 120px;
   }

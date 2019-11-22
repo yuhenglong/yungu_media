@@ -92,7 +92,7 @@
             size="small"
             v-if="scope.row.contract_code == null || scope.row.contract_code == ''"
           >录入</el-button>
-          <el-button type="text" size="small" v-else>编辑</el-button>
+          <el-button type="text" size="small" v-else @click="editPage(scope.row)">编辑</el-button>
           <el-button
             @click="handleClick(scope.row)"
             type="text"
@@ -136,10 +136,11 @@ export default {
     };
   },
   methods: {
-    routerNext(row){
-      console.log('这是每行的信息',row);
-      localStorage.setItem('task_id',row.task_id);
-      this.$router.push('/addContract');
+    routerNext(row) {
+      console.log("这是每行的信息", row);
+      localStorage.setItem("task_id", row.task_id);
+      localStorage.setItem("aid", row.aid);
+      this.$router.push("/addContract");
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -152,6 +153,12 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
+    editPage(row) {
+      console.log('编辑',row);
+      localStorage.setItem('task_id',row.task_id);
+      localStorage.setItem("contract_id", row.contract_id);
+      this.$router.push("/editContractPage");
+    },
     examine(row) {
       console.log(row);
       localStorage.setItem("aid", row.aid);
@@ -159,8 +166,8 @@ export default {
     },
     lookConInfo(row) {
       console.log(row);
-      localStorage.setItem('contract_id',row.contract_id);
-      
+      localStorage.setItem("contract_id", row.contract_id);
+      this.$router.push('/lookConInfo');
     },
     getTableData() {
       this.$http

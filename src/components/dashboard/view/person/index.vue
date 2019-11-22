@@ -1,0 +1,65 @@
+<template>
+  <div class="person">
+    <el-dropdown trigger="hover">
+      <span class="el-dropdown-link userinfo-inner">
+        <img :src="this.sysUserAvatar" />
+        {{sysUserName}}
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>我的消息</el-dropdown-item>
+        <el-dropdown-item>设置</el-dropdown-item>
+        <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "person",
+  components: {},
+  data() {
+    return {
+      sysUserName: "萍萍",
+      sysUserAvatar: require("@/assets/td2.jpg")
+    };
+  },
+  methods: {
+    logout() {
+      var _this = this;
+      this.$confirm("确认退出吗?", "提示", {
+        //type: 'warning'
+      })
+        .then(() => {
+          localStorage.removeItem("eleToken");
+          // window.location.reload();
+          _this.$router.push("/login");
+        })
+        .catch(() => {});
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.person {
+  text-align: right;
+  padding-right: 35px;
+  float: right;
+  margin: 0 5px;
+  .userinfo-inner {
+    font-size: 16px;
+    line-height: 50px;
+    cursor: pointer;
+    color: #3a8ee6;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      margin: 10px 0px 10px 10px;
+      float: right;
+    }
+  }
+}
+</style>

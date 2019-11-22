@@ -16,8 +16,10 @@
 .headPortrait {
   border: 1px dashed #409eff;
   border-radius: 50%;
-  margin: 50px 10px 30px;
+  margin: 30px auto;
   overflow: hidden;
+  width:120px;
+  height:120px;
 }
 .avatar-uploader .el-upload {
   border: 1px dashed #409eff;
@@ -33,14 +35,14 @@
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
   text-align: center;
 }
 .avatar {
-  width: 178px;
-  height: 178px;
+  width: 120px;
+  height: 120px;
   display: block;
 }
 </style>

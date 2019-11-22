@@ -27,9 +27,9 @@
             <el-form-item label="维护人员" prop="protecter">
               <el-select disabled v-model="yunguAreaProjectModel.protecter" placeholder="请选择">
                 <el-option
-                  v-for="(item,index) in protecterList"
+                  v-for="item in protecterList"
                   :key="item.index"
-                  :label="item.real_name"
+                  label="item.real_name"
                   :value="item.did"
                 ></el-option>
               </el-select>
@@ -39,15 +39,15 @@
                 <el-option
                   v-for="item in manageCompanyTwo"
                   :key="item.name"
-                  :label="item.name"
+                  label="item.name"
                   :value="item.did"
                 ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="一级属性">
               <el-select disabled v-model="yunguAreaProjectModel.projectType" placeholder="一级属性">
-                <el-option label="写字楼" value="0"></el-option>
-                <el-option label="停车场" value="1"></el-option>
+                <el-option label="写字楼" :value="0"></el-option>
+                <el-option label="停车场" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="所属地区">
@@ -55,8 +55,8 @@
             </el-form-item>
             <el-form-item label="套餐赠送">
               <el-select disabled v-model="yunguAreaProjectModel.setMeal" placeholder="套餐赠送">
-                <el-option label="套餐一" value="0"></el-option>
-                <el-option label="套餐二" value="1"></el-option>
+                <el-option label="套餐一" :value="0"></el-option>
+                <el-option label="套餐二" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="是否备案">
@@ -273,10 +273,10 @@
               >支付管理：</h3>
               <el-form-item label="支付方式">
                 <el-select disabled v-model="yunguPayMethodModelList.payName" placeholder="名称：" id="payText">
-                  <el-option label="银行卡" value="0"></el-option>
-                  <el-option label="支付宝" value="1"></el-option>
-                  <el-option label="微信" value="2"></el-option>
-                  <el-option label="现金" value="3"></el-option>
+                  <el-option label="银行卡" :value="0"></el-option>
+                  <el-option label="支付宝" :value="1"></el-option>
+                  <el-option label="微信" :value="2"></el-option>
+                  <el-option label="现金" :value="3"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="账号">
