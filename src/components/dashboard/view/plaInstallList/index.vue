@@ -84,7 +84,7 @@
           <el-button @click="checkItemInfo(scope.row)" type="text" size="small">查看项目信息</el-button>
           <el-button @click="checkContractInfo(scope.row)" type="text" size="small">查看合同信息</el-button>
           <el-button @click="auditLogging(scope.row)" type="text" size="small">查看审核记录</el-button>
-          <el-button @click="audit(scope.$index, scope.row)" type="text" size="small">新增</el-button>
+          <el-button @click="addAudit(scope.$index, scope.row)" type="text" size="small">新增</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -181,6 +181,13 @@ export default {
     };
   },
   methods: {
+    addAudit(index,row){
+      console.log('这是新增',index,row);
+      this.$router.push({
+        path:'/addPlaInstallList',
+        query:row
+      })
+    },
     checkItemInfo(row) {
       localStorage.setItem("aid", row.aid);
       this.$router.push("/examinePage");

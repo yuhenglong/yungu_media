@@ -196,8 +196,8 @@ export default {
     },
     audit(index, row) {
       this.dialogAuditVisible = true;
-      this.checkDia.identificationCode = row.identification_code;
-      console.log(this.checkDia.identificationCode, "dada");
+      localStorage.setItem('identification_code',row.contract_code);
+      this.checkDia.identificationCode = row.contract_code;
       this.checkDia.taskId = row.task_id;
     },
     deilComfirm() {

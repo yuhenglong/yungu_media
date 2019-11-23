@@ -13,30 +13,29 @@ export default {
   components: {},
   data() {
     return {
-      breadListIm: [
-        {
-          path: "/addContract",
-          name: "添加合同"
-        },
-        {
-          path: "/lizi",
-          name: "例子测试"
-        }
-      ],
+      breadListIm: {},
       breadListLast: []
     };
   },
   methods: {
-    loadChange() {
+    async loadChange() {
       this.breadListLast = [];
-      console.log("这是路由历史", this.$route.path);
-      // this.breadListLast = this.$route.path.split("/");
-      // this.breadListLast.splice(0, 1);
-      // for(let item in this.breadListLast){
-      //     item = '/'+ item;
-      // }
+      await this.getRouterList();
       this.breadListLast.push(this.$route.path);
-      console.log(this.breadListLast);
+      console.log("这是啥", this.breadListIm);
+      // for(let item in this.breadListIm){
+      //     if(item.url == this.breadListLast[0]){
+      //       console.log('大水货');
+      //     }
+      // }
+    },
+    getRouterList() {
+      this.$http.get("/sysResource/getUrlNotNullAllList").then(res => {
+        console.log("dongxi", res);
+        if (res.data.meta.code == 200) {
+          this.breadListIm = res.data.data.obj;
+        }
+      });
     }
   },
   watch: {
@@ -45,6 +44,9 @@ export default {
       // console.log(to.path);
     }
   },
+  // created() {
+  //   this.getRouterList();
+  // },
   mounted() {
     this.loadChange();
   }

@@ -30,6 +30,7 @@ import checkContract from '@/components/dashboard/view/checkContract'
 import planPayDetail from '@/components/dashboard/view/planPayDetail'
 import editContractPage from '@/components/dashboard/view/editContractPage'
 import lookConInfo from '@/components/dashboard/view/lookConInfo'
+import addPlaInstallList from '@/components/dashboard/view/addPlaInstallList'
 import lizi from '@/components/dashboard/view/lizi'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
@@ -191,6 +192,10 @@ const router = new Router({
                 {
                     path: '/lookConInfo',
                     component: lookConInfo
+                },
+                {
+                    path: '/addPlaInstallList',
+                    component: addPlaInstallList
                 }
             ]
         },

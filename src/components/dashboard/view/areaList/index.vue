@@ -179,9 +179,10 @@ export default {
         });
     },
     examine(row) {
+      console.log(row);
+      localStorage.setItem("identification_code", row.identification_code);
       localStorage.setItem("aid", row.aid);
       this.$router.push("/examinePage");
-      console.log(row);
     },
     editPage(index, row) {
       localStorage.setItem("aid", row.aid);

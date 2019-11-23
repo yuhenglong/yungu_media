@@ -14,7 +14,6 @@
           <el-option label="区域二" value="beijing"></el-option>
         </el-select>
       </el-form-item>
-
       <el-form-item label="项目编号">
         <el-input v-model="formInline.user" placeholder="项目编号"></el-input>
       </el-form-item>
@@ -261,7 +260,6 @@ export default {
           }
         });
     },
- 
     getTableData() {
       this.$http
         .post(

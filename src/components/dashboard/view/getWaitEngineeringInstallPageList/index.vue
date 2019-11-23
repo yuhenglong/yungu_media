@@ -65,14 +65,14 @@
     </el-form>
     <!-- 表格 -->
     <el-table :data="areaTableList" border style="width: 100%">
-      <el-table-column fixed prop="identification_code" label="项目编号" width="150"></el-table-column>
-      <el-table-column prop="project_name" label="项目名称" width="120"></el-table-column>
-      <el-table-column prop="project_address" label="城市" width="120"></el-table-column>
+      <el-table-column fixed prop="projectCode" label="项目编号" width="150"></el-table-column>
+      <el-table-column prop="projectName" label="项目名称" width="120"></el-table-column>
+      <el-table-column prop="projectAddress" label="城市" width="120"></el-table-column>
       <el-table-column prop="protecter" label="维护人员" width="120"></el-table-column>
       <el-table-column prop="dept" label="所属部门" width="300"></el-table-column>
       <el-table-column prop="developer" label="管理公司" width="120"></el-table-column>
-      <el-table-column prop="project_type" label="项目属性" width="120"></el-table-column>
-      <el-table-column prop="activity_status" label="项目状态" width="120"></el-table-column>
+      <el-table-column prop="projectType" label="项目属性" width="120"></el-table-column>
+      <el-table-column prop="activityStatus" label="项目状态" width="120"></el-table-column>
       <el-table-column label="业务状态" width="120">
         <template slot-scope="scope">
           <span v-if="scope.row.verify_status == 0">审核不通过</span>
@@ -190,8 +190,8 @@ export default {
     },
     audit(index, row) {
       this.dialogAuditVisible = true;
-      this.checkDia.identificationCode = row.customer_code;
-      this.checkDia.taskId = row.task_id;
+      this.checkDia.identificationCode = row.contractCode;
+      this.checkDia.taskId = row.taskId;
     },
     deilComfirm() {
       this.$http
@@ -265,7 +265,7 @@ export default {
     getTableData() {
       this.$http
         .post(
-          "/yunguInstallList/getWaitEngineeringInstallPageList",
+          "/yunguInstallList/getWaitManagerInstallPageList",
           this.pageInfo
         )
         .then(res => {
@@ -293,6 +293,7 @@ export default {
     font-size: 26px;
     line-height: 26px;
     margin: 10px 0;
+    text-align:center;
   }
   .pagi {
     width: 100%;

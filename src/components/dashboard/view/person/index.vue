@@ -20,11 +20,19 @@ export default {
   components: {},
   data() {
     return {
-      sysUserName: "萍萍",
-      sysUserAvatar: require("@/assets/td2.jpg")
+      sysUserName: "",
+      sysUserAvatar: ''
     };
   },
   methods: {
+    getInfo(){
+      this.$http.get('/getUserInfo').then(res =>{
+        if(res.data.meta.code ==200){
+          this.sysUserName = res.data.data.obj.realName;
+          this.sysUserAvatar = res.data.data.obj.photo;
+        }
+      })
+    },
     logout() {
       var _this = this;
       this.$confirm("确认退出吗?", "提示", {
@@ -37,6 +45,9 @@ export default {
         })
         .catch(() => {});
     }
+  },
+  created(){
+    this.getInfo();
   }
 };
 </script>
