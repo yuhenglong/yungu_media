@@ -81,24 +81,17 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width>
         <template slot-scope="scope">
-          <el-button @click="checkItemInfo(scope.row)" type="text" size="small">查看项目信息</el-button>
-          <el-button @click="checkContractInfo(scope.row)" type="text" size="small">查看合同信息</el-button>
-          <el-button @click="auditLogging(scope.row)" type="text" size="small">查看审核记录</el-button>
-          <el-button @click="addAudit(scope.$index, scope.row)" type="text" size="small">新增</el-button>
+          <!-- <el-button @click="checkItemInfo(scope.row)" type="text" size="small">查看项目信息</el-button> -->
+          <!-- <el-button @click="checkContractInfo(scope.row)" type="text" size="small">查看合同信息</el-button> -->
+          <el-button @click="addAudit(scope.$index, scope.row)" type="text" size="small" v-if="scope.row.sid == null">新增</el-button>
+          <el-button @click="auditLogging(scope.row)" type="text" size="small" v-if="scope.row.sid !== null">查看审核记录</el-button>
+          <el-button @click="checkInstallInfo(scope.$index, scope.row)" type="text" size="small" v-if="scope.row.sid !== null">查看安装单信息</el-button>
+          <el-button @click="editInstallInfo(scope.row)" type="text" size="small" v-if="scope.row.verfyStatus == 0 ||scope.row.verfyStatus == 3">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagi">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.pageInfo.pageNum"
-        :page-sizes="[10, 20]"
-        :page-size="this.pageInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
-    </div>
+    <!-- 二次封装分页插件 -->
+    <pagination :total="total" @pageChange="changePage"></pagination>
     <!-- 查看审核记录 -->
     <el-dialog
       :title="title"
@@ -143,8 +136,12 @@
 
 <script>
 import qs from "qs";
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "plaInstallList",
+  components: {
+    pagination
+  },
   data() {
     return {
       date: "",
@@ -181,12 +178,20 @@ export default {
     };
   },
   methods: {
-    addAudit(index,row){
-      console.log('这是新增',index,row);
+    checkInstallInfo(index,row){
       this.$router.push({
-        path:'/addPlaInstallList',
-        query:row
+        path:'/checkPlaInstall',
+        query:{sid:row.sid}
       })
+    },
+    editInstallInfo(row) {
+
+    },
+    addAudit(index, row) {
+      this.$router.push({
+        path: "/addPlaInstallList",
+        query: row
+      });
     },
     checkItemInfo(row) {
       localStorage.setItem("aid", row.aid);
@@ -271,6 +276,10 @@ export default {
           }
         });
     },
+    changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
+    },
     getTableData() {
       this.$http
         .post("/yunguInstallList/getYunguInstallPageList", this.pageInfo)
@@ -300,10 +309,6 @@ export default {
     line-height: 26px;
     text-align: center;
     margin: 10px 0;
-  }
-  .pagi {
-    width: 100%;
-    height: 100px;
   }
   .add_btn {
     text-decoration: none;

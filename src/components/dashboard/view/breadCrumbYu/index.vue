@@ -2,7 +2,7 @@
   <div class="breadCrumbYu">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item v-for="item in breadListLast" :to="item.path" :key="item.path">{{item}}</el-breadcrumb-item>
+      <el-breadcrumb-item :to="breadList.url">{{breadList.path}}</el-breadcrumb-item>
     </el-breadcrumb>
   </div>
 </template>
@@ -13,40 +13,38 @@ export default {
   components: {},
   data() {
     return {
-      breadListIm: {},
-      breadListLast: []
+      breadListIm: [],
+      breadListLast: '',
+      breadList:{}
     };
   },
   methods: {
-    async loadChange() {
-      this.breadListLast = [];
-      await this.getRouterList();
-      this.breadListLast.push(this.$route.path);
-      console.log("这是啥", this.breadListIm);
-      // for(let item in this.breadListIm){
-      //     if(item.url == this.breadListLast[0]){
-      //       console.log('大水货');
-      //     }
-      // }
+    loadChange() {
+      this.breadListLast = '';
+      this.breadList = {};
+      this.breadListLast=this.$route.path;
+      this.getRouterList();
     },
     getRouterList() {
       this.$http.get("/sysResource/getUrlNotNullAllList").then(res => {
-        console.log("dongxi", res);
         if (res.data.meta.code == 200) {
-          this.breadListIm = res.data.data.obj;
+        this.breadListIm = res.data.data.obj;
         }
-      });
+      }).then(json =>{
+        for(let i = 0;i<this.breadListIm.length;i++){
+          if(this.breadListIm[i].url == this.breadListLast){
+            this.breadList = this.breadListIm[i];
+          }
+        }
+      }
+      )
     }
   },
   watch: {
     $route(to, from) {
       this.loadChange();
-      // console.log(to.path);
     }
   },
-  // created() {
-  //   this.getRouterList();
-  // },
   mounted() {
     this.loadChange();
   }

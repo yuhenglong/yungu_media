@@ -49,6 +49,6 @@ export default {
 .rightView {
   position: fixed;
   height:100%;
-  top: 70px;
+  top: 85px;
 }
 </style>

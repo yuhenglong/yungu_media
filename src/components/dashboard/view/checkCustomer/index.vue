@@ -95,17 +95,8 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagi">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="this.pageInfo.pageNum"
-          :page-sizes="[10, 20]"
-          :page-size="this.pageInfo.pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-        ></el-pagination>
-      </div>
+      <!-- 二次封装分页插件 -->
+      <pagination :total="total" @pageChange="changePage"></pagination>
     </div>
     <!-- 查看弹窗 -->
     <el-dialog
@@ -239,10 +230,12 @@
 <script>
 import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "checkCustomer",
   components: {
-    linkage
+    linkage,
+    pagination
   },
   data() {
     return {
@@ -334,7 +327,7 @@ export default {
             });
             this.dialogAuditVisible = false;
             this.getTableData();
-          }else{
+          } else {
             this.$message({
               type: "error",
               message: `处理失败！请重新提交。`
@@ -436,6 +429,10 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.pageInfo.pageNum = val;
+    },
+    changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
     },
     getTableData() {
       this.$http

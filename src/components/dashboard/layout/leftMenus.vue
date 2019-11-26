@@ -17,7 +17,7 @@
           </template>
           <template v-for="(itemb,indexb) in item.subList">
             <el-menu-item-group :key="indexb">
-              <el-menu-item :index="itemb.url">{{itemb.name}}</el-menu-item>
+              <el-menu-item :index="itemb.url" @click="changeRouter(itemb.url,itemb.name)">{{itemb.name}}</el-menu-item>
             </el-menu-item-group>
           </template>
         </el-submenu>
@@ -52,6 +52,15 @@ export default {
           this.menusTree = res.data.data.obj;
         }
       });
+    },
+    changeRouter(url,name){
+      const that = this;
+      const obj ={
+        name:name,
+        path:url,
+        title:name,
+      };
+      this.$store.dispatch("addVisitedViews", obj);
     }
   },
   computed: {

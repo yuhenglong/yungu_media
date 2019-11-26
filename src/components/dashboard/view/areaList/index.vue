@@ -75,17 +75,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagi">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.pageInfo.pageNum"
-        :page-sizes="[10, 20]"
-        :page-size="this.pageInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
-    </div>
+    <!-- 二次封装分页插件 -->
+    <pagination :total="total" @pageChange="changePage"></pagination>
     <!-- 查看审核记录 -->
     <el-dialog
       :title="titleTwo"
@@ -108,9 +99,12 @@
 
 <script>
 import qs from "qs";
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "areaList",
-  components: {},
+  components: {
+    pagination
+  },
   data() {
     return {
       formInline: {
@@ -188,6 +182,10 @@ export default {
       localStorage.setItem("aid", row.aid);
       localStorage.setItem("identification_code", row.identification_code);
       this.$router.push("/editPlaceAudit");
+    },
+    changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
     },
     getTableData() {
       this.$http

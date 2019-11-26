@@ -76,7 +76,7 @@ export default {
               return res.json();
             })
             .then(json => {
-              console.log(json)
+              console.log(json);
               if (json.meta.code == 200) {
                 localStorage.setItem("eleToken", json.data.token);
                 this.$router.push("/");

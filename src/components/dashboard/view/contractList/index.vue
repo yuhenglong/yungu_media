@@ -1,5 +1,6 @@
 <template>
   <div class="contractList">
+    <h2>场地合同列表</h2>
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="合同编号">
         <el-input v-model="formInline.user" placeholder="合同编号"></el-input>
@@ -102,24 +103,18 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagi">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.pageInfo.pageNum"
-        :page-sizes="[10, 20]"
-        :page-size="this.pageInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
-    </div>
+    <!-- 二次封装分页插件 -->
+    <pagination :total="total" @pageChange="changePage"></pagination>
   </div>
 </template>
 
 <script>
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "contractList",
-  components: {},
+  components: {
+    pagination
+  },
   data() {
     return {
       formInline: {
@@ -154,8 +149,8 @@ export default {
       console.log("submit!");
     },
     editPage(row) {
-      console.log('编辑',row);
-      localStorage.setItem('task_id',row.task_id);
+      console.log("编辑", row);
+      localStorage.setItem("task_id", row.task_id);
       localStorage.setItem("contract_id", row.contract_id);
       this.$router.push("/editContractPage");
     },
@@ -167,7 +162,11 @@ export default {
     lookConInfo(row) {
       console.log(row);
       localStorage.setItem("contract_id", row.contract_id);
-      this.$router.push('/lookConInfo');
+      this.$router.push("/lookConInfo");
+    },
+    changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
     },
     getTableData() {
       this.$http
@@ -193,5 +192,11 @@ export default {
   padding: 30px 2.5%;
   height: auto;
   overflow: auto;
+  h2 {
+    font-size: 26px;
+    line-height: 26px;
+    text-align: center;
+    margin: 10px 0;
+  }
 }
 </style>

@@ -90,7 +90,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagi">
+    <!-- 二次封装分页插件 -->
+    <pagination :total="total" @pageChange="changePage"></pagination>
+    <!-- <div class="pagi">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -100,7 +102,7 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       ></el-pagination>
-    </div>
+    </div>-->
     <!-- 查看审核记录 -->
     <el-dialog
       :title="title"
@@ -145,8 +147,12 @@
 
 <script>
 import qs from "qs";
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "waitPlaPayAudit",
+  components: {
+    pagination
+  },
   data() {
     return {
       date: "",
@@ -265,6 +271,10 @@ export default {
             console.log(this.formCheckList);
           }
         });
+    },
+    changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
     },
     getTableData() {
       this.$http

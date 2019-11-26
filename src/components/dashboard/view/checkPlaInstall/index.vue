@@ -1,6 +1,6 @@
 <template>
-  <div class="addArea">
-    <h2>添加安装单</h2>
+  <div class="checkPlaInstall">
+    <h2>查看安装单</h2>
     <div class="tabs">
       <el-tabs type="border-card">
         <el-tab-pane label="基本信息">
@@ -26,10 +26,10 @@
               <el-input :readonly="true" v-model="addInstallTable.projectCode" placeholder></el-input>
             </el-form-item>
             <el-form-item :readonly="true" label="项目名称" prop="projectName">
-              <el-input v-model="addInstallTable.projectName" placeholder></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.projectName" placeholder></el-input>
             </el-form-item>
             <el-form-item label="项目所在地" prop="installationAddress">
-              <el-input v-model="addInstallTable.installationAddress" placeholder="项目所在地"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.installationAddress" placeholder="项目所在地"></el-input>
             </el-form-item>
             <!-- <el-form-item label="管理公司" prop="ccc">
               <el-input v-model="addInstallTable.ccc" placeholder="管理公司"></el-input>
@@ -50,10 +50,10 @@
               <!-- <el-input v-model="addInstallTable.protecter" placeholder="维护人员"></el-input> -->
             </el-form-item>
             <el-form-item label="维护人员电话" prop="protecterPhone">
-              <el-input v-model="addInstallTable.protecterPhone" placeholder="维护人员电话"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.protecterPhone" placeholder="维护人员电话"></el-input>
             </el-form-item>
             <el-form-item label="联系人" prop="linkman">
-              <el-input v-model="addInstallTable.linkman" placeholder="联系人"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.linkman" placeholder="联系人"></el-input>
             </el-form-item>
             <!-- <el-form-item label="联系方式">
               <el-select v-model="yunguContractPayModelChild.ddd" placeholder="选择">
@@ -66,28 +66,53 @@
               <el-date-picker
                 v-model="addInstallTable.installationDate"
                 type="date"
-                placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                placeholder="选择日期"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="实际联系人" prop="realUser">
-              <el-input v-model="addInstallTable.realUser" placeholder="实际联系人"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.realUser" placeholder="实际联系人"></el-input>
             </el-form-item>
             <el-form-item label="实际联系人电话" prop="realUserPhone">
-              <el-input v-model="addInstallTable.realUserPhone" placeholder="实际联系人电话"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.realUserPhone" placeholder="实际联系人电话"></el-input>
             </el-form-item>
             <el-form-item label="实际联系人手机" prop="realUserMobile">
-              <el-input v-model="addInstallTable.realUserMobile" placeholder="实际联系人电话"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.realUserMobile" placeholder="实际联系人电话"></el-input>
             </el-form-item>
             <el-form-item label="备注" prop="remark">
-              <el-input v-model="addInstallTable.remark" placeholder="备注"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.remark" placeholder="备注"></el-input>
             </el-form-item>
             <el-form-item label="创建人" prop="creator">
-              <el-input v-model="addInstallTable.creator" placeholder="创建人"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.creator" placeholder="创建人"></el-input>
             </el-form-item>
             <el-form-item label="创建日期" prop="createDate">
-              <el-date-picker format="yyyy-MM-dd" value-format="yyyy-MM-dd" v-model="addInstallTable.createDate" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                v-model="addInstallTable.createDate"
+                type="date"
+                placeholder="选择日期"
+              ></el-date-picker>
             </el-form-item>
           </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="点位信息">
+          <el-table :data="tableData" style="width: 100%">
+            <el-table-column prop="project_name" label="项目名称" width="180"></el-table-column>
+            <el-table-column prop="contract_code" label="合同编号" width="180"></el-table-column>
+            <el-table-column prop="install_name" label="安装名称"></el-table-column>
+            <el-table-column prop="Media_name" label="媒体名称"></el-table-column>
+            <el-table-column prop="show_mode" label="呈现方式"></el-table-column>
+            <el-table-column prop="equipment_name" label="计划机型"></el-table-column>
+            <el-table-column prop="device_count" label="设备数量"></el-table-column>
+            <el-table-column prop="is_give" label="是否赠送"></el-table-column>
+            <el-table-column prop="company" label="所属公司"></el-table-column>
+            <el-table-column prop="installation_result" label="安装状态"></el-table-column>
+            <el-table-column prop="install_date" label="安装时间"></el-table-column>
+            <el-table-column prop="lookover_result" label="巡视状态"></el-table-column>
+            <el-table-column prop="equiment_code" label="设备编码"></el-table-column>
+          </el-table>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -95,21 +120,21 @@
       <el-button
         type="primary"
         size="medium"
-        @click="commit('addInstallTable')"
-      >提&nbsp;&nbsp;&nbsp;交</el-button>
+        @click="reGo()"
+      >返回上一页</el-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "areaManage",
+  name: "checkPlaInstall",
   components: {},
   data() {
     return {
       addInstallTable: {
-        areaProjectId:'',
-        showMode: '',
+        areaProjectId: "",
+        showMode: 0,
         dept: "",
         projectCode: "",
         projectName: "",
@@ -119,7 +144,6 @@ export default {
         protecterPhone: "",
         linkman: "",
         installationDate: "",
-        installationAddress: "",
         realUser: "",
         realUserPhone: "",
         realUserMobile: "",
@@ -127,6 +151,7 @@ export default {
         creator: "",
         createDate: ""
       },
+      tableData:[],
       baseInfoOne: {
         projectName: [
           { required: true, message: "请输入项目名称", trigger: "blur" }
@@ -137,43 +162,40 @@ export default {
         developer: [
           { required: true, message: "请输入开发人员", trigger: "blur" }
         ]
-        // dept: [{ required: true, message: "请选择所属部门", trigger: "change" }]
       }
     };
   },
   methods: {
     getTable() {
-      console.log("这是路由传参", this.$route.query);
-      this.addInstallTable = this.$route.query;
-      this.addInstallTable.protecter = 0;
-      this.addInstallTable.areaProjectId = this.$route.query.aid;
-    },
-    commit(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          delete this.addInstallTable.creator;
-          delete this.addInstallTable.createDate;
-          console.log("上传数据", this.addInstallTable);
-          this.$http
-            .post(
-              "/yunguInstallList/insertYunguInstallList",
-              this.addInstallTable
-            )
-            .then(res => {
-              if (res.data.meta.code == 200) {
-                this.$message({
-                  type: "success",
-                  message: "新增安装单成功，即将返回列表页。"
-                });
-                setTimeout(() => {
-                  this.$router.go(-1);
-                }, 3000);
-              }
-            });
-        } else {
-          console.log("error!");
+      const url =
+        "/yunguInstallList/getYunguInstallListById?id=" + this.$route.query.sid;
+      this.$http.get(url).then(res => {
+        console.log("获取列表信息", res);
+        if (res.data.meta.code == 200) {
+          this.addInstallTable = res.data.data.obj.installInfo;
+          this.addInstallTable.areaProjectId =
+            res.data.data.obj.installInfo.area_project_id;
+          this.addInstallTable.createDate =
+            res.data.data.obj.installInfo.create_date;
+          this.addInstallTable.installationAddress =
+            res.data.data.obj.installInfo.installation_address;
+          this.addInstallTable.installationDate =
+            res.data.data.obj.installInfo.installation_date;
+          this.addInstallTable.realUser =
+            res.data.data.obj.installInfo.real_user;
+          this.addInstallTable.realUserMobile =
+            res.data.data.obj.installInfo.real_user_mobile;
+          this.addInstallTable.realUserPhone =
+            res.data.data.obj.installInfo.real_user_phone;
+          this.addInstallTable.showMode =
+            res.data.data.obj.installInfo.show_mode;
+            // 赋值table
+            this.tableData = res.data.data.obj.areaPostion;
         }
       });
+    },
+    reGo(){
+      this.$router.go(-1);
     }
   },
   mounted() {
@@ -183,7 +205,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addArea {
+.checkPlaInstall {
   width: 95%;
   padding: 30px 2.5%;
   height: auto;
@@ -223,7 +245,7 @@ export default {
 }
 </style>
 <style lang="scss">
-.addArea {
+.checkPlaInstall {
   .el-form--inline .el-form-item__label {
     width: 120px;
   }

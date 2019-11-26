@@ -79,19 +79,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagi">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.pageInfo.pageNum"
-        :page-sizes="[10, 20]"
-        :page-size="this.pageInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        style="width:100%;height:100px;"
-      ></el-pagination>
-    </div>
-    <!-- 查看审核记录 -->
+    <!-- 二次封装分页插件 -->
+    <pagination :total="total" @pageChange="changePage"></pagination>
     <el-dialog
       :title="titleTwo"
       :visible.sync="dialogCheckVisible"
@@ -134,10 +123,13 @@
 </template>
 
 <script>
-import qs from 'qs';
+import qs from "qs";
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "contractList",
-  components: {},
+  components: {
+    pagination
+  },
   data() {
     return {
       titleTwo: "待审核场地项目列表",
@@ -196,7 +188,7 @@ export default {
     },
     audit(index, row) {
       this.dialogAuditVisible = true;
-      localStorage.setItem('identification_code',row.contract_code);
+      localStorage.setItem("identification_code", row.contract_code);
       this.checkDia.identificationCode = row.contract_code;
       this.checkDia.taskId = row.task_id;
     },
@@ -238,13 +230,18 @@ export default {
       console.log("submit!");
     },
     examine(row) {
-      console.log('待处理',row);
+      console.log("待处理", row);
       localStorage.setItem("aid", row.aid);
       this.$router.push("/checkContract");
     },
     lookConInfo(row) {
       console.log(row);
       localStorage.setItem("contract_id", row.contract_id);
+    },
+    changePage(item) {
+      this.pageInfo = item;
+      console.log('改变的pageinfo',this.pageInfo)
+      this.getTableData();
     },
     getTableData() {
       this.$http

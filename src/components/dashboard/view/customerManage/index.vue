@@ -107,7 +107,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagi">
+      <!-- 二次封装分页插件 -->
+      <pagination :total="total" @pageChange="changePage"></pagination>
+      <!-- <div class="pagi" style="height:100px;">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -117,7 +119,7 @@
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
         ></el-pagination>
-      </div>
+      </div>-->
     </div>
     <el-dialog
       :title="title"
@@ -315,10 +317,12 @@
 <script>
 import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "customerManage",
   components: {
-    linkage
+    linkage,
+    pagination
   },
   data() {
     return {
@@ -511,6 +515,10 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.pageInfo.pageNum = val;
+    },
+    changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
     },
     getTableData() {
       this.$http

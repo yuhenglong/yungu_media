@@ -91,17 +91,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagi">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.pageInfo.pageNum"
-        :page-sizes="[10, 20]"
-        :page-size="this.pageInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
-    </div>
+    <!-- 二次封装分页插件 -->
+    <pagination :total="total" @pageChange="changePage"></pagination>
     <!-- 查看审核记录 -->
     <el-dialog
       :title="titleTwo"
@@ -147,10 +138,12 @@
 <script>
 import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "placeAuditList",
   components: {
-    linkage
+    linkage,
+    pagination
   },
   data() {
     return {
@@ -190,13 +183,11 @@ export default {
     deilDel() {
       this.dialogAuditVisible = false;
     },
-    onSubmit(){
-
-    },
+    onSubmit() {},
     audit(index, row) {
       this.dialogAuditVisible = true;
       this.checkDia.identificationCode = row.identification_code;
-      console.log(this.checkDia.identificationCode,'dada');
+      console.log(this.checkDia.identificationCode, "dada");
       this.checkDia.taskId = row.task_id;
     },
     deilComfirm() {
@@ -246,7 +237,7 @@ export default {
       this.pageInfo.pageNum = val;
       this.getTableData();
     },
-  
+
     auditLogging(index, row) {
       this.$http
         .post(
@@ -259,6 +250,10 @@ export default {
             this.formCheckList = res.data.data.obj;
           }
         });
+    },
+    changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
     },
     getTableData() {
       this.$http
@@ -289,6 +284,7 @@ export default {
   h2 {
     font-size: 26px;
     line-height: 26px;
+    text-align:center;
     margin: 10px 0;
   }
   .pagi {

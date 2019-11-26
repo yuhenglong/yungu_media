@@ -39,7 +39,7 @@
       <el-form-item label="所属区域">
         <linkage></linkage>
       </el-form-item>
-            <el-form-item label="项目状态">
+      <el-form-item label="项目状态">
         <el-select v-model="formInline.region" placeholder="项目状态">
           <el-option label="区域一" value="shanghai"></el-option>
           <el-option label="区域二" value="beijing"></el-option>
@@ -75,10 +75,10 @@
       <el-table-column prop="activityStatus" label="项目状态" width="120"></el-table-column>
       <el-table-column label="业务状态" width="120">
         <template slot-scope="scope">
-          <span v-if="scope.row.verify_status == 0">审核不通过</span>
-          <span v-else-if="scope.row.verify_status == 1">审核通过</span>
-          <span v-else-if="scope.row.verify_status == 2">待审核</span>
-          <span v-else-if="scope.row.verify_status == 3">编辑状态</span>
+          <span v-if="scope.row.verifyStatus == 0">审核不通过</span>
+          <span v-else-if="scope.row.verifyStatus == 1">审核通过</span>
+          <span v-else-if="scope.row.verifyStatus == 2">待审核</span>
+          <span v-else-if="scope.row.verifyStatus == 3">编辑状态</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width>
@@ -89,17 +89,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagi">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.pageInfo.pageNum"
-        :page-sizes="[10, 20]"
-        :page-size="this.pageInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
-    </div>
+    <!-- 二次封装分页插件 -->
+    <pagination :total="total" @pageChange="changePage"></pagination>
     <!-- 查看审核记录 -->
     <el-dialog
       :title="titleTwo"
@@ -145,10 +136,12 @@
 <script>
 import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "getWaitEngineeringInstallPageList",
   components: {
-    linkage
+    linkage,
+    pagination
   },
   data() {
     return {
@@ -166,7 +159,7 @@ export default {
       },
       checkDia: {
         verifyResult: "",
-        type: 3,
+        type: 6,
         refuseReason: "",
         identificationCode: "",
         taskId: ""
@@ -189,8 +182,9 @@ export default {
       this.dialogAuditVisible = false;
     },
     audit(index, row) {
+      console.log("每行数据", row);
       this.dialogAuditVisible = true;
-      this.checkDia.identificationCode = row.contractCode;
+      this.checkDia.identificationCode = row.installCode;
       this.checkDia.taskId = row.taskId;
     },
     deilComfirm() {
@@ -234,8 +228,7 @@ export default {
       this.getTableData();
     },
     examine(row) {
-      this.$router.push("/examinePage");
-      console.log(row);
+      this.$router.push({ path: "/checkPlaInstall", query: { sid: row.sid } });
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
@@ -249,25 +242,26 @@ export default {
       this.$http
         .post(
           "/yunguVerifyNote/getVerifyNoteListByCode",
-          qs.stringify({ code: row.identification_code })
+          qs.stringify({ code: row.installCode })
         )
         .then(res => {
           if (res.data.meta.code == 200) {
             this.dialogCheckVisible = true;
             this.formCheckList = res.data.data.obj;
-            console.log(this.formCheckList);
+            console.log("获取回来的数据", this.formCheckList);
           }
         });
     },
     handleClick(row) {
       console.log(row);
     },
+    changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
+    },
     getTableData() {
       this.$http
-        .post(
-          "/yunguInstallList/getWaitManagerInstallPageList",
-          this.pageInfo
-        )
+        .post("/yunguInstallList/getWaitManagerInstallPageList", this.pageInfo)
         .then(res => {
           console.log("数据", res);
           if (res.data.meta.code == 200) {
@@ -293,7 +287,7 @@ export default {
     font-size: 26px;
     line-height: 26px;
     margin: 10px 0;
-    text-align:center;
+    text-align: center;
   }
   .pagi {
     width: 100%;

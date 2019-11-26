@@ -20,6 +20,7 @@ import getFeedBackList from '@/components/dashboard/view/getFeedBackList'
 import editPlaceAudit from '@/components/dashboard/view/editPlaceAudit'
 import equipList from '@/components/dashboard/view/equipList'
 import examinePage from '@/components/dashboard/view/examinePage'
+import checkPlaInstall from '@/components/dashboard/view/checkPlaInstall'
 import checkEquipTable from '@/components/dashboard/view/checkEquipTable'
 import editEquipTable from '@/components/dashboard/view/editEquipTable'
 import addNewEquip from '@/components/dashboard/view/addNewEquip'
@@ -32,6 +33,7 @@ import editContractPage from '@/components/dashboard/view/editContractPage'
 import lookConInfo from '@/components/dashboard/view/lookConInfo'
 import addPlaInstallList from '@/components/dashboard/view/addPlaInstallList'
 import lizi from '@/components/dashboard/view/lizi'
+import pendEquList from '@/components/dashboard/view/pendEquList'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -196,6 +198,13 @@ const router = new Router({
                 {
                     path: '/addPlaInstallList',
                     component: addPlaInstallList
+                },
+                {
+                    path: '/checkPlaInstall',
+                    component: checkPlaInstall
+                }, {
+                    path: '/pendEquList',
+                    component: pendEquList
                 }
             ]
         },

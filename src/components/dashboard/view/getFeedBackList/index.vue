@@ -1,5 +1,5 @@
 <template>
-  <div class="getWaitEngineeringInstallPageList">
+  <div class="getFeedBackList">
     <h2>场地项目安装反馈列表</h2>
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="维护人员">
@@ -39,7 +39,7 @@
       <el-form-item label="所属区域">
         <linkage></linkage>
       </el-form-item>
-            <el-form-item label="项目状态">
+      <el-form-item label="项目状态">
         <el-select v-model="formInline.region" placeholder="项目状态">
           <el-option label="区域一" value="shanghai"></el-option>
           <el-option label="区域二" value="beijing"></el-option>
@@ -89,18 +89,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagi">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.pageInfo.pageNum"
-        :page-sizes="[10, 20]"
-        :page-size="this.pageInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
-    </div>
-    <!-- 查看审核记录 -->
+    <!-- 二次封装分页插件 -->
+    <pagination :total="total" @pageChange="changePage"></pagination>
     <el-dialog
       :title="titleTwo"
       :visible.sync="dialogCheckVisible"
@@ -145,10 +135,12 @@
 <script>
 import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "getFeedBackList",
   components: {
-    linkage
+    linkage,
+    pagination
   },
   data() {
     return {
@@ -262,14 +254,15 @@ export default {
     handleClick(row) {
       console.log(row);
     },
+     changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
+    },
     getTableData() {
       this.$http
-        .post(
-          "/yunguAreaProject/getFeedBackList",
-          this.pageInfo
-        )
+        .post("/yunguInstallList/installFeeBackPageList", this.pageInfo)
         .then(res => {
-          console.log("数据", res);
+          console.log("反馈数据", res);
           if (res.data.meta.code == 200) {
             this.areaTableList = res.data.data.obj.data;
             this.total = res.data.data.obj.count;
@@ -292,6 +285,7 @@ export default {
   h2 {
     font-size: 26px;
     line-height: 26px;
+    text-align:center;
     margin: 10px 0;
   }
   .pagi {

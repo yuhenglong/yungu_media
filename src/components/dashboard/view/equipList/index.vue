@@ -54,7 +54,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagi">
+    <!-- 二次封装分页插件 -->
+    <pagination :total="total" @pageChange="changePage"></pagination>
+    <!-- <div class="pagi">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -64,14 +66,17 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       ></el-pagination>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
+import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "equipList",
-  components: {},
+  components: {
+    pagination
+  },
   data() {
     return {
       formInline: {
@@ -88,9 +93,7 @@ export default {
     };
   },
   methods: {
-    serch(){
-
-    },
+    serch() {},
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
@@ -102,7 +105,7 @@ export default {
       this.getTableData();
     },
     addNewEquip() {
-      this.$router.push('/addNewEquip');
+      this.$router.push("/addNewEquip");
     },
     checkTable(row) {
       console.log(row);
@@ -114,13 +117,13 @@ export default {
     saveEdit(row) {
       const obj = {
         adjustReason: row.adjust_reason,
-        eid:row.eid,
+        eid: row.eid,
         equipmentCount: row.equipment_count,
         equipmentDetail: row.equipment_detail,
         equipmentName: row.equipment_name,
         equipmentNumber: row.equipment_number,
         euqipmentSize: row.euqipment_size,
-        euqipmentStatus: row.euqipment_status == 0?'1':'0',
+        euqipmentStatus: row.euqipment_status == 0 ? "1" : "0",
         intallonNumber: row.intallon_number
       };
       this.$http.post("/yunguEquipment/updateYunguEquipment", obj).then(res => {
@@ -135,6 +138,10 @@ export default {
         name: "editEquipTable",
         query: row
       });
+    },
+    changePage(item) {
+      this.pageInfo = item;
+      this.getTableData();
     },
     getTableData() {
       this.$http
@@ -163,6 +170,7 @@ export default {
   h2 {
     font-size: 26px;
     line-height: 26px;
+    text-align:center;
     margin: 10px 0;
   }
   .textSty {

@@ -5,26 +5,19 @@
         <i @click="togalClick" :class="icon" class="pad_i"></i>
         <topMenus></topMenus>
       </div>
-      <!-- 注释掉右侧的内容 -->
-      <!-- <div class="rightNav fr">
-        <headerSearch></headerSearch>
-        <screenFull></screenFull>
-      </div> -->
     </div>
-    <!-- <el-button @click="setParams">传参</el-button> -->
+    <tabsView></tabsView>
   </div>
 </template>
 
 <script>
 import topMenus from "@/components/dashboard/view/topMenus";
-// import headerSearch from "@/components/dashboard/view/headerSearch";
-// import screenFull from "@/components/dashboard/view/screenFull";
+import tabsView from "@/components/dashboard/view/tabsView";
 export default {
   name: "headNav",
   components: {
-    topMenus
-    // headerSearch,
-    // screenFull
+    topMenus,
+    tabsView
   },
   data() {
     return {
@@ -50,7 +43,7 @@ export default {
 .headNav {
   display: inline-block;
   box-sizing: border-box;
-  height: 70px;
+  height:50px;
   background-color: #fff;
   -webkit-box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
@@ -63,8 +56,8 @@ export default {
     display: inline;
   }
   .pad_i {
-    float:left;
-    padding: 17px;
+    float: left;
+    padding: 16px;
     background-color: #fff;
     cursor: pointer;
   }
