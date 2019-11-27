@@ -34,14 +34,13 @@ export default {
       })
     },
     logout() {
-      var _this = this;
       this.$confirm("确认退出吗?", "提示", {
         //type: 'warning'
       })
         .then(() => {
           localStorage.removeItem("eleToken");
           // window.location.reload();
-          _this.$router.push("/login");
+          this.$router.push("/login");
         })
         .catch(() => {});
     }

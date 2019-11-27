@@ -1,6 +1,6 @@
 <template>
-  <div class="editPlaInstall">
-    <h2>编辑安装单</h2>
+  <div class="checkPlaInstall">
+    <h2>结束安装单</h2>
     <div class="tabs">
       <el-tabs type="border-card">
         <el-tab-pane label="基本信息">
@@ -20,22 +20,30 @@
               </el-select>
             </el-form-item>
             <el-form-item label="所属部门" prop="dept">
-              <el-input v-model="addInstallTable.dept" placeholder @input="change($event)"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.dept" placeholder></el-input>
             </el-form-item>
             <el-form-item label="项目编号" prop="projectCode">
               <el-input :readonly="true" v-model="addInstallTable.projectCode" placeholder></el-input>
             </el-form-item>
-            <el-form-item label="项目名称" prop="projectName">
-              <el-input v-model="addInstallTable.projectName" placeholder @input="change($event)"></el-input>
+            <el-form-item :readonly="true" label="项目名称" prop="projectName">
+              <el-input :readonly="true" v-model="addInstallTable.projectName" placeholder></el-input>
             </el-form-item>
             <el-form-item label="项目所在地" prop="installationAddress">
-              <el-input v-model="addInstallTable.installationAddress" placeholder="项目所在地"  @input="change($event)"></el-input>
+              <el-input
+                :readonly="true"
+                v-model="addInstallTable.installationAddress"
+                placeholder="项目所在地"
+              ></el-input>
             </el-form-item>
             <!-- <el-form-item label="管理公司" prop="ccc">
               <el-input v-model="addInstallTable.ccc" placeholder="管理公司"></el-input>
             </el-form-item>-->
             <el-form-item label="项目属性" prop="activityStatus">
-              <el-input v-model="addInstallTable.activityStatus" placeholder="项目属性"  @input="change($event)"></el-input>
+              <el-input
+                :readonly="true"
+                v-model="addInstallTable.activityStatus"
+                placeholder="项目属性"
+              ></el-input>
             </el-form-item>
             <el-form-item label="维护人员" prop="protecter">
               <el-select v-model="addInstallTable.protecter" placeholder="选择">
@@ -46,10 +54,14 @@
               <!-- <el-input v-model="addInstallTable.protecter" placeholder="维护人员"></el-input> -->
             </el-form-item>
             <el-form-item label="维护人员电话" prop="protecterPhone">
-              <el-input v-model="addInstallTable.protecterPhone" placeholder="维护人员电话"  @input="change($event)"></el-input>
+              <el-input
+                :readonly="true"
+                v-model="addInstallTable.protecterPhone"
+                placeholder="维护人员电话"
+              ></el-input>
             </el-form-item>
             <el-form-item label="联系人" prop="linkman">
-              <el-input v-model="addInstallTable.linkman" placeholder="联系人" @input="change($event)"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.linkman" placeholder="联系人"></el-input>
             </el-form-item>
             <!-- <el-form-item label="联系方式">
               <el-select v-model="yunguContractPayModelChild.ddd" placeholder="选择">
@@ -68,19 +80,27 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="实际联系人" prop="realUser">
-              <el-input v-model="addInstallTable.realUser" placeholder="实际联系人" @input="change($event)"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.realUser" placeholder="实际联系人"></el-input>
             </el-form-item>
             <el-form-item label="实际联系人电话" prop="realUserPhone">
-              <el-input v-model="addInstallTable.realUserPhone" placeholder="实际联系人电话" @input="change($event)"></el-input>
+              <el-input
+                :readonly="true"
+                v-model="addInstallTable.realUserPhone"
+                placeholder="实际联系人电话"
+              ></el-input>
             </el-form-item>
             <el-form-item label="实际联系人手机" prop="realUserMobile">
-              <el-input v-model="addInstallTable.realUserMobile" placeholder="实际联系人电话" @input="change($event)"></el-input>
+              <el-input
+                :readonly="true"
+                v-model="addInstallTable.realUserMobile"
+                placeholder="实际联系人电话"
+              ></el-input>
             </el-form-item>
             <el-form-item label="备注" prop="remark">
-              <el-input v-model="addInstallTable.remark" placeholder="备注" @input="change($event)"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.remark" placeholder="备注"></el-input>
             </el-form-item>
             <el-form-item label="创建人" prop="creator">
-              <el-input v-model="addInstallTable.creator" placeholder="创建人" @input="change($event)"></el-input>
+              <el-input :readonly="true" v-model="addInstallTable.creator" placeholder="创建人"></el-input>
             </el-form-item>
             <el-form-item label="创建日期" prop="createDate">
               <el-date-picker
@@ -110,27 +130,19 @@
             <el-table-column prop="equiment_code" label="设备编码"></el-table-column>
           </el-table>
         </el-tab-pane>
+        <el-tab-pane label="GVT"></el-tab-pane>
       </el-tabs>
     </div>
     <div class="btn">
-      <el-button
-        type="primary"
-        size="medium"
-        @click="commit(true)"
-      >提&nbsp;&nbsp;&nbsp;交</el-button>
-      <el-button
-        type="success"
-        size="medium"
-        @click="commit()"
-      >保&nbsp;&nbsp;&nbsp;存</el-button>
-      <el-button type="warning" size="medium" @click="giveUp()">放弃修改并返回</el-button>
+      <el-button type="primary" size="medium" @click="endOrder()">结单</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import qs from 'qs';
 export default {
-  name: "editPlaInstall",
+  name: "checkPlaInstall",
   components: {},
   data() {
     return {
@@ -168,8 +180,28 @@ export default {
     };
   },
   methods: {
-    change(e){
-      this.$forceUpdate();
+    endOrder() {
+      this.$confirm("确认结单吗?", "提示", {
+        //type: 'warning'
+      }).then(() => {
+        this.$http
+          .post("/areaProjectActivity/areaProjectEnd", qs.stringify({
+            taskId: localStorage.task_id
+          }))
+          .then(res => {
+            console.log("hhh", res);
+            if(res.data.meta.code ==200){
+              this.$message({
+                type:"success",
+                message:"结单成功！即将返回上一页"
+              });
+              setTimeout(()=>{
+              this.$router.go(-1);
+              },2000);
+
+            }
+          })
+      });
     },
     getTable() {
       const url =
@@ -177,66 +209,30 @@ export default {
       this.$http.get(url).then(res => {
         console.log("获取列表信息", res);
         if (res.data.meta.code == 200) {
-          // 深拷贝（虽然用不上）
-          const subObj = JSON.parse(JSON.stringify(res.data.data.obj));
-            this.addInstallTable = subObj.installInfo;
+          this.addInstallTable = res.data.data.obj.installInfo;
           this.addInstallTable.areaProjectId =
-            subObj.installInfo.area_project_id;
+            res.data.data.obj.installInfo.area_project_id;
           this.addInstallTable.createDate =
-            subObj.installInfo.create_date;
+            res.data.data.obj.installInfo.create_date;
           this.addInstallTable.installationAddress =
-            subObj.installInfo.installation_address;
+            res.data.data.obj.installInfo.installation_address;
           this.addInstallTable.installationDate =
-            subObj.installInfo.installation_date;
+            res.data.data.obj.installInfo.installation_date;
           this.addInstallTable.realUser =
-            subObj.installInfo.real_user;
+            res.data.data.obj.installInfo.real_user;
           this.addInstallTable.realUserMobile =
-            subObj.installInfo.real_user_mobile;
+            res.data.data.obj.installInfo.real_user_mobile;
           this.addInstallTable.realUserPhone =
-            subObj.installInfo.real_user_phone;
+            res.data.data.obj.installInfo.real_user_phone;
           this.addInstallTable.showMode =
-            subObj.installInfo.show_mode;
-          // this.addInstallTable = res.data.data.obj.installInfo;
-          // this.addInstallTable.areaProjectId =
-          //   res.data.data.obj.installInfo.area_project_id;
-          // this.addInstallTable.createDate =
-          //   res.data.data.obj.installInfo.create_date;
-          // this.addInstallTable.installationAddress =
-          //   res.data.data.obj.installInfo.installation_address;
-          // this.addInstallTable.installationDate =
-          //   res.data.data.obj.installInfo.installation_date;
-          // this.addInstallTable.realUser =
-          //   res.data.data.obj.installInfo.real_user;
-          // this.addInstallTable.realUserMobile =
-          //   res.data.data.obj.installInfo.real_user_mobile;
-          // this.addInstallTable.realUserPhone =
-          //   res.data.data.obj.installInfo.real_user_phone;
-          // this.addInstallTable.showMode =
-          //   res.data.data.obj.installInfo.show_mode;
+            res.data.data.obj.installInfo.show_mode;
           // 赋值table
-          this.tableData = subObj.areaPostion;
+          this.tableData = res.data.data.obj.areaPostion;
         }
       });
     },
-    giveUp() {
+    reGo() {
       this.$router.go(-1);
-    },
-    commit(isSave){
-      if(isSave){
-        this.addInstallTable.taskId = localStorage.getItem('task_id');
-      }
-      this.$http.post('/yunguInstallList/updateYunguInstallList',this.addInstallTable).then(res =>{
-        console.log('这是更新的回调',res);
-        if (res.data.meta.code == 200) {
-            this.$message({
-              type: "success",
-              message: "修改成功，即将返回列表页。"
-            });
-            setTimeout(() => {
-              this.$router.go(-1);
-            }, 2000);
-          }
-      })
     }
   },
   mounted() {
@@ -246,7 +242,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.editPlaInstall {
+.checkPlaInstall {
   width: 95%;
   padding: 30px 2.5%;
   height: auto;
@@ -286,7 +282,7 @@ export default {
 }
 </style>
 <style lang="scss">
-.editPlaInstall {
+.checkPlaInstall {
   .el-form--inline .el-form-item__label {
     width: 120px;
   }

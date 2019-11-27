@@ -62,7 +62,7 @@
     </el-form>
     <!-- 表格 -->
     <el-table :data="payTableList" border style="width: 100%">
-      <el-table-column fixed prop="contract_code" label="合同编号" width="150"></el-table-column>
+      <el-table-column fixed prop="contract_Code" label="合同编号" width="150"></el-table-column>
       <el-table-column prop="project_name" label="项目名称" width="120"></el-table-column>
       <el-table-column prop="project_address" label="项目所在地区" width="120"></el-table-column>
       <el-table-column prop="protecter" label="项目属性" width="120"></el-table-column>

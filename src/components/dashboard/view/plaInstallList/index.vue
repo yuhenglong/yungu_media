@@ -83,10 +83,30 @@
         <template slot-scope="scope">
           <!-- <el-button @click="checkItemInfo(scope.row)" type="text" size="small">查看项目信息</el-button> -->
           <!-- <el-button @click="checkContractInfo(scope.row)" type="text" size="small">查看合同信息</el-button> -->
-          <el-button @click="addAudit(scope.$index, scope.row)" type="text" size="small" v-if="scope.row.sid == null">新增</el-button>
-          <el-button @click="auditLogging(scope.row)" type="text" size="small" v-if="scope.row.sid !== null">查看审核记录</el-button>
-          <el-button @click="checkInstallInfo(scope.$index, scope.row)" type="text" size="small" v-if="scope.row.sid !== null">查看安装单信息</el-button>
-          <el-button @click="editInstallInfo(scope.row)" type="text" size="small" v-if="scope.row.verfyStatus == 0 ||scope.row.verfyStatus == 3">编辑</el-button>
+          <el-button
+            @click="addAudit(scope.$index, scope.row)"
+            type="text"
+            size="small"
+            v-if="scope.row.sid == null"
+          >新增</el-button>
+          <el-button
+            @click="auditLogging(scope.row)"
+            type="text"
+            size="small"
+            v-if="scope.row.sid !== null"
+          >查看审核记录</el-button>
+          <el-button
+            @click="checkInstallInfo(scope.$index, scope.row)"
+            type="text"
+            size="small"
+            v-if="scope.row.sid !== null"
+          >查看安装单信息</el-button>
+          <el-button
+            @click="editInstallInfo(scope.row)"
+            type="text"
+            size="small"
+            v-if="scope.row.verifyStatus == 0 || scope.row.verifyStatus == 3"
+          >编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -178,14 +198,18 @@ export default {
     };
   },
   methods: {
-    checkInstallInfo(index,row){
+    checkInstallInfo(index, row) {
       this.$router.push({
-        path:'/checkPlaInstall',
-        query:{sid:row.sid}
-      })
+        path: "/checkPlaInstall",
+        query: { sid: row.sid }
+      });
     },
     editInstallInfo(row) {
-
+      this.$router.push({
+        path: "/editPlaInstall",
+        query: { sid: row.sid }
+      });
+      localStorage.setItem("task_id", row.taskId);
     },
     addAudit(index, row) {
       this.$router.push({

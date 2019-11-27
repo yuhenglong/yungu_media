@@ -32,8 +32,9 @@ import planPayDetail from '@/components/dashboard/view/planPayDetail'
 import editContractPage from '@/components/dashboard/view/editContractPage'
 import lookConInfo from '@/components/dashboard/view/lookConInfo'
 import addPlaInstallList from '@/components/dashboard/view/addPlaInstallList'
-import lizi from '@/components/dashboard/view/lizi'
 import pendEquList from '@/components/dashboard/view/pendEquList'
+import editPlaInstall from '@/components/dashboard/view/editPlaInstall'
+import endOrdercInstall from '@/components/dashboard/view/endOrdercInstall'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -160,15 +161,15 @@ const router = new Router({
                 },
                 {
                     path: '/addContract',
-                    component: addContract,
-                    children: [{
-                        path: '/',
-                        component: lizi
-                    }, {
-                        path: 'lizi',
-                        name: 'lizi',
-                        component: lizi
-                    }]
+                    component: addContract
+                        // children: [{
+                        //     path: '/',
+                        //     component: lizi
+                        // }, {
+                        //     path: 'lizi',
+                        //     name: 'lizi',
+                        //     component: lizi
+                        // }]
                 },
                 {
                     path: '/logManage',
@@ -205,6 +206,12 @@ const router = new Router({
                 }, {
                     path: '/pendEquList',
                     component: pendEquList
+                }, {
+                    path: '/editPlaInstall',
+                    component: editPlaInstall
+                }, {
+                    path: '/endOrdercInstall',
+                    component: endOrdercInstall
                 }
             ]
         },

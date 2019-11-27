@@ -16,7 +16,7 @@ export default {
     this.init();
   },
   beforeDestroy() {
-    this.destroy();
+    // this.destroy();
   },
   methods: {
     fullScreen() {

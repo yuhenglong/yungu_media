@@ -580,14 +580,13 @@ export default {
    
       // 把重新组装的对象复制到对象属性内
       obj.yunguAreaContractdetailModel = this.yunguAreaContractdetailModel;
-      console.log("这是上传的内容", obj);
       this.$http
         .post("/yunguareacontract/updateYunguAreaContract", obj)
         .then(res => {
           if (res.data.meta.code == 200) {
             this.$message({
               type: "success",
-              text: "修改成功，即将返回列表页。"
+              message: "修改成功，即将返回列表页。"
             });
             setTimeout(() => {
               this.$router.push("/contractList");
