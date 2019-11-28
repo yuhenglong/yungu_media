@@ -36,7 +36,7 @@ export default {
           if (lastView) {
             this.$router.push(lastView.path);
           } else {
-            this.$router.push("/dashboard");
+            this.$router.push("/");
           }
         }
       });

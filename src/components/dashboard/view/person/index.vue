@@ -29,6 +29,7 @@ export default {
       this.$http.get('/getUserInfo').then(res =>{
         if(res.data.meta.code ==200){
           this.sysUserName = res.data.data.obj.realName;
+          localStorage.setItem('sysUserName',this.sysUserName);
           this.sysUserAvatar = res.data.data.obj.photo;
         }
       })

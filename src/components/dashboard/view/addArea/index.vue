@@ -13,7 +13,11 @@
             ref="yunguAreaProjectModel"
           >
             <el-form-item label="项目名称" prop="projectName">
-              <el-input v-model="yunguAreaProjectModel.projectName" placeholder="项目名称"></el-input>
+              <el-input
+                v-model="yunguAreaProjectModel.projectName"
+                placeholder="项目名称"
+                @blur="setName()"
+              ></el-input>
             </el-form-item>
             <el-form-item label="项目地址" prop="projectAddress">
               <el-input v-model="yunguAreaProjectModel.projectAddress" placeholder="项目地址"></el-input>
@@ -22,7 +26,11 @@
               <el-input v-model="yunguAreaProjectModel.projectPosition" placeholder="位置信息"></el-input>
             </el-form-item>
             <el-form-item label="开发人员" prop="developer">
-              <el-input v-model="yunguAreaProjectModel.developer" placeholder="开发人员"></el-input>
+              <el-input
+                :readonly="true"
+                v-model="yunguAreaProjectModel.developer"
+                placeholder="开发人员"
+              ></el-input>
             </el-form-item>
             <el-form-item label="维护人员" prop="protecter">
               <el-select
@@ -340,8 +348,12 @@
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="管理公司">
               <el-select v-model="yunguAreaPostionModelList.company" placeholder="管理公司">
-                <el-option label="广州海云投资信息咨询有限公司" value="0"></el-option>
-                <el-option label="停车场" value="1"></el-option>
+                <el-option
+                  v-for="item in companyList"
+                  :key="item.customerId"
+                  :label="item.customerName"
+                  :value="item.customerId"
+                ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="安装名称">
@@ -358,11 +370,12 @@
               <el-radio v-model="yunguAreaPostionModelList.isGive" label="0">是</el-radio>
               <el-radio v-model="yunguAreaPostionModelList.isGive" label="1">否</el-radio>
             </el-form-item>
-            <el-form-item label="媒体名称" prop="mediaName">
-              <el-input v-model="yunguAreaPostionModelList.mediaName" placeholder="媒体名称"></el-input>
-            </el-form-item>
             <el-form-item label="点位名称" prop="pointName">
               <el-input v-model="yunguAreaPostionModelList.pointName" placeholder="点位名称"></el-input>
+            </el-form-item>
+            <el-form-item label="媒体名称" prop="mediaName">
+              <el-input v-model="mediaName" placeholder="媒体名称"></el-input>
+              <!-- <el-input v-model="yunguAreaPostionModelList.mediaName" placeholder="媒体名称"></el-input> -->
             </el-form-item>
             <el-form-item label="点位图片" prop="positionPicture">
               <uploadPicture></uploadPicture>
@@ -378,7 +391,15 @@
               </el-select>
             </el-form-item>
             <el-form-item label="设备规格" prop="size">
-              <el-input v-model="yunguAreaPostionModelList.size" placeholder="设备规格"></el-input>
+              <el-select v-model="yunguAreaPostionModelList.size" placeholder="请选择">
+                <el-option
+                  v-for="item in equipList"
+                  :key="item.equipmentId"
+                  :label="item.equipmentName"
+                  :value="item.equipmentId"
+                ></el-option>
+              </el-select>
+              <!-- <el-input v-model="yunguAreaPostionModelList.size" placeholder="设备规格"></el-input> -->
             </el-form-item>
             <div class="addAdress">
               <el-button type="primary" class="addAdr" plain @click="addTable">增加场地点位</el-button>
@@ -436,6 +457,8 @@ export default {
       ],
       manageCompany: [],
       protecterList: [],
+      companyList: [],
+      equipList: [],
       yunguAreaProjectModelListTwo: [],
       yunguAreaPostionModelList: {
         company: "",
@@ -517,6 +540,7 @@ export default {
         mediaName: "",
         isSave: "0"
       },
+
       yunguPayMethodModelList_arr: [],
       yunguPayMethodModelList: {
         payName: "",
@@ -542,6 +566,29 @@ export default {
     };
   },
   methods: {
+    setName() {
+      this.yunguAreaPostionModelList.installName = this.yunguAreaProjectModel.projectName;
+    },
+    getSelectData() {
+      this.yunguAreaProjectModel.developer = localStorage.getItem(
+        "sysUserName"
+      );
+      this.$http
+        .get("/yunguAreaCustomer/getYunguAreaCustomerList")
+        .then(res => {
+          if (res.data.meta.code == 200) {
+            console.log("dada", res);
+            this.companyList = res.data.data.obj;
+          }
+        });
+      this.$http.get("/yunguEquipment/getStatusEquipmentList").then(res => {
+        if (res.data.meta.code == 200) {
+          console.log("dada123", res);
+          this.equipList = res.data.data.obj;
+          // this.equitList = res.data.data.obj;
+        }
+      });
+    },
     chooseDept() {
       this.yunguAreaProjectModel.dept = this.yunguAreaProjectModel.protecter;
     },
@@ -568,6 +615,7 @@ export default {
       console.log("暂时不能编辑");
     },
     addTable() {
+      this.yunguAreaPostionModelList.mediaName = this.mediaName;
       this.yunguAreaProjectModelListTwo.push(this.yunguAreaPostionModelList);
       this.yunguAreaPostionModelList = {
         company: "",
@@ -649,9 +697,17 @@ export default {
         });
     }
   },
+  computed: {
+    mediaName(){
+      return this.yunguAreaPostionModelList.pointName + ' ' + this.yunguAreaPostionModelList.installPosition;
+    }
+  },
   created() {
     this.getDepartOptions();
     this.getPersonOptions();
+  },
+  mounted() {
+    this.getSelectData();
   }
 };
 </script>

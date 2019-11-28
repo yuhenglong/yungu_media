@@ -101,14 +101,7 @@
       center
       :append-to-body="true"
     >
-      <el-table :data="formCheckList" border>
-        <el-table-column property="identificationCode" label="序号"></el-table-column>
-        <el-table-column property="verifyUserName" label="审核用户"></el-table-column>
-        <el-table-column property="verifyResult" label="审核结果"></el-table-column>
-        <el-table-column property="type" label="审核类型"></el-table-column>
-        <el-table-column property="refuseReason" label="拒绝原因"></el-table-column>
-        <el-table-column property="verifyTime" label="添加时间"></el-table-column>
-      </el-table>
+      <dialogAuditList :formCheckArray="formCheckList"></dialogAuditList>
     </el-dialog>
     <!-- 审核 -->
     <el-dialog
@@ -139,11 +132,13 @@
 import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
 import pagination from "@/components/dashboard/view/pagination";
+import dialogAuditList from "@/components/dashboard/view/dialogAuditList";
 export default {
   name: "placeAuditList",
   components: {
     linkage,
-    pagination
+    pagination,
+    dialogAuditList
   },
   data() {
     return {
@@ -284,7 +279,7 @@ export default {
   h2 {
     font-size: 26px;
     line-height: 26px;
-    text-align:center;
+    text-align: center;
     margin: 10px 0;
   }
   .pagi {

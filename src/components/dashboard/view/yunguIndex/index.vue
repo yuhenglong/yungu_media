@@ -10,6 +10,7 @@
         <el-radio-button label="待我审查"></el-radio-button>
         <el-radio-button label="我已审查"></el-radio-button>
         <el-radio-button label="我跟踪的"></el-radio-button>
+        <!-- <demo></demo>   -->
       </el-radio-group>
       <div class="ta">
         <el-table class="tabl" :data="tableData" style="width: 100%" border>
@@ -23,9 +24,13 @@
 </template>
 <script>
 import echarts from "echarts";
+import demo from "@/components/dashboard/view/demo"
 import qs from "qs";
 export default {
   name: "yunguIndex",
+  components:{
+    // demo
+  },
   data() {
     return {
       radio: "我启动的",

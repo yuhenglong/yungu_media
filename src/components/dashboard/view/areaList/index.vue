@@ -85,25 +85,20 @@
       center
       :append-to-body="true"
     >
-      <el-table :data="formCheckList" border>
-        <el-table-column property="identificationCode" label="序号"></el-table-column>
-        <el-table-column property="verifyUserName" label="审核用户"></el-table-column>
-        <el-table-column property="verifyResult" label="审核结果"></el-table-column>
-        <el-table-column property="type" label="审核类型"></el-table-column>
-        <el-table-column property="refuseReason" label="拒绝原因"></el-table-column>
-        <el-table-column property="verifyTime" label="添加时间"></el-table-column>
-      </el-table>
+    <dialogAuditList :formCheckArray="formCheckList"></dialogAuditList>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import qs from "qs";
+import dialogAuditList from "@/components/dashboard/view/dialogAuditList";
 import pagination from "@/components/dashboard/view/pagination";
 export default {
   name: "areaList",
   components: {
-    pagination
+    pagination,
+    dialogAuditList
   },
   data() {
     return {
@@ -168,7 +163,7 @@ export default {
           if (res.data.meta.code == 200) {
             this.dialogCheckVisible = true;
             this.formCheckList = res.data.data.obj;
-            console.log(this.formCheckList);
+            console.log('这是审核弹窗信息',this.formCheckList);
           }
         });
     },

@@ -127,14 +127,15 @@
       center
       :append-to-body="true"
     >
-      <el-table :data="formCheckList" border>
+      <dialogAuditList :formCheckArray="formCheckList"></dialogAuditList>
+      <!-- <el-table :data="formCheckList" border>
         <el-table-column property="identificationCode" label="序号"></el-table-column>
         <el-table-column property="verifyUserName" label="审核用户"></el-table-column>
         <el-table-column property="verifyResult" label="审核结果"></el-table-column>
         <el-table-column property="type" label="审核类型"></el-table-column>
         <el-table-column property="refuseReason" label="拒绝原因"></el-table-column>
         <el-table-column property="verifyTime" label="添加时间"></el-table-column>
-      </el-table>
+      </el-table>-->
     </el-dialog>
     <!-- 拒绝 -->
     <el-dialog
@@ -209,11 +210,13 @@
 import qs from "qs";
 import linkage from "@/components/dashboard/view/linkage";
 import pagination from "@/components/dashboard/view/pagination";
+import dialogAuditList from "@/components/dashboard/view/dialogAuditList";
 export default {
   name: "getFeedBackList",
   components: {
     linkage,
-    pagination
+    pagination,
+    dialogAuditList
   },
   data() {
     return {
@@ -308,7 +311,7 @@ export default {
   },
   methods: {
     endOrder(row) {
-      localStorage.setItem('task_id',row.taskId);
+      localStorage.setItem("task_id", row.taskId);
       this.$router.push({
         path: "/endOrdercInstall",
         query: { sid: row.sid }
