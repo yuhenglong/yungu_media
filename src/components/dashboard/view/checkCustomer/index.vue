@@ -205,8 +205,8 @@
     >
       <el-form ref="form" :model="checkDia" label-width="80px">
         <el-form-item label="处理方式">
-          <el-radio v-model="checkDia.verifyResult" label="0">通过</el-radio>
-          <el-radio v-model="checkDia.verifyResult" label="1">拒绝</el-radio>
+          <el-radio v-model="checkDia.verifyResult" label="1">通过</el-radio>
+          <el-radio v-model="checkDia.verifyResult" label="0">拒绝</el-radio>
         </el-form-item>
         <el-form-item label="备注原由">
           <el-input type="textarea" v-model="checkDia.refuseReason"></el-input>

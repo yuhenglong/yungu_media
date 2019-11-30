@@ -22,12 +22,20 @@
               <el-input v-model="yunguAreaProjectModel.projectPosition" placeholder="位置信息"></el-input>
             </el-form-item>
             <el-form-item label="开发人员" prop="developer">
-              <el-input v-model="yunguAreaProjectModel.developer" placeholder="开发人员"></el-input>
+              <!-- <el-input v-model="yunguAreaProjectModel.developer" placeholder="开发人员"></el-input> -->
+              <el-select v-model="yunguAreaProjectModel.developer" placeholder="请选择">
+                <el-option
+                  v-for="item in protecterList"
+                  :key="item.index"
+                  :label="item.real_name"
+                  :value="item.did"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="维护人员" prop="protecter">
               <el-select v-model="yunguAreaProjectModel.protecter" placeholder="请选择">
                 <el-option
-                  v-for="(item,index) in protecterList"
+                  v-for="item in protecterList"
                   :key="item.index"
                   :label="item.real_name"
                   :value="item.did"
@@ -322,10 +330,12 @@
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="管理公司">
               <el-select v-model="yunguAreaPostionModelList.company" placeholder="管理公司">
-                <el-option label="广州海云投资信息咨询有限公司" value="0"></el-option>
-                <el-option label="停车场" value="1"></el-option>
-                <!-- <el-option label="停车场weff" value="11222"></el-option> -->
-                <el-option label="11222" value="停车场"></el-option>
+                <el-option
+                  v-for="item in companyList"
+                  :key="item.customerId"
+                  :label="item.customerName"
+                  :value="item.customerId"
+                ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="安装名称">
@@ -368,11 +378,75 @@
               <el-button type="primary" class="addAdr" plain @click="addTable">增加场地点位</el-button>
             </div>
           </el-form>
-          <addAdrTable
-            :formData="yunguAreaProjectModelListTwo"
-            :projectName="yunguAreaProjectModel.projectName"
-            @delParentData="delTable"
-          ></addAdrTable>
+          <!-- 不封装的table -->
+          <div class="addAdrTable">
+            <el-table
+              :data="yunguAreaProjectModelListTwo"
+              style="width: 100%;margin-top:20px;"
+              border
+            >
+              <el-table-column label="项目名称" width="180">
+                <template>
+                  <span style>{{ yunguAreaProjectModel.projectName }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="点位名称" width="180">
+                <template slot-scope="scope">
+                  <span style>{{ scope.row.pointName }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="安装名称" width="180">
+                <template slot-scope="scope">
+                  <span style>{{ scope.row.installName }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="媒体名称">
+                <template slot-scope="scope">
+                  <span style>{{ scope.row.mediaName }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="呈现方式">
+                <template slot-scope="scope">
+                  <span v-if="scope.row.showMode ==0">3D液晶</span>
+                  <span v-if="scope.row.showMode ==1">2D平面</span>
+                  <span v-if="scope.row.showMode ==2">楼梯屏</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="计划机型">
+                <template slot-scope="scope">
+                  <span v-if="scope.row.size == 1">新机</span>
+                  <span v-if="scope.row.size == 2">裸眼3D</span>
+                  <span v-if="scope.row.size == 3">归属感</span>
+                  <span v-if="scope.row.size == 4">ces</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="设备数量">
+                <template>
+                  <span style>1台</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="是否赠送">
+                <template slot-scope="scope">
+                  <span style>{{ scope.row.isGive === '0' ?'是':'否' }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="所属公司" width="180">
+                <template slot-scope="scope">
+                  <span>{{companytwo(scope.row.company)}}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="addAreaDel(scope.$index, scope.row)"
+                  >删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -397,6 +471,7 @@ export default {
   },
   data() {
     return {
+      companyList: [],
       showModeList: [
         {
           value: "0",
@@ -521,6 +596,49 @@ export default {
     };
   },
   methods: {
+    companytwo(val) {
+      // 方法一
+      // const len = this.companyList.length;
+      // for (let i = 0; i < len; i++) {
+      //   if (this.companyList[i].customerId == val) {
+      //     return this.companyList[i].customerName;
+      //   }
+      // }
+      // 方法二
+      const arr = this.companyList.filter(item =>{
+        return item.customerId == val
+      })
+      return arr[0]['customerName'];
+    },
+    changeText(val, row) {
+      return val == row;
+    },
+    handleEdit(index, row) {
+      console.log("暂时不能编辑");
+    },
+    addAreaDel(index, row) {
+      console.log(index, row);
+      this.yunguAreaProjectModelListTwo.splice(index, 1);
+    },
+    getSelectData() {
+      this.yunguAreaProjectModel.developer = localStorage.getItem(
+        "sysUserName"
+      );
+      this.$http
+        .get("/yunguAreaCustomer/getYunguAreaCustomerList")
+        .then(res => {
+          if (res.data.meta.code == 200) {
+            console.log("dadad", res);
+            this.companyList = res.data.data.obj;
+          }
+        });
+      this.$http.get("/yunguEquipment/getStatusEquipmentList").then(res => {
+        if (res.data.meta.code == 200) {
+          this.equipList = res.data.data.obj;
+          // this.equitList = res.data.data.obj;
+        }
+      });
+    },
     delTable(index) {
       this.yunguAreaProjectModelListTwo.splice(index, 1);
     },
@@ -545,6 +663,7 @@ export default {
     },
     addTable() {
       this.yunguAreaProjectModelListTwo.push(this.yunguAreaPostionModelList);
+      console.log("打印", this.yunguAreaProjectModelListTwo);
       this.yunguAreaPostionModelList = {
         company: "",
         installName: "",
@@ -590,6 +709,7 @@ export default {
           }
         });
     },
+    computed() {},
     waiveCommit() {
       this.$router.push("/areaList");
     },
@@ -601,6 +721,7 @@ export default {
     getDepartOptions() {
       this.$http.get("/sysDept/getDeptListByStatus?status=1").then(res => {
         if (res.data.meta.code == 200) {
+          console.log("管理公司", res);
           this.manageCompany = res.data.data.obj;
         } else {
           console.log("选项列表获取错误");
@@ -629,8 +750,8 @@ export default {
         .then(res => {
           if (res.data.meta.code == 200) {
             console.log("这是table数据", res);
-            this.yunguAreaPostionModelList =
-              res.data.data.obj.areaPostionList[0];
+            // this.yunguAreaPostionModelList =
+            //   res.data.data.obj.areaPostionList[0];
             this.yunguAreaProjectModelListTwo =
               res.data.data.obj.areaPostionList;
             this.yunguPayMethodModelList_arr = res.data.data.obj.paymethodList;
@@ -656,6 +777,7 @@ export default {
     this.getAidData();
     this.getDepartOptions();
     this.getPersonOptions();
+    this.getSelectData();
   }
 };
 </script>
@@ -685,10 +807,11 @@ export default {
     margin: 30px 0;
     height: 100px;
     text-align: center;
+    .el-button {
+      width: 300px;
+    }
   }
-  .el-button {
-    width: 300px;
-  }
+
   .addAdress {
     text-align: center;
     .addAdr {

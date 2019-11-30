@@ -1,6 +1,6 @@
 <template>
     <div class="demo">
-        我是一头猪
+        测试
     </div>
 </template>
 
@@ -37,5 +37,6 @@ export default {
 <style lang="scss" scoped>
 .demo{
     color:#666;
+    height:100px;
 }
 </style>

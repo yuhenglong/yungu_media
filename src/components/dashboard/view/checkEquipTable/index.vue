@@ -24,7 +24,7 @@
         <el-input :disabled="true" v-model="equipTable.euqipment_size"></el-input>
       </el-form-item>
       <el-form-item label="设备状态" prop="euqipment_status">
-        <el-input :disabled="true" v-model="equipTable.euqipment_status==0?'启用':'暂停'"></el-input>
+        <el-input :disabled="true" v-model="equipTable.euqipment_status==1?'启用':'禁止'"></el-input>
       </el-form-item>
       <el-form-item label>
         <el-button type="primary" @click="cancel()">返回</el-button>

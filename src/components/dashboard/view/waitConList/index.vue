@@ -53,7 +53,15 @@
       <el-table-column prop="contract_code" label="合同编号"></el-table-column>
       <el-table-column prop="project_name" label="项目名称"></el-table-column>
       <el-table-column prop="project_address" label="项目所在地区"></el-table-column>
-      <el-table-column prop="project_type" label="项目属性"></el-table-column>
+      <el-table-column label="项目属性">
+           <template slot-scope="scope">
+          <span v-if="scope.row.project_type == 0">写字楼</span>
+          <span v-if="scope.row.project_type == 1">商场</span>
+          <span v-if="scope.row.project_type == 2">公寓</span>
+          <span v-if="scope.row.project_type == 3">住宅</span>
+          <span v-if="scope.row.project_type == 4">综合体</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="contract_type" label="合同类型"></el-table-column>
       <el-table-column prop="dept" label="部门"></el-table-column>
       <el-table-column prop="developer" label="开发人员"></el-table-column>

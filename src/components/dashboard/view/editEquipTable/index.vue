@@ -25,8 +25,8 @@
       </el-form-item>
       <el-form-item label="设备状态" prop="euqipment_status">
         <el-radio-group v-model="equipTable.euqipment_status">
-          <el-radio :label="0">启用</el-radio>
-          <el-radio :label="1">禁止</el-radio>
+          <el-radio :label="1">启用</el-radio>
+          <el-radio :label="0">禁止</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label>

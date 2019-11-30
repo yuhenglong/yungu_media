@@ -59,7 +59,10 @@
             <el-form-item label="一级属性">
               <el-select v-model="yunguAreaProjectModel.projectType" placeholder="一级属性">
                 <el-option label="写字楼" value="0"></el-option>
-                <el-option label="停车场" value="1"></el-option>
+                <el-option label="商场" value="1"></el-option>
+                <el-option label="公寓" value="2"></el-option>
+                <el-option label="住宅" value="3"></el-option>
+                <el-option label="综合体" value="4"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="所属地区">
@@ -408,6 +411,7 @@
           <addAdrTable
             :formData="yunguAreaProjectModelListTwo"
             :projectName="yunguAreaProjectModel.projectName"
+            :companyList="companyList"
             @delParentData="delTable"
           ></addAdrTable>
         </el-tab-pane>
@@ -577,13 +581,11 @@ export default {
         .get("/yunguAreaCustomer/getYunguAreaCustomerList")
         .then(res => {
           if (res.data.meta.code == 200) {
-            console.log("dada", res);
             this.companyList = res.data.data.obj;
           }
         });
       this.$http.get("/yunguEquipment/getStatusEquipmentList").then(res => {
         if (res.data.meta.code == 200) {
-          console.log("dada123", res);
           this.equipList = res.data.data.obj;
           // this.equitList = res.data.data.obj;
         }
@@ -650,6 +652,7 @@ export default {
           obj.yunguAreaPostionModelList = this.yunguAreaProjectModelListTwo;
           obj.yunguAreaProjectDetailModel = this.yunguAreaProjectDetailModel;
           obj.yunguAreaProjectModel = this.yunguAreaProjectModel;
+          delete obj.yunguAreaProjectModel.developer;
           obj.yunguPayMethodModelList = this.yunguPayMethodModelList_arr;
           this.$http
             .post("/yunguAreaProject/insertYunguAreaProject", obj)

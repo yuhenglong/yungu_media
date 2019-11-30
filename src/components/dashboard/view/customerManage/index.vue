@@ -109,17 +109,6 @@
       </el-table>
       <!-- 二次封装分页插件 -->
       <pagination :total="total" @pageChange="changePage"></pagination>
-      <!-- <div class="pagi" style="height:100px;">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="this.pageInfo.pageNum"
-          :page-sizes="[10, 20]"
-          :page-size="this.pageInfo.pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-        ></el-pagination>
-      </div>-->
     </div>
     <el-dialog
       :title="title"
@@ -195,10 +184,26 @@
           <el-input v-model="formRowList.contact_phone"></el-input>
         </el-form-item>
         <el-form-item label="申请人">
-          <el-input v-model="formRowList.user_name"></el-input>
+          <!-- <el-input v-model="formRowList.apply_name"></el-input> -->
+          <el-select v-model="formRowList.apply_name" placeholder="请选择" @change="chooseDept">
+            <el-option
+              v-for="item in protecterList"
+              :key="item.index"
+              :label="item.real_name"
+              :value="item.uid"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="所属部门">
-          <el-input v-model="formRowList.apply_dept"></el-input>
+          <!-- <el-input v-model="formRowList.apply_dept"></el-input> -->
+          <el-select v-model="formRowList.apply_dept" placeholder="所属部门">
+            <el-option
+              v-for="item in manageCompany"
+              :key="item.name"
+              :label="item.name"
+              :value="item.did"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item class="checkEditCheckBtn" label-width="0">
           <el-button type="primary" @click="editConfirm()">更新</el-button>
@@ -210,7 +215,7 @@
     <el-dialog
       :title="titleFour"
       :visible.sync="dialogAddVisible"
-      width="1200px"
+      width="1000px"
       center
       :append-to-body="true"
     >
@@ -282,11 +287,28 @@
         <el-form-item label="纳税性质">
           <el-input v-model="addCustomerObj.taxableNature"></el-input>
         </el-form-item>
-        <el-form-item label="所属部门">
-          <el-input v-model="addCustomerObj.applyDept"></el-input>
-        </el-form-item>
+
         <el-form-item label="申请人">
-          <el-input v-model="addCustomerObj.applyName"></el-input>
+          <!-- <el-input v-model="addCustomerObj.applyName"></el-input> -->
+          <el-select v-model="addCustomerObj.applyName" placeholder="请选择" @change="chooseDept">
+            <el-option
+              v-for="item in protecterList"
+              :key="item.index"
+              :label="item.real_name"
+              :value="item.uid"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="所属部门">
+          <!-- <el-input v-model="addCustomerObj.applyDept"></el-input> -->
+          <el-select v-model="addCustomerObj.applyDept" placeholder="所属部门">
+            <el-option
+              v-for="item in manageCompany"
+              :key="item.name"
+              :label="item.name"
+              :value="item.did"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item class="checkEditCheckBtn" label-width="0">
           <el-button type="primary" @click="addComfirm()">确定</el-button>
@@ -302,7 +324,7 @@
       center
       :append-to-body="true"
     >
-    <dialogAuditList :formCheckArray="formCheckList"></dialogAuditList>
+      <dialogAuditList :formCheckArray="formCheckList"></dialogAuditList>
     </el-dialog>
   </div>
 </template>
@@ -321,6 +343,8 @@ export default {
   },
   data() {
     return {
+      manageCompany: [],
+      protecterList: [],
       title: "当前客户信息",
       titleTwo: "场地客户审核列表",
       titleThr: "编辑客户数据",
@@ -338,6 +362,7 @@ export default {
         contact_phone: "",
         user_name: "",
         apply_dept: "",
+        apply_name: "",
         status: "",
         verify_stauts: "",
         companyPhone: "",
@@ -393,6 +418,37 @@ export default {
     };
   },
   methods: {
+    defaultChoose() {
+      this.addCustomerObj.applyName = parseInt(localStorage.getItem("uid"));
+      this.addCustomerObj.applyDept = this.addCustomerObj.applyName;
+    },
+    chooseDept() {
+      this.addCustomerObj.applyDept = this.addCustomerObj.applyName;
+    },
+    // 获取部门列表
+    getDepartOptions() {
+      this.$http.get("/sysDept/getDeptListByStatus?status=1").then(res => {
+        if (res.data.meta.code == 200) {
+          console.log("所属部门", res);
+          this.manageCompany = res.data.data.obj;
+        } else {
+          console.log("选项列表获取错误");
+        }
+      });
+    },
+    // 获取维护人员列表
+    getPersonOptions() {
+      this.$http
+        .post("/sysUser/getSysUserPageList", { roleStatus: 1, status: 1 })
+        .then(res => {
+          if (res.data.meta.code == 200) {
+            console.log("维护人员", res);
+            this.protecterList = res.data.data.obj.data;
+          } else {
+            console.log("选项列表获取错误");
+          }
+        });
+    },
     cancel() {
       window.location.reload();
       this.dialogEditVisible = false;
@@ -428,7 +484,6 @@ export default {
           this.dialogCheckVisible = true;
           if (res.data.meta.code == 200) {
             this.formCheckList = res.data.data.obj;
-            console.log(this.formCheckList);
           }
         });
     },
@@ -471,6 +526,8 @@ export default {
     editDialog(index, row) {
       this.dialogEditVisible = true;
       this.formRowList = row;
+      this.formRowList.apply_name = row.apply_name;
+      console.log("这是数据", this.formRowList.apply_name, typeof(this.formRowList.apply_name));
     },
     onSubmit() {
       console.log("submit!");
@@ -547,6 +604,9 @@ export default {
   },
   created() {
     this.getTableData();
+    this.getDepartOptions();
+    this.getPersonOptions();
+    this.defaultChoose();
   }
 };
 </script>

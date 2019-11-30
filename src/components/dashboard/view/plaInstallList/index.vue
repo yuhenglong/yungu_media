@@ -68,8 +68,16 @@
       <el-table-column prop="projectAddress" label="城市" width="120"></el-table-column>
       <el-table-column prop="protecter" label="维护人员" width="120"></el-table-column>
       <el-table-column prop="dept" label="所属部门" width="120"></el-table-column>
-      <el-table-column prop="customerId" label="管理公司" width="120"></el-table-column>
-      <el-table-column prop="projectType" label="项目一级属性" width="120"></el-table-column>
+      <el-table-column prop="customerName" label="管理公司" width="120"></el-table-column>
+      <el-table-column label="项目一级属性" width="120">
+        <template slot-scope="scope">
+          <span v-if="scope.row.projectType == 0">写字楼</span>
+          <span v-if="scope.row.projectType == 1">商场</span>
+          <span v-if="scope.row.projectType == 2">公寓</span>
+          <span v-if="scope.row.projectType == 3">住宅</span>
+          <span v-if="scope.row.projectType == 4">综合体</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="activityStatus" label="项目状态" width="120"></el-table-column>
       <el-table-column label="业务状态" width="120">
         <template slot-scope="scope">
@@ -120,7 +128,7 @@
       center
       :append-to-body="true"
     >
-    <dialogAuditList :formCheckArray="formCheckList"></dialogAuditList>
+      <dialogAuditList :formCheckArray="formCheckList"></dialogAuditList>
       <!-- <el-table :data="formCheckList" border>
         <el-table-column property="identificationCode" label="序号"></el-table-column>
         <el-table-column property="verifyUserName" label="审核用户"></el-table-column>
@@ -128,7 +136,7 @@
         <el-table-column property="type" label="审核类型"></el-table-column>
         <el-table-column property="refuseReason" label="拒绝原因"></el-table-column>
         <el-table-column property="verifyTime" label="添加时间"></el-table-column>
-      </el-table> -->
+      </el-table>-->
     </el-dialog>
     <!-- 审核 -->
     <el-dialog

@@ -223,7 +223,7 @@
                 @change="changeId()"
               >
                 <template v-for="(item,index) in payModeList">
-                  <el-option :label="item.user_name" :value="item.id" :key="index"></el-option>
+                  <el-option :label="item.customerName" :value="item.customerId" :key="index"></el-option>
                 </template>
               </el-select>
             </el-form-item>
@@ -303,63 +303,62 @@
               <el-button @click="commitTable" type="success">添加付款计划</el-button>
             </div>
             <el-table :data="yunguContractPayModel" style="width: 100%;margin-top:20px;" border>
-              <el-table-column label="支付主体" width="180">
+              <el-table-column label="支付主体">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payMode }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="费用类别" width="180">
+              <el-table-column label="费用类别">
                 <template slot-scope="scope">
                   <span>{{ scope.row.costType }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="支付形式" width="180">
+              <el-table-column label="支付形式">
                 <template slot-scope="scope">
                   <span>{{ scope.row.costType }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="支付方式" width="180">
+              <el-table-column label="支付方式">
                 <template slot-scope="scope">
                   <span>{{ scope.row.costType }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="付费开始时间" width="180">
+              <el-table-column label="付费开始时间">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payStarttime }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="付费结束时间" width="180">
+              <el-table-column label="付费结束时间">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payEndtime }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="是否有发票" width="180">
+              <el-table-column label="是否有发票">
                 <template slot-scope="scope">
                   <span>{{ scope.row.isInvoice ==0?'是':'否' }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="应付金额" width="180">
+              <el-table-column label="应付金额">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payTotal }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="已付金额" width="180">
+              <el-table-column label="已付金额">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payTotal }}</span>
                 </template>
               </el-table-column>
-
-              <el-table-column label="开户行" width="180">
+              <el-table-column label="开户行">
                 <template slot-scope="scope">
                   <span>{{ scope.row.bankName }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="账号" width="180">
+              <el-table-column label="账号">
                 <template slot-scope="scope">
                   <span>{{ scope.row.bankAccount }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="操作" width="300px;">
+              <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button @click="payEdit(scope.$index, scope.row)" type="success">编辑</el-button>
                   <el-button @click="PayDel(scope.$index, scope.row)" type="danger">删除</el-button>
@@ -502,15 +501,19 @@ export default {
   methods: {
     getData() {
       this.$http
-        .post("/yunguAreaCustomer/getYunguAreaCustomerList")
+        .get("/yunguAreaCustomer/getYunguAreaCustomerList")
         .then(res => {
           if (res.data.meta.code == 200) {
+            console.log('支付主体',res);
             this.payModeList = res.data.data.obj;
           }
         });
     },
+    PayDel(index,row){
+      this.yunguContractPayModel.splice(index,1);
+    },
     changeId() {
-      console.log("id", this.yunguContractPayModelChild.paySubject);
+      // console.log("id", this.yunguContractPayModelChild.paySubject);
       this.$http
         .post(
           "/yunguAreaCustomer/getYunguAreaCustomerById",

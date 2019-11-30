@@ -50,6 +50,7 @@ export default {
   },
   watch: {
     $route() {
+      console.log('这是路由',this.$route);
       this.addViewTags();
     }
   }
@@ -57,8 +58,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .tags-view-wrap {
+  white-space:nowrap;
+  overflow-x:auto;
   width: 100%;
-  height: 36px;
+  // height: auto;
+  height: 50px;
   color: #333;
   background: #fff;
   border-bottom: 1px solid #d8dce5;
@@ -75,10 +79,10 @@ export default {
 }
 .tags-view-item {
   top: 6px;
-  margin-left: 10px;
+  margin-left: 5px;
   padding: 5px 8px 5px 15px;
   background-color: #fff;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 26px;
   color: #999;
   border-radius: 5px;

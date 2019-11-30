@@ -21,18 +21,19 @@ export default {
   data() {
     return {
       sysUserName: "",
-      sysUserAvatar: ''
+      sysUserAvatar: ""
     };
   },
   methods: {
-    getInfo(){
-      this.$http.get('/getUserInfo').then(res =>{
-        if(res.data.meta.code ==200){
+    getInfo() {
+      this.$http.get("/getUserInfo").then(res => {
+        if (res.data.meta.code == 200) {
           this.sysUserName = res.data.data.obj.realName;
-          localStorage.setItem('sysUserName',this.sysUserName);
+          localStorage.setItem("sysUserName", this.sysUserName);
+          localStorage.setItem("uid", res.data.data.obj.uid);
           this.sysUserAvatar = res.data.data.obj.photo;
         }
-      })
+      });
     },
     logout() {
       this.$confirm("确认退出吗?", "提示", {
@@ -46,7 +47,7 @@ export default {
         .catch(() => {});
     }
   },
-  created(){
+  created() {
     this.getInfo();
   }
 };

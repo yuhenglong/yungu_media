@@ -72,8 +72,16 @@
       <el-table-column prop="project_address" label="城市" width="120"></el-table-column>
       <el-table-column prop="protecter" label="维护人员" width="120"></el-table-column>
       <el-table-column prop="dept" label="所属部门" width="300"></el-table-column>
-      <el-table-column prop="developer" label="管理公司" width="120"></el-table-column>
-      <el-table-column prop="project_type" label="项目属性" width="120"></el-table-column>
+      <el-table-column prop="customer_name" label="管理公司" width="120"></el-table-column>
+      <el-table-column label="项目属性" width="120">
+           <template slot-scope="scope">
+          <span v-if="scope.row.project_type == 0">写字楼</span>
+          <span v-if="scope.row.project_type == 1">商场</span>
+          <span v-if="scope.row.project_type == 2">公寓</span>
+          <span v-if="scope.row.project_type == 3">住宅</span>
+          <span v-if="scope.row.project_type == 4">综合体</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="activity_status" label="项目状态" width="120"></el-table-column>
       <el-table-column label="业务状态" width="120">
         <template slot-scope="scope">
@@ -258,6 +266,7 @@ export default {
         )
         .then(res => {
           if (res.data.meta.code == 200) {
+            console.log('管理公司',res);
             this.areaTableList = res.data.data.obj.data;
             this.total = res.data.data.obj.count;
           }

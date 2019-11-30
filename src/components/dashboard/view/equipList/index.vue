@@ -37,11 +37,11 @@
       <el-table-column label="设备状态" width="120">
         <template slot-scope="scope">
           <span
-            :class="scope.row.euqipment_status == 0?'':'textSty'"
-          >{{ scope.row.euqipment_status == 0?'启用':'禁止' }}</span>
+            :class="scope.row.euqipment_status == 1?'':'textSty'"
+          >{{ scope.row.euqipment_status == 1?'启用':'禁止' }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="zip" label="入库时间" width="120"></el-table-column>
+      <el-table-column prop="create_time" label="入库时间" width="120"></el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button @click="checkTable(scope.row)" type="text" size="small">查看</el-button>
@@ -50,7 +50,7 @@
             @click="saveEdit(scope.row)"
             type="text"
             size="small"
-          >{{scope.row.euqipment_status == 1?'启用':'禁止'}}</el-button>
+          >{{scope.row.euqipment_status == 0?'启用':'禁止'}}</el-button>
         </template>
       </el-table-column>
     </el-table>

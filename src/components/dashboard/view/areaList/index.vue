@@ -63,10 +63,25 @@
       <el-table-column prop="project_address" label="城市" width="120"></el-table-column>
       <el-table-column prop="protecter" label="维护人员" width="120"></el-table-column>
       <el-table-column prop="dept" label="所属部门" width="300"></el-table-column>
-      <el-table-column prop="customer_id" label="管理公司" width="120"></el-table-column>
-      <el-table-column prop="project_type" label="项目属性" width="120"></el-table-column>
+      <el-table-column prop="customer_name" label="管理公司" width="120"></el-table-column>
+      <el-table-column label="项目属性" width="120">
+        <template slot-scope="scope">
+          <span v-if="scope.row.project_type == 0">写字楼</span>
+          <span v-if="scope.row.project_type == 1">商场</span>
+          <span v-if="scope.row.project_type == 2">公寓</span>
+          <span v-if="scope.row.project_type == 3">住宅</span>
+          <span v-if="scope.row.project_type == 4">综合体</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="activity_status" label="项目状态" width="120"></el-table-column>
-      <el-table-column prop="verify_status" label="业务状态" width="120"></el-table-column>
+      <el-table-column label="业务状态" width="120">
+        <template slot-scope="scope">
+          <span v-if="scope.row.verify_status == 0">审核未通过</span>
+          <span v-if="scope.row.verify_status == 1">审核成功</span>
+          <span v-if="scope.row.verify_status == 2">待审核</span>
+          <span v-if="scope.row.verify_status == 3">编辑中</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button @click="examine(scope.row)" type="text" size="small">查看</el-button>
@@ -85,7 +100,7 @@
       center
       :append-to-body="true"
     >
-    <dialogAuditList :formCheckArray="formCheckList"></dialogAuditList>
+      <dialogAuditList :formCheckArray="formCheckList"></dialogAuditList>
     </el-dialog>
   </div>
 </template>
@@ -163,7 +178,7 @@ export default {
           if (res.data.meta.code == 200) {
             this.dialogCheckVisible = true;
             this.formCheckList = res.data.data.obj;
-            console.log('这是审核弹窗信息',this.formCheckList);
+            console.log("这是审核弹窗信息", this.formCheckList);
           }
         });
     },

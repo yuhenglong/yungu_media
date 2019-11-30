@@ -10,7 +10,6 @@
         <el-radio-button label="待我审查"></el-radio-button>
         <el-radio-button label="我已审查"></el-radio-button>
         <el-radio-button label="我跟踪的"></el-radio-button>
-        <!-- <demo></demo>   -->
       </el-radio-group>
       <div class="ta">
         <el-table class="tabl" :data="tableData" style="width: 100%" border>
@@ -18,18 +17,19 @@
           <el-table-column prop="date" label="日期" width="180"></el-table-column>
           <el-table-column prop="bz" label="备注"></el-table-column>
         </el-table>
+        <demo></demo>
       </div>
     </div>
   </div>
 </template>
 <script>
 import echarts from "echarts";
-import demo from "@/components/dashboard/view/demo"
+import demo from "@/components/dashboard/view/demo";
 import qs from "qs";
 export default {
   name: "yunguIndex",
-  components:{
-    // demo
+  components: {
+    demo
   },
   data() {
     return {
@@ -203,7 +203,7 @@ export default {
           break;
       }
     },
-    choose(){
+    choose() {
       this.tableData = this.tableDataOne;
     }
   },
@@ -217,8 +217,8 @@ export default {
 .yunguIndex {
   width: 100%;
   padding: 30px;
-  height:auto;
-  overflow:auto;
+  height: auto;
+  overflow: auto;
   .ov {
     overflow: hidden;
   }

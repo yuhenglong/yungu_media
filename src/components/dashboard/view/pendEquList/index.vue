@@ -138,8 +138,6 @@ export default {
     return {
       title: "设备信息查看",
       titleTwo: "拒绝记录列表",
-      // titleThr: "编辑客户数据",
-      // titleFour: "添加客户数据",
       labelPosition: "right",
       dialogEditVisible: false,
       dialogCheckVisible: false,
