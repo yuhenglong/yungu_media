@@ -43,9 +43,9 @@
             </el-form-item>
             <el-form-item label="维护人员" prop="protecter">
               <el-select v-model="addInstallTable.protecter" placeholder="选择">
-                <el-option label="隆" value="0"></el-option>
-                <el-option label="华" value="1"></el-option>
-                <el-option label="丽" value="2"></el-option>
+                <el-option label="隆" :value="0"></el-option>
+                <el-option label="华" :value="1"></el-option>
+                <el-option label="丽" :value="2"></el-option>
               </el-select>
               <!-- <el-input v-model="addInstallTable.protecter" placeholder="维护人员"></el-input> -->
             </el-form-item>

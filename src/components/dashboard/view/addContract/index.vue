@@ -247,6 +247,9 @@
               <el-select v-model="yunguContractPayModelChild.payMode" placeholder="选择">
                 <el-option label="银行卡" value="0"></el-option>
                 <el-option label="支付宝" value="1"></el-option>
+                <el-option label="微信" value="2"></el-option>
+                <el-option label="现金" value="3"></el-option>
+                <el-option label="其他" value="3"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="总支付金额">
@@ -285,19 +288,61 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="计划周期">
-              <el-select v-model="yunguContractPayModelChild.planPeriod" placeholder="请选择">
-                <el-option label="待支付" value="0"></el-option>
-                <el-option label="已支付" value="1"></el-option>
+              <el-select
+                v-model="yunguContractPayModelChild.planPeriod"
+                placeholder="请选择"
+                @change="chengPayPlan"
+              >
+                <el-option label="季结" value="0"></el-option>
+                <el-option label="半年结" value="1"></el-option>
+                <el-option label="年结" value="2"></el-option>
+                <el-option label="一次性" value="3"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="开户行">
               <el-select v-model="yunguContractPayModelChild.bankName" placeholder="请选择">
-                <el-option label="中国银行" value="0"></el-option>
-                <el-option label="已支付" value="1"></el-option>
+                <template v-for="(item,index) in payBank">
+                  <el-option :label="item.payWay" :value="item.value" :key="index"></el-option>
+                </template>
               </el-select>
             </el-form-item>
             <el-form-item label="账号">
               <el-input v-model="yunguContractPayModelChild.bankAccount" placeholder="账号"></el-input>
+            </el-form-item>
+            <el-form-item label="付费计划详情">
+              <div style="position:relative;top:0;left:150px;">
+                <el-table :data="payTableDrtailData" style="width: 1001px;" border>
+                  <!-- <el-table-column type="index" width="150" :index="indexDefault" label="计划序号"></el-table-column> -->
+                  <el-table-column label="计划序号" width="250px">
+                    <template slot-scope="scope">
+                      <el-input v-model="scope.row.seq" placeholder="请输入内容" style="width:90%;"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="付款时间" width="250px">
+                    <template slot-scope="scope">
+                      <el-input v-model="scope.row.payTime" placeholder="请输入内容" style="width:90%;"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="付款金额" width="250px">
+                    <template slot-scope="scope">
+                      <el-input
+                        v-model="scope.row.payAmount"
+                        placeholder="请输入内容"
+                        style="width:90%;"
+                      ></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="付款备注" width="250px">
+                    <template slot-scope="scope">
+                      <el-input
+                        v-model="scope.row.payRemark"
+                        placeholder="请输入内容"
+                        style="width:90%;"
+                      ></el-input>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
             </el-form-item>
             <div style="text-align:center;">
               <el-button @click="commitTable" type="success">添加付款计划</el-button>
@@ -305,22 +350,27 @@
             <el-table :data="yunguContractPayModel" style="width: 100%;margin-top:20px;" border>
               <el-table-column label="支付主体">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.payMode }}</span>
+                  <span>{{ changePayModel(scope.row.paySubject) }}</span>
+                  <!-- <span>{{ changePayModel(scope.row) }}</span> -->
                 </template>
               </el-table-column>
               <el-table-column label="费用类别">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.costType }}</span>
+                  <span>{{ scope.row.costType== 0?'押金':'租金' }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="支付形式">
+              <!-- <el-table-column label="支付形式">
                 <template slot-scope="scope">
                   <span>{{ scope.row.costType }}</span>
                 </template>
-              </el-table-column>
+              </el-table-column>-->
               <el-table-column label="支付方式">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.costType }}</span>
+                  <span v-if="scope.row.payMode ==0">银行卡</span>
+                  <span v-if="scope.row.payMode ==1">支付宝</span>
+                  <span v-if="scope.row.payMode ==2">微信</span>
+                  <span v-if="scope.row.payMode ==3">现金</span>
+                  <span v-if="scope.row.payMode ==4">其他</span>
                 </template>
               </el-table-column>
               <el-table-column label="付费开始时间">
@@ -350,7 +400,7 @@
               </el-table-column>
               <el-table-column label="开户行">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.bankName }}</span>
+                  <span>{{ changePayWay(scope.row.bankName) }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="账号">
@@ -405,6 +455,32 @@ export default {
             "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
         }
       ],
+      payTableDrtailData: [
+        // {
+        //   seq: "",
+        //   payTime: "",
+        //   payAmount: "",
+        //   payRemark: ""
+        // },
+        // {
+        //   seq: "",
+        //   payTime: "",
+        //   payAmount: "",
+        //   payRemark: ""
+        // },
+        // {
+        //   seq: "",
+        //   payTime: "",
+        //   payAmount: "",
+        //   payRemark: ""
+        // },
+        // {
+        //   seq: "",
+        //   payTime: "",
+        //   payAmount: "",
+        //   payRemark: ""
+        // }
+      ],
       yunguAreaContractModel: {
         areaProjectId: null,
         contractAttrubite: null,
@@ -423,6 +499,40 @@ export default {
         signCustomer: null,
         verifyStatus: null
       },
+      payBank: [
+        {
+          payWay: "中国银行",
+          value: 0
+        },
+        {
+          payWay: "工商银行",
+          value: 1
+        },
+        {
+          payWay: "建设银行",
+          value: 2
+        },
+        {
+          payWay: "农业银行",
+          value: 3
+        },
+        {
+          payWay: "兴业银行",
+          value: 4
+        },
+        {
+          payWay: "广发银行",
+          value: 5
+        },
+        {
+          payWay: "浦发银行",
+          value: 6
+        },
+        {
+          payWay: "平安银行",
+          value: 7
+        }
+      ],
       yunguAreaContractdetailModel: {
         accountCheck: null,
         amortizeMode: null,
@@ -499,18 +609,178 @@ export default {
     };
   },
   methods: {
+    // indexDefault(index) {
+    //   return index;
+    // },
+    arrPush(num) {
+      const stagePay = this.yunguContractPayModelChild.payTotal /num;
+      for (let i = 0; i < num; i++) {
+        const obj = {
+          seq: i + 1,
+          payTime: "",
+          payAmount: stagePay +'元',
+          payRemark: ""
+        };
+        this.payTableDrtailData.push(obj);
+      }
+      console.log("存进后的数组", this.payTableDrtailData);
+    },
+    // 获取时间间隔
+    DateDiff(sDate1, sDate2) {
+      var aDate, oDate1, oDate2, iDays;
+      aDate = sDate1.split("-");
+      oDate1 = new Date(aDate[0], aDate[1], aDate[2]); //转换为12-18-2006格式
+      aDate = sDate2.split("-");
+      oDate2 = new Date(aDate[0], aDate[1], aDate[2]);
+      iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
+      console.log("间隔", iDays);
+      return iDays;
+    },
+    addDays(date, days, seperator = "-") {
+      let oDate = new Date(date).valueOf();
+      let nDate = oDate + days * 24 * 3600 * 1000;
+      nDate = new Date(nDate);
+      let y = nDate
+        .getFullYear()
+        .toString()
+        .padStart(2, 0);
+      let m = (nDate.getMonth() + 1).toString().padStart(2, 0);
+      let d = nDate
+        .getDate()
+        .toString()
+        .padStart(2, 0);
+      console.log("N天后", `${y}${seperator}${m}${seperator}${d}`);
+      return `${y}${seperator}${m}${seperator}${d}`;
+    },
+    chengPayPlan() {
+      const timeOne = this.yunguContractPayModelChild.payStarttime.split(
+        " "
+      )[0];
+      const timeTwo = this.yunguContractPayModelChild.payEndtime.split(" ")[0];
+      // 获取时间间隔
+      const dateDiff = this.DateDiff(timeOne, timeTwo);
+
+      const setDate = this.yunguContractPayModelChild;
+      if (setDate.planPeriod == 0) {
+        this.payTableDrtailData = [];
+        // 循环次数
+        const firForTime = dateDiff / 90;
+        const forTime = Math.ceil(firForTime);
+        this.arrPush(forTime);
+        if (forTime == 1) {
+          // this.arrPush(1);
+          this.payTableDrtailData[0].payTime = timeTwo;
+        } else{
+          for (let i = 0; i < forTime; i++) {
+            const ii = i + 1;
+            if (ii % 4 == 0) {
+              this.payTableDrtailData[i].payTime = this.addDays(
+                setDate.payStarttime,
+                365 * ii
+              );
+            } else {
+              this.payTableDrtailData[i].payTime = this.addDays(
+                setDate.payStarttime,
+                90 * (i + 1)
+              );
+            };
+          }
+          // 因为数字没有整除，所以要把没分配好的最后日期计算上去
+          this.payTableDrtailData[this.payTableDrtailData.length -1]["payTime"] = timeTwo;
+        }
+      } else if (setDate.planPeriod == 1) {
+        this.payTableDrtailData = [];
+        // 循环次数
+        const firForTime = dateDiff / 180;
+        const forTime = Math.ceil(firForTime);
+        console.log('向上取整',forTime);
+        this.arrPush(forTime);
+        if (forTime == 1) {
+          // this.arrPush(1);
+          this.payTableDrtailData[0].payTime = timeTwo;
+        } else{
+          for (let i = 0; i < forTime; i++) {
+            const ii = i + 1;
+            if (ii % 2 == 0) {
+              this.payTableDrtailData[i].payTime = this.addDays(
+                setDate.payStarttime,
+                365 * ii
+              );
+            } else {
+              this.payTableDrtailData[i].payTime = this.addDays(
+                setDate.payStarttime,
+                182 * (i + 1)
+              );
+            };
+          }
+          // 因为数字没有整除，所以要把没分配好的最后日期计算上去
+          this.payTableDrtailData[this.payTableDrtailData.length -1]["payTime"] = timeTwo;
+        }
+        // this.payTableDrtailData = [];
+        // this.arrPush(2);
+        // this.payTableDrtailData[0].payTime = this.addDays(
+        //   setDate.payStarttime,
+        //   180
+        // );
+        // this.payTableDrtailData[1].payTime = this.addDays(
+        //   setDate.payStarttime,
+        //   365
+        // );
+      } else if (setDate.planPeriod == 2) {
+        this.payTableDrtailData = [];
+        this.arrPush(2);
+        this.payTableDrtailData[0].payTime = this.addDays(
+          setDate.payStarttime,
+          365
+        );
+        this.payTableDrtailData[1].payTime = this.addDays(
+          setDate.payStarttime,
+          365 * 2
+        );
+      } else if (setDate.planPeriod == 3) {
+        this.payTableDrtailData = [];
+        this.arrPush(1);
+        // 获取时间间隔
+        // const dateDiff = this.DateDiff(timeOne, timeTwo);
+        // this.payTableDrtailData[0].payTime = this.addDays(
+        //   setDate.payStarttime,
+        //   dateDiff
+        // );
+        this.payTableDrtailData[0].payTime = timeTwo;
+      }
+      // 获取时间间隔
+      // this.DateDiff(timeOne, timeTwo);
+      const val = this.yunguContractPayModelChild.planPeriod;
+    },
+    changePayModel(val) {
+      const len = this.payModeList.length;
+      for (let i = 0; i < len; i++) {
+        if (this.payModeList[i].customerId == val) {
+          return this.payModeList[i].customerName;
+        }
+      }
+    },
+    changePayWay(val) {
+      const len = this.payBank.length;
+      console.log(val);
+      for (let i = 0; i < len; i++) {
+        if (this.payBank[i].value == val) {
+          return this.payBank[i].payWay;
+        }
+      }
+    },
     getData() {
       this.$http
         .get("/yunguAreaCustomer/getYunguAreaCustomerList")
         .then(res => {
           if (res.data.meta.code == 200) {
-            console.log('支付主体',res);
+            console.log("支付主体", res);
             this.payModeList = res.data.data.obj;
           }
         });
     },
-    PayDel(index,row){
-      this.yunguContractPayModel.splice(index,1);
+    PayDel(index, row) {
+      this.yunguContractPayModel.splice(index, 1);
     },
     changeId() {
       // console.log("id", this.yunguContractPayModelChild.paySubject);
@@ -527,6 +797,7 @@ export default {
         });
     },
     commitTable() {
+      console.log("打印表格输入框内容", this.payTableDrtailData);
       this.yunguContractPayModel.push(this.yunguContractPayModelChild);
       this.yunguContractPayModelChild = {
         remark: "",
