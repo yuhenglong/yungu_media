@@ -62,7 +62,7 @@
     </el-form>
     <!-- 表格 -->
     <el-table :data="payTableList" border style="width: 100%">
-      <el-table-column fixed prop="contract_Code" label="合同编号" width="150"></el-table-column>
+      <el-table-column fixed prop="contract_code" label="合同编号" width="150"></el-table-column>
       <el-table-column prop="project_name" label="项目名称" width="120"></el-table-column>
       <el-table-column prop="project_address" label="项目所在地区" width="120"></el-table-column>
       <el-table-column prop="protecter" label="项目属性" width="120"></el-table-column>
@@ -92,17 +92,6 @@
     </el-table>
     <!-- 二次封装分页插件 -->
     <pagination :total="total" @pageChange="changePage"></pagination>
-    <!-- <div class="pagi">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.pageInfo.pageNum"
-        :page-sizes="[10, 20]"
-        :page-size="this.pageInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
-    </div>-->
     <!-- 查看审核记录 -->
     <el-dialog
       :title="title"

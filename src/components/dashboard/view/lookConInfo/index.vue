@@ -291,7 +291,7 @@
         </el-tab-pane>
         <el-tab-pane label="付款计划">
           <el-form :inline="true" class="demo-form-inline">
-            <el-form-item label="支付主体">
+            <!-- <el-form-item label="支付主体">
               <el-select
                 disabled
                 v-model="yunguContractPayModelChild.paySubject"
@@ -387,70 +387,69 @@
                 v-model="yunguContractPayModelChild.bankAccount"
                 placeholder="账号"
               ></el-input>
-            </el-form-item>
-            <div style="text-align:center;">
+            </el-form-item> -->
+            <!-- <div style="text-align:center;">
               <el-button @click="commitTable" type="success">添加付款计划</el-button>
-            </div>
+            </div> -->
             <el-table :data="yunguContractPayModel" style="width: 100%;margin-top:20px;" border>
-              <el-table-column label="支付主体" width="180">
+              <el-table-column label="支付主体">
                 <template slot-scope="scope">
                   <span>{{ scope.row.paySubject }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="费用类别" width="180">
+              <el-table-column label="费用类别">
                 <template slot-scope="scope">
                   <span>{{ scope.row.costType }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="支付形式" width="180">
+              <el-table-column label="支付形式">
                 <template slot-scope="scope">
                   <span>{{ scope.row.costType }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="支付方式" width="180">
+              <el-table-column label="支付方式">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payMode }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="付费开始时间" width="180">
+              <el-table-column label="付费开始时间">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payStarttime }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="付费结束时间" width="180">
+              <el-table-column label="付费结束时间">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payEndtime }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="是否有发票" width="180">
+              <el-table-column label="是否有发票">
                 <template slot-scope="scope">
                   <span>{{ scope.row.isInvoice ==0?'是':'否' }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="应付金额" width="180">
+              <el-table-column label="应付金额">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payTotal }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="已付金额" width="180">
+              <el-table-column label="已付金额">
                 <template slot-scope="scope">
                   <span>{{ scope.row.payTotal }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="开户行" width="180">
+              <el-table-column label="开户行">
                 <template slot-scope="scope">
                   <span>{{ scope.row.bankName }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="账号" width="180">
+              <el-table-column label="账号">
                 <template slot-scope="scope">
                   <span>{{ scope.row.bankAccount }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="操作" width="300px;">
                 <template slot-scope="scope">
-                  <el-button @click="payEdit(scope.$index, scope.row)" type="success">编辑</el-button>
-                  <el-button @click="PayDel(scope.$index, scope.row)" type="danger">删除</el-button>
+                  <el-button @click="checkInfo(scope.$index, scope.row)" type="success">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -459,16 +458,6 @@
       </el-tabs>
     </div>
     <div class="btn">
-      <!-- <el-button
-        type="primary"
-        size="medium"
-        @click="commit('yunguAreaContractModel',true)"
-      >提&nbsp;&nbsp;&nbsp;交</el-button>
-      <el-button
-        type="success"
-        size="medium"
-        @click="commit('yunguAreaContractModel')"
-      >保&nbsp;&nbsp;&nbsp;存</el-button> -->
       <el-button type="warning" size="medium" @click="giveUp()">放弃修改并返回</el-button>
     </div>
   </div>
@@ -520,8 +509,6 @@ export default {
         exeEndtime: "",
         exeStarttime: "",
         id: "",
-        // intallCost: "",
-        // intallNumber: "",
         mangerTotal: "",
         mediaNumber: "",
         notFullscreen: "",
@@ -587,6 +574,9 @@ export default {
   methods: {
     giveUp() {
       this.$router.go(-1);
+    },
+    checkInfo(index,row){
+      console.log(row);
     },
     getData() {
       this.$http
@@ -669,32 +659,7 @@ export default {
       }
       obj.yunguAreaContractModel = this.yunguAreaContractModel;
       obj.yunguContractPayModel = this.yunguContractPayModel;
-      // 下划线转鸵峰
-      // const gdObj = {};
-      // gdObj.areaContractId = this.yunguAreaContractdetailModel.areaContractId;
-      // gdObj.mediaNumber = this.yunguAreaContractdetailModel.mediaNumber;
-      // gdObj.exeStarttime = this.yunguAreaContractdetailModel.exeStarttime;
-      // gdObj.exeEndtime = this.yunguAreaContractdetailModel.exeEndtime;
-      // gdObj.deadline = this.yunguAreaContractdetailModel.deadline;
-      // gdObj.rentfreeStarttime = this.yunguAreaContractdetailModel.rentfreeStarttime;
-      // gdObj.rentfreeEndtime = this.yunguAreaContractdetailModel.rentfreeEndtime;
-      // gdObj.rentfree = this.yunguAreaContractdetailModel.rentfree;
-      // gdObj.signNumber = this.yunguAreaContractdetailModel.signNumber;
-      // gdObj.signWaitnumber = this.yunguAreaContractdetailModel.signWaitnumber;
-      // gdObj.signWaitprice = this.yunguAreaContractdetailModel.signWaitprice;
-      // gdObj.rentTotal = this.yunguAreaContractdetailModel.rentTotal;
-      // gdObj.mangerTotal = this.yunguAreaContractdetailModel.mangerTotal;
-      // gdObj.totalAmount = this.yunguAreaContractdetailModel.totalAmount;
-      // gdObj.paperAvg = this.yunguAreaContractdetailModel.paperAvg;
-      // gdObj.paperRent = this.yunguAreaContractdetailModel.paperRent;
-      // gdObj.otherAmount = this.yunguAreaContractdetailModel.otherAmount;
-      // gdObj.depositAmount = this.yunguAreaContractdetailModel.depositaAmount;
-      // gdObj.signYearprice = this.yunguAreaContractdetailModel.signYearprice;
-      // gdObj.signMonthprice = this.yunguAreaContractdetailModel.signMonthprice;
-      // gdObj.total = this.yunguAreaContractdetailModel.total;
-      // 这是没必要转鸵峰但必须带过去的字段,两对象合并
-      // const guoDuObj = Object.assign(gdObj,this.yunguAreaContractdetailModel);
-      // 把重新组装的对象复制到对象属性内
+
       obj.yunguAreaContractdetailModel = this.yunguAreaContractdetailModel;
       console.log("这是上传的内容", obj);
       this.$http

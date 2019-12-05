@@ -1,11 +1,6 @@
 <template>
 
   <div class="all-process-com" style="margin-top:20px;">
-        <el-breadcrumb class="breadcrumb-style pt-10" separator="/">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>流程发起</el-breadcrumb-item>
-        </el-breadcrumb>
-
         <ul class="ul">
             <li @click="toPath('/createProcessPageList')">
                 <div>{{variousProcessCount ? variousProcessCount.startedCount : "0"}}</div>
@@ -106,6 +101,7 @@ export default {
             justify-content: center;
             padding-bottom: 20px; 
             box-sizing: border-box;
+            margin-top:20px;
             li{
                 display: flex;
                 flex: 1;

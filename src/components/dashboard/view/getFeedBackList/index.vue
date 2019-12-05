@@ -159,7 +159,7 @@
     <el-dialog
       :title="titleThr"
       :visible.sync="dialogFeedbackVisible"
-      width="1000px"
+      width="1200px"
       center
       :append-to-body="true"
     >

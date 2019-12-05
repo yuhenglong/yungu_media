@@ -45,7 +45,7 @@
                 <el-option
                   v-for="item in protecterList"
                   :key="item.index"
-                  label="item.real_name"
+                  :label="item.real_name"
                   :value="item.did"
                 ></el-option>
               </el-select>
@@ -55,7 +55,7 @@
                 <el-option
                   v-for="item in manageCompanyTwo"
                   :key="item.name"
-                  label="item.name"
+                  :label="item.name"
                   :value="item.did"
                 ></el-option>
               </el-select>
@@ -542,7 +542,10 @@
             >
               <el-table-column label="支付方式" width="180">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.payText }}</span>
+                  <span v-if="scope.row.payName ==0">银行卡</span>
+                  <span v-if="scope.row.payName ==1">支付宝</span>
+                  <span v-if="scope.row.payName ==2">微信</span>
+                  <span v-if="scope.row.payName ==3">现金</span>
                 </template>
               </el-table-column>
               <el-table-column label="支付方式" width="180">

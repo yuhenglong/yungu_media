@@ -56,17 +56,7 @@
     </el-table>
     <!-- 二次封装分页插件 -->
     <pagination :total="total" @pageChange="changePage"></pagination>
-    <!-- <div class="pagi">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.pageInfo.pageNum"
-        :page-sizes="[10, 20]"
-        :page-size="this.pageInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
-    </div>-->
+
   </div>
 </template>
 

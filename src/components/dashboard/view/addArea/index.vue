@@ -39,10 +39,20 @@
                 @change="chooseDept"
               >
                 <el-option
-                  v-for="(item,index) in protecterList"
+                  v-for="item in protecterList"
                   :key="item.index"
                   :label="item.real_name"
                   :value="item.did"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="管理公司">
+              <el-select v-model="yunguAreaProjectModel.customerId" placeholder="管理公司">
+                <el-option
+                  v-for="item in companyList"
+                  :key="item.customerId"
+                  :label="item.customerName"
+                  :value="item.customerId"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -58,7 +68,7 @@
             </el-form-item>
             <el-form-item label="一级属性">
               <el-select v-model="yunguAreaProjectModel.projectType" placeholder="一级属性">
-                <el-option label="写字楼" value="0"></el-option>
+                <!-- <el-option label="写字楼" value="0"></el-option> -->
                 <el-option label="商场" value="1"></el-option>
                 <el-option label="公寓" value="2"></el-option>
                 <el-option label="住宅" value="3"></el-option>
@@ -145,6 +155,16 @@
             </el-form-item>
             <el-form-item label="项目经办人手机">
               <el-input v-model="yunguAreaProjectDetailModel.transactorPhone" placeholder="项目经办人手机"></el-input>
+            </el-form-item>
+            <el-form-item label="联系方式">
+              <el-select v-model="yunguAreaProjectDetailModel.contactWay" placeholder="请选择">
+                <el-option
+                  v-for="item in contactWay"
+                  :key="item.val"
+                  :label="item.way"
+                  :value="item.val"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="项目经办人电话">
               <el-input
@@ -293,8 +313,14 @@
               <el-input v-model="yunguAreaProjectDetailModel.showCost" placeholder="楼秀费用(元/天)"></el-input>
             </el-form-item>
             <el-form-item label="回票情况">
-              <el-radio v-model="yunguAreaProjectDetailModel.receiptStatus" label="0">有</el-radio>
-              <el-radio v-model="yunguAreaProjectDetailModel.receiptStatus" label="1">无</el-radio>
+              <el-select v-model="yunguAreaProjectDetailModel.receiptStatus" placeholder="请选择">
+                <el-option
+                  v-for="item in receiptStatus"
+                  :key="item.val"
+                  :label="item.way"
+                  :value="item.val"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <div class="pay">
               <h3
@@ -349,14 +375,11 @@
         </el-tab-pane>
         <el-tab-pane label="点位信息">
           <el-form :inline="true" class="demo-form-inline">
-            <el-form-item label="管理公司">
-              <el-select v-model="yunguAreaPostionModelList.company" placeholder="管理公司">
-                <el-option
-                  v-for="item in companyList"
-                  :key="item.customerId"
-                  :label="item.customerName"
-                  :value="item.customerId"
-                ></el-option>
+            <el-form-item label="所属公司">
+              <el-select v-model="yunguAreaPostionModelList.company" placeholder="所属公司">
+                <el-option label="云股" value="0"></el-option>
+                <el-option label="租用" value="1"></el-option>
+                <el-option label="其他" value="2"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="安装名称">
@@ -370,8 +393,16 @@
               <el-radio v-model="yunguAreaPostionModelList.isBody" label="1">否</el-radio>
             </el-form-item>
             <el-form-item label="是否赠品">
-              <el-radio v-model="yunguAreaPostionModelList.isGive" label="0">是</el-radio>
-              <el-radio v-model="yunguAreaPostionModelList.isGive" label="1">否</el-radio>
+              <!-- <el-radio v-model="yunguAreaPostionModelList.isGive" label="0">是</el-radio>
+              <el-radio v-model="yunguAreaPostionModelList.isGive" label="1">否</el-radio>-->
+              <el-select v-model="yunguAreaPostionModelList.isGive" placeholder="请选择">
+                <el-option
+                  v-for="item in isGiveList"
+                  :key="item.val"
+                  :label="item.name"
+                  :value="item.val"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="点位名称" prop="pointName">
               <el-input v-model="yunguAreaPostionModelList.pointName" placeholder="点位名称"></el-input>
@@ -448,15 +479,15 @@ export default {
       showModeList: [
         {
           value: "0",
-          label: "3D液晶"
+          label: "液晶"
         },
         {
           value: "1",
-          label: "2D平面"
+          label: "数码海报"
         },
         {
           value: "2",
-          label: "楼梯屏"
+          label: "电梯投影"
         }
       ],
       manageCompany: [],
@@ -469,13 +500,14 @@ export default {
         installName: "",
         installPosition: "",
         isBody: "0",
-        isGive: "0",
+        isGive: 0,
         pointName: "",
         positionPicture: "",
         showMode: "",
         size: ""
       },
       yunguAreaProjectDetailModel: {
+        contactWay: "",
         publicityWay: "0",
         projectCount: "",
         surrounding: "",
@@ -530,9 +562,10 @@ export default {
         specialOwner: "",
         isShow: "0",
         showCost: "",
-        receiptStatus: "0"
+        receiptStatus: 0
       },
       yunguAreaProjectModel: {
+        customerId: "",
         projectArea: "",
         projectName: "",
         projectAddress: "",
@@ -544,7 +577,52 @@ export default {
         mediaName: "",
         isSave: "0"
       },
-
+      contactWay: [
+        {
+          way: "微信",
+          val: 0
+        },
+        {
+          way: "手机",
+          val: 1
+        },
+        {
+          way: "QQ",
+          val: 2
+        }
+      ],
+      isGiveList: [
+        {
+          name: "否",
+          val: 0
+        },
+        {
+          name: "全屏(使用权)",
+          val: 1
+        },
+        {
+          name: "全屏(产权)",
+          val: 2
+        }
+      ],
+      receiptStatus: [
+        {
+          way: "无发票",
+          val: 0
+        },
+        {
+          way: "已申请",
+          val: 1
+        },
+        {
+          way: "已开票",
+          val: 2
+        },
+        {
+          way: "确认收票",
+          val: 3
+        }
+      ],
       yunguPayMethodModelList_arr: [],
       yunguPayMethodModelList: {
         payName: "",
@@ -631,15 +709,6 @@ export default {
         size: ""
       };
     },
-    // getDate() {
-    //   const openTimeSub = document.getElementById("openTimeFir").value;
-    //   const checkinTimeSub = document.getElementById("checkinTimeFir").value;
-    //   const detailTimeFir = openTimeSub + " 00:00:00";
-    //   const detailTimeSec = checkinTimeSub + " 00:00:00";
-    //   this.yunguAreaProjectDetailModel.openTime = detailTimeFir;
-    //   this.yunguAreaProjectDetailModel.checkinTime = detailTimeSec;
-    // },
-
     commit(formName, isSave) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -701,8 +770,12 @@ export default {
     }
   },
   computed: {
-    mediaName(){
-      return this.yunguAreaPostionModelList.pointName + ' ' + this.yunguAreaPostionModelList.installPosition;
+    mediaName() {
+      return (
+        this.yunguAreaPostionModelList.pointName +
+        " " +
+        this.yunguAreaPostionModelList.installPosition
+      );
     }
   },
   created() {

@@ -43,9 +43,9 @@
             </el-form-item>
             <el-form-item label="维护人员" prop="protecter">
               <el-select v-model="addInstallTable.protecter" placeholder="选择">
-                <el-option label="隆" value="0"></el-option>
-                <el-option label="华" value="1"></el-option>
-                <el-option label="丽" value="2"></el-option>
+                <template v-for="(item,index) in protecterList">
+                  <el-option :label="item.real_name" :value="item.user_name" :key="index"></el-option>
+                </template>
               </el-select>
               <!-- <el-input v-model="addInstallTable.protecter" placeholder="维护人员"></el-input> -->
             </el-form-item>
@@ -58,7 +58,7 @@
             <!-- <el-form-item label="联系方式">
               <el-select v-model="yunguContractPayModelChild.ddd" placeholder="选择">
                 <el-option label="微信" value="0"></el-option>
-                <el-option label="电话" value="1"></el-option>
+                <el-option label="手机" value="1"></el-option>
                 <el-option label="QQ" value="2"></el-option>
               </el-select>
             </el-form-item>-->
@@ -66,7 +66,9 @@
               <el-date-picker
                 v-model="addInstallTable.installationDate"
                 type="date"
-                placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                placeholder="选择日期"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="实际联系人" prop="realUser">
@@ -85,7 +87,13 @@
               <el-input v-model="addInstallTable.creator" placeholder="创建人"></el-input>
             </el-form-item>
             <el-form-item label="创建日期" prop="createDate">
-              <el-date-picker format="yyyy-MM-dd" value-format="yyyy-MM-dd" v-model="addInstallTable.createDate" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                v-model="addInstallTable.createDate"
+                type="date"
+                placeholder="选择日期"
+              ></el-date-picker>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -102,14 +110,16 @@
 </template>
 
 <script>
+import qs from "qs";
 export default {
   name: "areaManage",
   components: {},
   data() {
     return {
+      protecterList: [],
       addInstallTable: {
-        areaProjectId:'',
-        showMode: '',
+        areaProjectId: "",
+        showMode: "",
         dept: "",
         projectCode: "",
         projectName: "",
@@ -142,18 +152,40 @@ export default {
     };
   },
   methods: {
+    getCompanyCode() {
+      this.$http
+        .post(
+          "/yunguDataDictionary/getDictionaryFormRedis",
+          qs.stringify({
+            code: "look_result"
+          })
+        )
+        .then(res => {
+          console.log("下拉列表", res);
+        });
+    },
     getTable() {
-      console.log("这是路由传参", this.$route.query);
       this.addInstallTable = this.$route.query;
-      this.addInstallTable.protecter = 0;
       this.addInstallTable.areaProjectId = this.$route.query.aid;
+    },
+    // 获取维护人员列表
+    getPersonOptions() {
+      this.$http
+        .post("/sysUser/getSysUserPageList", { roleStatus: 1, status: 1 })
+        .then(res => {
+          if (res.data.meta.code == 200) {
+            console.log("维护人员", res);
+            this.protecterList = res.data.data.obj.data;
+          } else {
+            console.log("选项列表获取错误");
+          }
+        });
     },
     commit(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           delete this.addInstallTable.creator;
           delete this.addInstallTable.createDate;
-          console.log("上传数据", this.addInstallTable);
           this.$http
             .post(
               "/yunguInstallList/insertYunguInstallList",
@@ -178,6 +210,8 @@ export default {
   },
   mounted() {
     this.getTable();
+    this.getCompanyCode();
+    this.getPersonOptions();
   }
 };
 </script>

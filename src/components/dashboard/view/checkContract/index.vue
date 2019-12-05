@@ -219,58 +219,58 @@
           <el-table :data="yunguContractPayModel" style="width: 100%;margin-top:20px;" border>
             <el-table-column label="支付主体">
               <template slot-scope="scope">
-                <span>{{ scope.row.pay_mode }}</span>
+                <span>{{ scope.row.payMode }}</span>
               </template>
             </el-table-column>
             <el-table-column label="费用类别">
               <template slot-scope="scope">
-                <span>{{ scope.row.cost_type }}</span>
+                <span>{{ scope.row.costType }}</span>
               </template>
             </el-table-column>
             <el-table-column label="支付形式">
               <template slot-scope="scope">
-                <span>{{ scope.row.pay_mode }}</span>
+                <span>{{ scope.row.payMode }}</span>
               </template>
             </el-table-column>
             <el-table-column label="支付方式">
               <template slot-scope="scope">
-                <span>{{ scope.row.pay_status }}</span>
+                <span>{{ scope.row.payStatus }}</span>
               </template>
             </el-table-column>
             <el-table-column label="付费开始时间">
               <template slot-scope="scope">
-                <span>{{ scope.row.pay_starttime }}</span>
+                <span>{{ scope.row.payStarttime }}</span>
               </template>
             </el-table-column>
             <el-table-column label="付费结束时间">
               <template slot-scope="scope">
-                <span>{{ scope.row.pay_endtime }}</span>
+                <span>{{ scope.row.payEndtime }}</span>
               </template>
             </el-table-column>
             <el-table-column label="是否有发票">
               <template slot-scope="scope">
-                <span>{{ scope.row.is_invoice ==0?'是':'否' }}</span>
+                <span>{{ scope.row.isInvoice ==0?'是':'否' }}</span>
               </template>
             </el-table-column>
             <el-table-column label="应付金额">
               <template slot-scope="scope">
-                <span>{{ scope.row.plan_period }}</span>
+                <span>{{ scope.row.planPeriod }}</span>
               </template>
             </el-table-column>
             <el-table-column label="已付金额">
               <template slot-scope="scope">
-                <span>{{ scope.row.bank_account }}</span>
+                <span>{{ scope.row.bankAccount }}</span>
               </template>
             </el-table-column>
 
             <el-table-column label="开户行">
               <template slot-scope="scope">
-                <span>{{ scope.row.bank_name }}</span>
+                <span>{{ scope.row.bankName }}</span>
               </template>
             </el-table-column>
             <el-table-column label="账号">
               <template slot-scope="scope">
-                <span>{{ scope.row.bank_account }}</span>
+                <span>{{ scope.row.bankAccount }}</span>
               </template>
             </el-table-column>
             <el-table-column label="操作">
@@ -400,7 +400,7 @@ export default {
   },
   methods: {
     getData() {
-      const id = localStorage.getItem("aid");
+      const id = localStorage.getItem("contract_id");
       this.$http
         .post(
           "/yunguareacontract/getYunguAreaContractById",
@@ -412,32 +412,32 @@ export default {
             this.yunguAreaContractModel = res.data.data.obj.contract;
             this.yunguAreaContractdetailModel =
               res.data.data.obj.contractdetail;
-            this.yunguAreaContractdetailModel.mediaNumber =
-              res.data.data.obj.contractdetail.media_number;
-            this.yunguAreaContractdetailModel.signNumber =
-              res.data.data.obj.contractdetail.sign_number;
-            this.yunguAreaContractdetailModel.signWaitnumber =
-              res.data.data.obj.contractdetail.sign_waitnumber;
-            this.yunguAreaContractdetailModel.signWaitprice =
-              res.data.data.obj.contractdetail.sign_waitprice;
-            this.yunguAreaContractdetailModel.rentTotal =
-              res.data.data.obj.contractdetail.rent_total;
-            this.yunguAreaContractdetailModel.mangerTotal =
-              res.data.data.obj.contractdetail.manger_total;
-            this.yunguAreaContractdetailModel.totalAmount =
-              res.data.data.obj.contractdetail.total_amount;
-            this.yunguAreaContractdetailModel.paperAvg =
-              res.data.data.obj.contractdetail.paper_avg;
-            this.yunguAreaContractdetailModel.paperRent =
-              res.data.data.obj.contractdetail.paper_rent;
-            this.yunguAreaContractdetailModel.otherAmount =
-              res.data.data.obj.contractdetail.other_amount;
-            this.yunguAreaContractdetailModel.depositAmount =
-              res.data.data.obj.contractdetail.deposit_amount;
-            this.yunguAreaContractdetailModel.signYearprice =
-              res.data.data.obj.contractdetail.sign_yearprice;
-            this.yunguAreaContractdetailModel.signMonthprice =
-              res.data.data.obj.contractdetail.sign_monthprice;
+            // this.yunguAreaContractdetailModel.mediaNumber =
+            //   res.data.data.obj.contractdetail.media_number;
+            // this.yunguAreaContractdetailModel.signNumber =
+            //   res.data.data.obj.contractdetail.sign_number;
+            // this.yunguAreaContractdetailModel.signWaitnumber =
+            //   res.data.data.obj.contractdetail.sign_waitnumber;
+            // this.yunguAreaContractdetailModel.signWaitprice =
+            //   res.data.data.obj.contractdetail.sign_waitprice;
+            // this.yunguAreaContractdetailModel.rentTotal =
+            //   res.data.data.obj.contractdetail.rent_total;
+            // this.yunguAreaContractdetailModel.mangerTotal =
+            //   res.data.data.obj.contractdetail.manger_total;
+            // this.yunguAreaContractdetailModel.totalAmount =
+            //   res.data.data.obj.contractdetail.total_amount;
+            // this.yunguAreaContractdetailModel.paperAvg =
+            //   res.data.data.obj.contractdetail.paper_avg;
+            // this.yunguAreaContractdetailModel.paperRent =
+            //   res.data.data.obj.contractdetail.paper_rent;
+            // this.yunguAreaContractdetailModel.otherAmount =
+            //   res.data.data.obj.contractdetail.other_amount;
+            // this.yunguAreaContractdetailModel.depositAmount =
+            //   res.data.data.obj.contractdetail.deposit_amount;
+            // this.yunguAreaContractdetailModel.signYearprice =
+            //   res.data.data.obj.contractdetail.sign_yearprice;
+            // this.yunguAreaContractdetailModel.signMonthprice =
+            //   res.data.data.obj.contractdetail.sign_monthprice;
             this.yunguContractPayModel = res.data.data.obj.payList;
           }
         });

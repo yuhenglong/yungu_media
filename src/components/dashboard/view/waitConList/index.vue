@@ -239,7 +239,7 @@ export default {
     },
     examine(row) {
       console.log("待处理", row);
-      localStorage.setItem("aid", row.aid);
+      localStorage.setItem("contract_id", row.contract_id);
       this.$router.push("/checkContract");
     },
     lookConInfo(row) {

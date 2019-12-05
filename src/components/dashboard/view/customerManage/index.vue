@@ -1,6 +1,6 @@
 <template>
   <div class="customerManage">
-    <h1 style="text-align:center;">场地客户管理</h1>
+    <h2>场地客户管理</h2>
     <div style="margin-top:30px;">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="客户管理" style>
@@ -220,6 +220,7 @@
       :append-to-body="true"
     >
       <el-form :label-position="labelPosition" label-width="180px" :model="addCustomerObj">
+        <h2 style="font-size:18px;line-height:18px;">客户信息</h2>
         <el-form-item label="客户名称">
           <el-input v-model="addCustomerObj.customerName"></el-input>
         </el-form-item>
@@ -264,7 +265,26 @@
           <el-input v-model="addCustomerObj.customerNature"></el-input>
         </el-form-item>
         <el-form-item label="客户类型">
-          <el-input v-model="addCustomerObj.customerType"></el-input>
+          <!-- <el-input v-model="addCustomerObj.customerType"></el-input> -->
+          <el-select v-model="addCustomerObj.customerType" placeholder="请选择" @change="chooseDept">
+            <el-option
+              v-for="item in customerList"
+              :key="item.val"
+              :label="item.type"
+              :value="item.val"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="公司规模">
+          <!-- <el-input v-model="addCustomerObj.customerType"></el-input> -->
+          <el-select v-model="addCustomerObj.companySize" placeholder="请选择" @change="chooseDept">
+            <el-option
+              v-for="item in companyScale"
+              :key="item.val"
+              :label="item.population"
+              :value="item.val"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <!-- <el-form-item label="场地客户ID">
           <el-input v-model="addCustomerObj.id"></el-input>
@@ -343,6 +363,42 @@ export default {
   },
   data() {
     return {
+      customerList: [
+        {
+          type: "开发中",
+          val: "0"
+        },
+        {
+          type: "有意向",
+          val: "1"
+        },
+        {
+          type: "确定意向",
+          val: "2"
+        },
+        {
+          type: "确定资源",
+          val: "3"
+        }
+      ],
+      companyScale: [
+        {
+          population: "1-20人",
+          val: "0"
+        },
+        {
+          population: "21-50人",
+          val: "1"
+        },
+        {
+          population: "51-200人",
+          val: "2"
+        },
+        {
+          population: "200人以上",
+          val: "3"
+        }
+      ],
       manageCompany: [],
       protecterList: [],
       title: "当前客户信息",
@@ -369,6 +425,7 @@ export default {
         contactCommunication: ""
       },
       addCustomerObj: {
+        companySize: "",
         customerName: "",
         companyPhone: "",
         contactDept: "",
@@ -454,26 +511,27 @@ export default {
       this.dialogEditVisible = false;
     },
     openAddCustomer() {
-      this.dialogAddVisible = true;
+      this.$router.push("/addCustomer");
+      // this.dialogAddVisible = true;
     },
-    addComfirm() {
-      this.$http
-        .post("/yunguAreaCustomer/insertYunguAreaCustomer", this.addCustomerObj)
-        .then(res => {
-          console.log("这是新增对象", res);
-          if (res.data.meta.code == 200) {
-            this.$message({
-              type: "success",
-              message: "添加客户成功！"
-            });
-            this.dialogAddVisible = false;
-            window.location.reload();
-          }
-        });
-    },
-    addCancel() {
-      this.dialogAddVisible = false;
-    },
+    // addComfirm() {
+    //   this.$http
+    //     .post("/yunguAreaCustomer/insertYunguAreaCustomer", this.addCustomerObj)
+    //     .then(res => {
+    //       console.log("这是新增对象", res);
+    //       if (res.data.meta.code == 200) {
+    //         this.$message({
+    //           type: "success",
+    //           message: "添加客户成功！"
+    //         });
+    //         this.dialogAddVisible = false;
+    //         window.location.reload();
+    //       }
+    //     });
+    // },
+    // addCancel() {
+    //   this.dialogAddVisible = false;
+    // },
     lookInfo(index, row) {
       this.$http
         .post(
@@ -527,7 +585,11 @@ export default {
       this.dialogEditVisible = true;
       this.formRowList = row;
       this.formRowList.apply_name = row.apply_name;
-      console.log("这是数据", this.formRowList.apply_name, typeof(this.formRowList.apply_name));
+      console.log(
+        "这是数据",
+        this.formRowList.apply_name,
+        typeof this.formRowList.apply_name
+      );
     },
     onSubmit() {
       console.log("submit!");
@@ -617,6 +679,13 @@ export default {
   padding: 30px 2.5%;
   height: auto;
   overflow: auto;
+  h2 {
+    text-align: center;
+    font-size: 26px;
+    line-height: 26px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
 }
 </style>
 <style lang="scss">

@@ -35,6 +35,7 @@ import addPlaInstallList from '@/components/dashboard/view/addPlaInstallList'
 import pendEquList from '@/components/dashboard/view/pendEquList'
 import editPlaInstall from '@/components/dashboard/view/editPlaInstall'
 import endOrdercInstall from '@/components/dashboard/view/endOrdercInstall'
+import addCustomer from '@/components/dashboard/view/addCustomer'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -73,6 +74,10 @@ const router = new Router({
                 {
                     path: '/addArea',
                     component: addArea
+                },
+                {
+                    path: '/addCustomer',
+                    component: addCustomer
                 },
                 {
                     path: '/addAreaPlace',
