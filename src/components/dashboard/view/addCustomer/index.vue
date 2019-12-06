@@ -8,7 +8,7 @@
             <el-input v-model="addCustomerObj.customerName"></el-input>
           </el-form-item>
           <el-form-item label="所属地区">
-            <linkage></linkage>
+            <linkage @childFn="getAddress"></linkage>
           </el-form-item>
           <el-form-item label="申请人">
             <!-- <el-input v-model="addCustomerObj.applyName"></el-input> -->
@@ -231,16 +231,23 @@ export default {
       this.$http
         .post("/yunguAreaCustomer/insertYunguAreaCustomer", this.addCustomerObj)
         .then(res => {
-          console.log("这是新增对象", res);
           if (res.data.meta.code == 200) {
             this.$message({
               type: "success",
-              message: "添加客户成功！"
+              message: "添加客户成功！即将返回客户列表。"
             });
             this.dialogAddVisible = false;
-            window.location.reload();
+            setTimeout(() =>{
+              this.$router.push('/customerManage');
+            },2000)
           }
         });
+    },
+    getAddress(adress,sheng,shi,qu){
+      console.log('这是位置信息',adress,sheng,shi,qu);
+      this.addCustomerObj.provinceId = sheng;
+      this.addCustomerObj.cityId = shi;
+      this.addCustomerObj.townId = qu;
     },
     addCancel() {
       this.dialogAddVisible = false;

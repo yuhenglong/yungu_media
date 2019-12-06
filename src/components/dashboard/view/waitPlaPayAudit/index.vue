@@ -65,13 +65,13 @@
       <el-table-column fixed prop="contract_code" label="合同编号" width="150"></el-table-column>
       <el-table-column prop="project_name" label="项目名称" width="120"></el-table-column>
       <el-table-column prop="project_address" label="项目所在地区" width="120"></el-table-column>
-      <el-table-column prop="protecter" label="项目属性" width="120"></el-table-column>
-      <el-table-column prop="dept" label="合同类型" width="120"></el-table-column>
-      <el-table-column prop="developer" label="部门" width="120"></el-table-column>
-      <el-table-column prop="project_type" label="开发人员" width="120"></el-table-column>
-      <el-table-column prop="project_type" label="维护人员" width="120"></el-table-column>
-      <el-table-column prop="project_type" label="执行期间" width="120"></el-table-column>
-      <el-table-column prop="project_type" label="媒体签约数" width="120"></el-table-column>
+      <el-table-column prop="project_type" label="项目属性" width="120"></el-table-column>
+      <el-table-column prop="contract_type" label="合同类型" width="120"></el-table-column>
+      <el-table-column prop="dept" label="部门" width="120"></el-table-column>
+      <el-table-column prop="developer" label="开发人员" width="120"></el-table-column>
+      <el-table-column prop="protecter" label="维护人员" width="120"></el-table-column>
+      <el-table-column prop="oprator_time" label="执行期间" width="120"></el-table-column>
+      <el-table-column prop="media_number" label="媒体签约数" width="120"></el-table-column>
       <el-table-column prop="activity_status" label="项目状态" width="120"></el-table-column>
       <el-table-column label="业务状态" width="120">
         <template slot-scope="scope">

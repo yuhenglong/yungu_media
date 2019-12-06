@@ -4,7 +4,6 @@
     <el-form
       :model="equipTable"
       :rules="rules"
-      ref="equipTable"
       label-width="100px"
       class="demo-ruleForm"
     >
@@ -26,7 +25,7 @@
       <el-form-item label="设备状态" prop="euqipment_status">
         <el-input :disabled="true" v-model="equipTable.euqipment_status==1?'启用':'禁止'"></el-input>
       </el-form-item>
-      <el-form-item label>
+      <el-form-item>
         <el-button type="primary" @click="cancel()">返回</el-button>
       </el-form-item>
     </el-form>
@@ -39,9 +38,7 @@ export default {
   components: {},
   data() {
     return {
-      equipTable: {},
-      rules: {
-      }
+      equipTable: {}
     };
   },
   methods: {

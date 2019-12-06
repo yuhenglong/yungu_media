@@ -36,6 +36,7 @@ import pendEquList from '@/components/dashboard/view/pendEquList'
 import editPlaInstall from '@/components/dashboard/view/editPlaInstall'
 import endOrdercInstall from '@/components/dashboard/view/endOrdercInstall'
 import addCustomer from '@/components/dashboard/view/addCustomer'
+import lookConPayInfo from '@/components/dashboard/view/lookConPayInfo'
 
 import sysUse from '@/components/dashboard/view/sys/sysUser.vue'
 import roleManage from '@/components/dashboard/view/sys/roleManage.vue'
@@ -121,6 +122,10 @@ const router = new Router({
                 {
                     path: '/placeAuditList',
                     component: placeAuditList
+                },
+                {
+                    path: '/lookConPayInfo',
+                    component: lookConPayInfo
                 },
                 {
                     path: 'getWaitEngineeringInstallPageList',

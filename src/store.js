@@ -9,6 +9,9 @@ export default new Vuex.Store({
         // tab 
         visitedviews: [],
         firData: [],
+        // 数据
+        area_project_propert: [],
+        contract_type: []
     },
     mutations: {
         setIsCollapse(state) {
@@ -20,7 +23,8 @@ export default new Vuex.Store({
             state.visitedviews.push({
                 name: view.name,
                 path: view.path,
-                title: view.title || '首页'
+                title: view.title
+                    // title: view.title || '首页'
             })
         },
         DEL_VISITED_VIEWS: (state, view) => { //关闭页签--删除路由数据的方法
@@ -33,6 +37,12 @@ export default new Vuex.Store({
         },
         setIndexHtml: (state) => {
             state.visitedviews = []
+        },
+        set_area_project_propert: (state, data) => {
+            state.area_project_propert = data;
+        },
+        set_contract_type: (state, data) => {
+            state.contract_type = data;
         }
     },
     actions: {
@@ -54,6 +64,14 @@ export default new Vuex.Store({
         // tab设置为空
         setIndexHtml({ commit, state }) {
             commit('setIndexHtml', state)
+        },
+        // 设置项目属性数组
+        add_area_project_propert({ commit }, data) {
+            commit("set_area_project_propert", data);
+        },
+        // 设置合同类型数组
+        add_contract_type({ commit }, data) {
+            commit("set_contract_type", data);
         }
     }
 })

@@ -124,8 +124,11 @@ export default {
       let shiji = document.getElementById('shiji');
       let quji = document.getElementById('quji');
       this.adressOne = shengfen.value + shiji.value + quji.value;
+      let shengVal = shengfen.value;
+      let shiVal= shiji.value;
+      let quVal = quji.value;
       console.log(this.adressOne);
-      this.$emit('childFn',this.adressOne);
+      this.$emit('childFn',this.adressOne,shengVal,shiVal,quVal);
     }
   },
   created: function() {

@@ -44,7 +44,8 @@
               </el-select>
             </el-form-item>
             <el-form-item label="合同到期时间">
-              <el-date-picker disabled
+              <el-date-picker
+                disabled
                 v-model="yunguAreaContractModel.contractEndtime"
                 type="date"
                 format="yyyy-MM-dd HH:mm:ss"
@@ -139,7 +140,8 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="实际执行开始日期">
-              <el-date-picker disabled
+              <el-date-picker
+                disabled
                 v-model="yunguAreaContractdetailModel.exeStarttime"
                 type="date"
                 placeholder="选择日期"
@@ -148,7 +150,8 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="实际执行结束日期">
-              <el-date-picker disabled
+              <el-date-picker
+                disabled
                 v-model="yunguAreaContractdetailModel.exeEndtime"
                 type="date"
                 placeholder="选择日期"
@@ -164,7 +167,8 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="免租期开始日期">
-              <el-date-picker disabled
+              <el-date-picker
+                disabled
                 v-model="yunguAreaContractdetailModel.rentfreeStarttime"
                 type="date"
                 placeholder="选择日期"
@@ -173,7 +177,8 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="免租期结束日期">
-              <el-date-picker disabled
+              <el-date-picker
+                disabled
                 v-model="yunguAreaContractdetailModel.rentfreeEndtime"
                 type="date"
                 placeholder="选择日期"
@@ -387,10 +392,10 @@
                 v-model="yunguContractPayModelChild.bankAccount"
                 placeholder="账号"
               ></el-input>
-            </el-form-item> -->
+            </el-form-item>-->
             <!-- <div style="text-align:center;">
               <el-button @click="commitTable" type="success">添加付款计划</el-button>
-            </div> -->
+            </div>-->
             <el-table :data="yunguContractPayModel" style="width: 100%;margin-top:20px;" border>
               <el-table-column label="支付主体">
                 <template slot-scope="scope">
@@ -458,7 +463,7 @@
       </el-tabs>
     </div>
     <div class="btn">
-      <el-button type="warning" size="medium" @click="giveUp()">放弃修改并返回</el-button>
+      <el-button type="warning" size="medium" @click="giveUp()">返回</el-button>
     </div>
   </div>
 </template>
@@ -575,12 +580,18 @@ export default {
     giveUp() {
       this.$router.go(-1);
     },
-    checkInfo(index,row){
+    checkInfo(index, row) {
       console.log(row);
+      this.$router.push({
+        path:'/lookConPayInfo',
+        query:{
+          obj:row
+        }
+      })
     },
     getData() {
       this.$http
-        .post("/yunguAreaCustomer/getYunguAreaCustomerList")
+        .get("/yunguAreaCustomer/getYunguAreaCustomerList")
         .then(res => {
           if (res.data.meta.code == 200) {
             this.payModeList = res.data.data.obj;
