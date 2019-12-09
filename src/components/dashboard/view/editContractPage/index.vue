@@ -498,7 +498,7 @@ export default {
     },
     getData() {
       this.$http
-        .get("/yunguAreaCustomer/getYunguAreaCustomerList")
+        .post("/yunguAreaCustomer/getYunguAreaCustomerList")
         .then(res => {
           if (res.data.meta.code == 200) {
             this.payModeList = res.data.data.obj;

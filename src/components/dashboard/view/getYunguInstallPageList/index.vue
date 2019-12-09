@@ -65,7 +65,7 @@
     </el-form>
     <!-- 表格 -->
     <el-table :data="areaTableList" border style="width: 100%">
-      <el-table-column fixed prop="identification_code" label="项目编号" width="150"></el-table-column>
+      <el-table-column fixed prop="project_code" label="项目编号" width="150"></el-table-column>
       <el-table-column prop="project_name" label="项目名称" width="120"></el-table-column>
       <el-table-column prop="project_address" label="城市" width="120"></el-table-column>
       <el-table-column prop="protecter" label="维护人员" width="120"></el-table-column>
@@ -83,9 +83,9 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width>
         <template slot-scope="scope">
-          <el-button @click="examine(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="auditLogging(scope.$index,scope.row)" type="text" size="small">审核记录</el-button>
-          <router-link to="/addAreaPlace" type="text" size="small">添加安装单</router-link>
+          <el-button @click="examine(scope.row)" type="text" size="small" v-show="sid || sid == 0 || sid == 1 || sid == 2 || sid == 3 || sid == 5" >查看</el-button>
+          <el-button @click="auditLogging(scope.$index,scope.row)" type="text" size="small" v-show="sid || sid == 0 || sid == 1 || sid == 2 || sid == 3 || sid == 5">审核记录</el-button>
+          <el-button @click="addInfo(scope.row)" type="text" size="small" >添加安装单</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -156,6 +156,7 @@ export default {
       titleTwo: "场地项目安装单列表",
       dialogCheckVisible: false,
       dialogAuditVisible: false,
+      sid:'',
       formCheckList: {
         identificationCode: "",
         verifyUserName: "",
@@ -183,6 +184,7 @@ export default {
       total: 0,
       areaTableList: []
     };
+
   },
   methods: {
     deilDel() {
@@ -192,6 +194,16 @@ export default {
       this.dialogAuditVisible = true;
       this.checkDia.identificationCode = row.customer_code;
       this.checkDia.taskId = row.task_id;
+    },
+    addInfo(row) {
+      console.log(row,'row');
+      localStorage.setItem('infoId', row.aid)
+      this.$router.push("/addAreaPlace");
+      
+      const url = "/yunguInstallList/getInfoByProjectId?aid=" + localStorage.getItem('aid', row.id);
+      this.$http.get(url).then(res =>{
+        console.log('回调函数',res);
+      })
     },
     deilComfirm() {
       this.$http
@@ -234,8 +246,14 @@ export default {
       this.getTableData();
     },
     examine(row) {
+      localStorage.setItem("aid", row.aid);
       this.$router.push("/examinePage");
       console.log(row);
+    },
+    editPage(index, row) {
+      localStorage.setItem("aid", row.aid);
+      localStorage.setItem("identification_code", row.identification_code);
+      this.$router.push("/addAreaPlace");
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);

@@ -76,7 +76,7 @@
         </el-table-column>
         <el-table-column label="所属部门">
           <template slot-scope="scope">
-            <span>{{ scope.row.dept_name }}</span>
+            <span>{{ scope.row.apply_dept }}</span>
           </template>
         </el-table-column>
         <el-table-column label="状态" width="100">
@@ -110,7 +110,6 @@
       <!-- 二次封装分页插件 -->
       <pagination :total="total" @pageChange="changePage"></pagination>
     </div>
-    <!-- 查看 -->
     <el-dialog
       :title="title"
       :visible.sync="dialogVisible"
@@ -141,7 +140,7 @@
           <el-input v-model="formRowList.user_name" :readonly="true"></el-input>
         </el-form-item>
         <el-form-item label="所属部门">
-          <el-input v-model="formRowList.dept_name" :readonly="true"></el-input>
+          <el-input v-model="formRowList.apply_dept" :readonly="true"></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <el-input v-model="status_two" :readonly="true"></el-input>

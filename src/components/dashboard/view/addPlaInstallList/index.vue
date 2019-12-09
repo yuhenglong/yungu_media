@@ -186,25 +186,22 @@ export default {
         if (valid) {
           delete this.addInstallTable.creator;
           delete this.addInstallTable.createDate;
-          this.protecterList.forEach(item => {
-            if (this.addInstallTable.protecter == item.user_name) {
-              const obj = this.addInstallTable;
-              obj.protecter = item.uid;
-              this.$http
-                .post("/yunguInstallList/insertYunguInstallList", obj)
-                .then(res => {
-                  if (res.data.meta.code == 200) {
-                    this.$message({
-                      type: "success",
-                      message: "新增安装单成功，即将返回列表页。"
-                    });
-                    setTimeout(() => {
-                      this.$router.go(-1);
-                    }, 3000);
-                  }
+          this.$http
+            .post(
+              "/yunguInstallList/insertYunguInstallList",
+              this.addInstallTable
+            )
+            .then(res => {
+              if (res.data.meta.code == 200) {
+                this.$message({
+                  type: "success",
+                  message: "新增安装单成功，即将返回列表页。"
                 });
-            }
-          });
+                setTimeout(() => {
+                  this.$router.go(-1);
+                }, 3000);
+              }
+            });
         } else {
           console.log("error!");
         }

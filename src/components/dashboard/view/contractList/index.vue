@@ -60,15 +60,7 @@
       <el-table-column prop="contract_code" label="合同编号"></el-table-column>
       <el-table-column prop="project_name" label="项目名称" width="120"></el-table-column>
       <el-table-column prop="project_address" label="项目所在地区"></el-table-column>
-      <el-table-column label="项目属性">
-        <template slot-scope="scope">
-          <span
-            v-if="scope.row.project_type == item.value"
-            v-for="(item,index) in area_project_propert_list"
-            :key="index"
-          >{{item.name}}</span>
-        </template>
-      </el-table-column>
+      <el-table-column prop="project_type" label="项目属性"></el-table-column>
       <el-table-column prop="contract_type" label="合同类型" width="120"></el-table-column>
       <el-table-column prop="dept" label="部门" width="120"></el-table-column>
       <el-table-column prop="developer" label="开发人员" width="120"></el-table-column>
@@ -135,14 +127,7 @@ export default {
         pageNum: 1,
         pageSize: 10
       },
-      tableData: [],
-      // 临时的数组
-      area_project_propert_list: [
-        { name: "综合体", value: 0 },
-        { name: "住宅", value: 1 },
-        { name: "公寓", value: 2 },
-        { name: "商场", value: 3 }
-      ]
+      tableData: []
     };
   },
   methods: {
@@ -193,14 +178,6 @@ export default {
             this.total = res.data.data.obj.count;
           }
         });
-    }
-  },
-  computed:{
-    area_project_propert_list(){
-      return this.$store.state.area_project_propert;
-    },
-    contract_type_list(){
-      return this.$store.state.contract_type;
     }
   },
   mounted() {

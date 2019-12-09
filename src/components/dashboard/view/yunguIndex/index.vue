@@ -17,7 +17,7 @@
           <el-table-column prop="date" label="日期" width="180"></el-table-column>
           <el-table-column prop="bz" label="备注"></el-table-column>
         </el-table>
-        <demo></demo>
+        <!-- <demo></demo> -->
       </div>
     </div>
   </div>

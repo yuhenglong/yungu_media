@@ -251,7 +251,7 @@
               <el-select v-model="yunguContractPayModelChild.payMode" placeholder="选择">
                 <el-option label="银行卡" value="0"></el-option>
                 <!-- <el-option label="支付宝" value="1"></el-option>
-                <el-option label="微信" value="2"></el-option>-->
+                <el-option label="微信" value="2"></el-option> -->
                 <el-option label="现金" value="3"></el-option>
                 <!-- <el-option label="其他" value="3"></el-option> -->
               </el-select>
@@ -328,7 +328,7 @@
                       <el-input v-model="scope.row.payTime" placeholder="请输入内容" style="width:90%;"></el-input>
                     </template>
                   </el-table-column>
-                  <el-table-column label="付款金额(单位：元)" width="250px">
+                  <el-table-column label="付款金额" width="250px">
                     <template slot-scope="scope">
                       <el-input
                         v-model="scope.row.payAmount"
@@ -463,7 +463,6 @@ export default {
         }
       ],
       payTableDrtailData: [],
-      payTableDrtailDataTwo: [],
       yunguAreaContractModel: {
         areaProjectId: null,
         contractAttrubite: null,
@@ -594,7 +593,7 @@ export default {
         const obj = {
           seq: i + 1,
           payTime: "",
-          payAmount: stagePay,
+          payAmount: stagePay + "元",
           payRemark: ""
         };
         this.payTableDrtailData.push(obj);
@@ -625,7 +624,7 @@ export default {
         .toString()
         .padStart(2, 0);
       console.log("N天后", `${y}${seperator}${m}${seperator}${d}`);
-      return `${y}${seperator}${m}${seperator}${d}` + " 00:00:00";
+      return `${y}${seperator}${m}${seperator}${d}`;
     },
     forAddArr(dateNum, yearNum) {
       const timeOne = this.yunguContractPayModelChild.payStarttime.split(
@@ -641,7 +640,7 @@ export default {
       const forTime = Math.ceil(firForTime);
       this.arrPush(forTime);
       if (forTime == 1) {
-        this.payTableDrtailData[0].payTime = timeTwo +' 00:00:00';
+        this.payTableDrtailData[0].payTime = timeTwo;
       } else {
         for (let i = 0; i < forTime; i++) {
           const ii = i + 1;
@@ -660,7 +659,7 @@ export default {
         // 因为数字没有整除，所以要把没分配好的最后日期计算上去
         this.payTableDrtailData[this.payTableDrtailData.length - 1][
           "payTime"
-        ] = timeTwo +' 00:00:00';
+        ] = timeTwo;
       }
     },
     chengPayPlan() {
@@ -704,7 +703,7 @@ export default {
         const timeTwo = this.yunguContractPayModelChild.payEndtime.split(
           " "
         )[0];
-        this.payTableDrtailData[0].payTime = timeTwo + " 00:00:00";
+        this.payTableDrtailData[0].payTime = timeTwo;
       }
     },
     changePayModel(val) {
@@ -725,13 +724,14 @@ export default {
       }
     },
     getData() {
-      const url = "/yunguAreaCustomer/getYunguAreaCustomerList";
-      this.$http.get(url).then(res => {
-        if (res.data.meta.code == 200) {
-          console.log("支付主体", res);
-          this.payModeList = res.data.data.obj;
-        }
-      });
+      this.$http
+        .get("/yunguAreaCustomer/getYunguAreaCustomerList")
+        .then(res => {
+          if (res.data.meta.code == 200) {
+            console.log("支付主体", res);
+            this.payModeList = res.data.data.obj;
+          }
+        });
     },
     PayDel(index, row) {
       this.yunguContractPayModel.splice(index, 1);
@@ -751,7 +751,7 @@ export default {
         });
     },
     commitTable() {
-      this.yunguContractPayModelChild.yunguContractPaydetailList = this.payTableDrtailData;
+      this.payTableDrtailData = [];
       this.yunguContractPayModel.push(this.yunguContractPayModelChild);
       this.yunguContractPayModelChild = {
         remark: "",
@@ -769,10 +769,9 @@ export default {
         paySubject: null,
         payTotal: null,
         planPeriod: null,
-        customerCode: ""
-        // yunguContractPaydetailList: []
+        customerCode: "",
+        yunguContractPaydetailList: []
       };
-      this.payTableDrtailData = [];
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -782,6 +781,8 @@ export default {
     },
     commit(check, isSave) {
       this.yunguAreaContractModel.areaProjectId = localStorage.getItem("aid");
+      this.yunguContractPayModelChild.yunguContractPaydetailList = this.payTableDrtailData;
+      this.yunguContractPayModel.push(this.yunguContractPayModelChild);
       const obj = {};
       if (isSave) {
         obj.taskId = localStorage.getItem("task_id");

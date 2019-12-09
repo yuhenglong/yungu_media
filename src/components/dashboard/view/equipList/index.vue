@@ -100,7 +100,7 @@ export default {
     checkTable(row) {
       console.log(row);
       this.$router.push({
-        path: "/checkEquipTable",
+        name: "checkEquipTable",
         query: row
       });
     },

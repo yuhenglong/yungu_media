@@ -1,6 +1,6 @@
 <template>
   <div class="leftMenus">
-    <headPortrait></headPortrait>
+    <!-- <headPortrait></headPortrait> -->
     <el-menu
       class="el-menu-vertical-demo"
       @open="handleOpen"
@@ -17,10 +17,7 @@
           </template>
           <template v-for="(itemb,indexb) in item.subList">
             <el-menu-item-group :key="indexb">
-              <el-menu-item
-                :index="itemb.url"
-                @click="changeRouter(itemb.url,itemb.name)"
-              >{{itemb.name}}</el-menu-item>
+              <el-menu-item :index="itemb.url" @click="changeRouter(itemb.url,itemb.name)">{{itemb.name}}</el-menu-item>
             </el-menu-item-group>
           </template>
         </el-submenu>
@@ -29,7 +26,6 @@
   </div>
 </template>
 <script>
-import qs from "qs";
 import headPortrait from "@/components/dashboard/view/headPortrait";
 export default {
   name: "leftMenus",
@@ -57,27 +53,14 @@ export default {
         }
       });
     },
-    changeRouter(url, name) {
-      const obj = {
-        name: name,
-        path: url,
-        title: name
+    changeRouter(url,name){
+      const that = this;
+      const obj ={
+        name:name,
+        path:url,
+        title:name,
       };
       this.$store.dispatch("addVisitedViews", obj);
-    },
-    setVuexData(Code) {
-      this.$http
-        .post(
-          "/yunguDataDictionary/getDictionaryFormRedis",
-          qs.stringify({ code: Code })
-        )
-        .then(res => {
-          console.log("存vuex的数据$({Code})", res);
-          if (res.data.meta.code == 200) {
-            const name = "add" + "_" + Code;
-            this.$store.dispatch(name, res.data.data.obj);
-          }
-        });
     }
   },
   computed: {
@@ -87,10 +70,6 @@ export default {
   },
   created() {
     this.getMenus();
-  },
-  mounted() {
-    this.setVuexData("area_project_propert");
-    this.setVuexData("contract_type");
   }
 };
 </script>

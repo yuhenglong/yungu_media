@@ -691,7 +691,6 @@ export default {
       const obj = {};
       obj.code = localStorage.getItem("identification_code");
       obj.projectId = localStorage.getItem("aid");
-      obj.processKey = 'areaProject';
       obj.yunguAreaPostionModelList = this.yunguAreaProjectModelListTwo;
       obj.yunguAreaProjectDetailModel = this.yunguAreaProjectDetailModel;
       obj.yunguAreaProjectModel = this.yunguAreaProjectModel;

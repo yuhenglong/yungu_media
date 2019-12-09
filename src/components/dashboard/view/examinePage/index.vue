@@ -257,13 +257,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="开盘时间">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                id="openTimeFir"
-                v-model="yunguAreaProjectDetailModel.openTime"
-                value-format="yyyy-MM-dd"
-              ></el-date-picker>
+              <el-date-picker v-model="openTimeFir" type="date" placeholder="选择日期" id="openTimeFir"></el-date-picker>
             </el-form-item>
             <el-form-item label="最低层数">
               <el-input
@@ -281,11 +275,10 @@
             </el-form-item>
             <el-form-item label="社区入住时间">
               <el-date-picker
-                v-model="yunguAreaProjectDetailModel.checkinTime"
+                v-model="checkinTimeFir"
                 type="date"
                 placeholder="选择日期"
                 id="checkinTimeFir"
-                value-format="yyyy-MM-dd"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="物业费">
@@ -539,15 +532,15 @@
                 ></el-input>
               </el-form-item>
             </div>
-            <!-- <div class="addAdress">
+            <div class="addAdress">
               <el-button type="primary" class="addAdr" plain @click="addPayTable">增加支付方式</el-button>
-            </div> -->
+            </div>
             <el-table
               :data="yunguPayMethodModelList_arr"
               style="width: 100%;margin-top:20px;"
               border
             >
-              <el-table-column label="支付方式">
+              <el-table-column label="支付方式" width="180">
                 <template slot-scope="scope">
                   <span v-if="scope.row.payName ==0">银行卡</span>
                   <span v-if="scope.row.payName ==1">支付宝</span>
@@ -555,27 +548,27 @@
                   <span v-if="scope.row.payName ==3">现金</span>
                 </template>
               </el-table-column>
-              <el-table-column label="支付方式">
+              <el-table-column label="支付方式" width="180">
                 <template slot-scope="scope">
                   <span>{{ scope.row.account }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="支付方式">
+              <el-table-column label="支付方式" width="180">
                 <template slot-scope="scope">
                   <span>{{ scope.row.bankName }}</span>
                 </template>
               </el-table-column>
-              <!-- <el-table-column label="操作">
+              <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="payEdit(scope.$index, scope.row)">查看</el-button>
+                  <el-button size="mini" @click="payEdit(scope.$index, scope.row)">编辑</el-button>
                   <el-button size="mini" type="danger" @click="PayDel(scope.$index, scope.row)">删除</el-button>
                 </template>
-              </el-table-column> -->
+              </el-table-column>
             </el-table>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="点位信息">
-          <!-- <el-form :inline="true" class="demo-form-inline">
+          <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="管理公司">
               <el-select disabled v-model="yunguAreaPostionModelList.company" placeholder="管理公司">
                 <el-option label="广州海云投资信息咨询有限公司" value="0"></el-option>
@@ -642,7 +635,7 @@
             <div class="addAdress">
               <el-button type="primary" class="addAdr" plain @click="addTable">增加场地点位</el-button>
             </div>
-          </el-form> -->
+          </el-form>
           <addAdrTable
             :formData="yunguAreaProjectModelListTwo"
             :projectName="yunguAreaProjectModel.projectName"
@@ -914,9 +907,6 @@ export default {
             this.yunguAreaProjectModel = res.data.data.obj.areaProject;
             this.yunguAreaProjectDetailModel =
               res.data.data.obj.areaProjectDetail;
-            this.yunguAreaProjectDetailModel.checkinTime = this.yunguAreaProjectDetailModel.checkinTime.split(
-              " "
-            )[0];
           } else {
             console.log("回调出错了");
           }

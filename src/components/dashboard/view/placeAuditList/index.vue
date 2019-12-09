@@ -232,7 +232,6 @@ export default {
       this.getTableData();
     },
     examine(row) {
-      localStorage.setItem('aid',row.aid);
       this.$router.push("/examinePage");
       console.log(row);
     },

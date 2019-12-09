@@ -392,9 +392,6 @@
               <el-radio v-model="yunguAreaPostionModelList.isBody" label="0">是</el-radio>
               <el-radio v-model="yunguAreaPostionModelList.isBody" label="1">否</el-radio>
             </el-form-item>
-            <el-form-item label="点位名称" prop="pointName">
-              <el-input v-model="yunguAreaPostionModelList.pointName" placeholder="点位名称"></el-input>
-            </el-form-item>
             <el-form-item label="是否赠品">
               <!-- <el-radio v-model="yunguAreaPostionModelList.isGive" label="0">是</el-radio>
               <el-radio v-model="yunguAreaPostionModelList.isGive" label="1">否</el-radio>-->
@@ -407,7 +404,9 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-
+            <el-form-item label="点位名称" prop="pointName">
+              <el-input v-model="yunguAreaPostionModelList.pointName" placeholder="点位名称"></el-input>
+            </el-form-item>
             <el-form-item label="媒体名称" prop="mediaName">
               <el-input v-model="mediaName" placeholder="媒体名称"></el-input>
               <!-- <el-input v-model="yunguAreaPostionModelList.mediaName" placeholder="媒体名称"></el-input> -->

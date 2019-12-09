@@ -5,68 +5,68 @@
       <el-tabs type="border-card">
         <el-tab-pane label="付费计划列表">
           <el-form :inline="true" label-width="170px" class="demo-form-inline" :model="obj">
-            <el-form-item label="支付主体">
-              <el-input :readonly="true" v-model="obj.payMode" placeholder=""></el-input>
+            <el-form-item label="支付主体" prop="protecter">
+              <el-input :readonly="true" v-model="obj.pay_mode" placeholder=""></el-input>
             </el-form-item>
-            <el-form-item label="支付主体编号">
-              <el-input :readonly="true" v-model="obj.payId" placeholder=""></el-input>
+            <el-form-item label="支付主体编号" prop="projectAddress">
+              <el-input :readonly="true" v-model="obj.pay_mode" placeholder=""></el-input>
             </el-form-item>
             <el-form-item label="费用类别" prop="protecter">
-              <el-select disabled v-model="obj.costType" placeholder="请选择">
-                <el-option :label="押金" :value="0"></el-option>
-                <el-option :label="现金" :value="1"></el-option>
+              <el-select disabled v-model="obj.cost_type" placeholder="请选择">
+                <el-option label="押金" :value="0"></el-option>
+                <el-option label="现金" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="备注" prop="developer">
               <el-input :readonly="true" v-model="obj.remark" placeholder="开发人员"></el-input>
             </el-form-item>
-            <el-form-item label="支付方式">
-              <el-select disabled v-model="obj.payStatus" placeholder="请选择">
-                <el-option :label="现金" :value="0"></el-option>
-                <el-option :label="支票" :value="1"></el-option>
+            <el-form-item label="支付方式" prop="protecter">
+              <el-select disabled v-model="obj.pay_status" placeholder="请选择">
+                <el-option label="现金" :value="0"></el-option>
+                <el-option label="支票" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="支付总金额" prop="developer">
-              <el-input :readonly="true" v-model="obj.payTotal" placeholder="开发人员"></el-input>
+              <el-input :readonly="true" v-model="obj.pay_total" placeholder="开发人员"></el-input>
             </el-form-item>
             <el-form-item label="是否有发票" prop="protecter">
-              <el-select disabled v-model="obj.isInvoice" placeholder="请选择">
-                <el-option :label="是" :value="0"></el-option>
-                <el-option :label="否" :value="1"></el-option>
+              <el-select disabled v-model="obj.is_invoice" placeholder="请选择">
+                <el-option label="是" :value="0"></el-option>
+                <el-option label="否" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="是否个人收款" prop="protecter">
-              <el-select disabled v-model="obj.isPersonal" placeholder="请选择">
-                <el-option :label="是" :value="0"></el-option>
-                <el-option :label="否" :value="1"></el-option>
+              <el-select disabled v-model="obj.is_personal" placeholder="请选择">
+                <el-option label="是" :value="0"></el-option>
+                <el-option label="否" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="付款状态" prop="dept">
-              <el-select disabled v-model="obj.payStatus" placeholder="所属部门">
-                <el-option :label="待支付" :value="0"></el-option>
-                <el-option :label="已支付" :value="1"></el-option>
+              <el-select disabled v-model="obj.pay_status" placeholder="所属部门">
+                <el-option label="待支付" :value="0"></el-option>
+                <el-option label="已支付" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="付费开始时间">
-              <el-input :readonly="true" v-model="obj.payStarttime" placeholder></el-input>
+              <el-input :readonly="true" v-model="obj.pay_starttime" placeholder></el-input>
             </el-form-item>
             <el-form-item label="付费结束时间">
-              <el-input :readonly="true" v-model="obj.payEndtime" placeholder></el-input>
+              <el-input :readonly="true" v-model="obj.pay_endtime" placeholder></el-input>
             </el-form-item>
             <el-form-item label="计划周期" prop="dept">
-              <el-select disabled v-model="obj.planPeriod" placeholder>
-                <el-option :label="年结" :value="0"></el-option>
-                <el-option :label="月结" :value="1"></el-option>
+              <el-select disabled v-model="obj.plan_period" placeholder>
+                <el-option label="年结" :value="0"></el-option>
+                <el-option label="月结" :value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="开户行" prop="dept">
-              <el-select disabled v-model="obj.bankName" placeholder>
-                <el-option :label="建设" :value="0"></el-option>
-                <el-option :label="工行" :value="1"></el-option>
+              <el-select disabled v-model="obj.bank_name" placeholder>
+                <el-option label="建设" value="0"></el-option>
+                <el-option label="工行" value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="账号">
-              <el-input :readonly="true" v-model="obj.bankAccount " placeholder></el-input>
+              <el-input :readonly="true" v-model="obj.bank_account " placeholder></el-input>
             </el-form-item>
             <el-form-item label="付款计划详情">
               <el-table :data="obj.payDetails" border>
@@ -99,8 +99,7 @@ export default {
   methods: {
     getData() {
       this.obj = this.$route.query;
-      this.obj.costType = parseInt(this.obj.costType);
-      console.log("传参",this.obj);
+      console.log("传参", this.$route.query);
     },
     goBack() {
       this.$router.go(-1);
